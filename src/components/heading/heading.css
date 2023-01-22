@@ -1,0 +1,25 @@
+.heading__text {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 48px;
+}
+.heading__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1
+}
+.heading__button_text {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #EDEDED;
+}
+.heading__buttons {
+  display: flex;
+  /* flex: 1 */
+}

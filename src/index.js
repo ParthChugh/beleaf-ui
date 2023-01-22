@@ -1,20 +1,15 @@
 import React from 'react';
 import './index.css';
 import { createRoot } from "react-dom/client";
-import {
-  RouterProvider,
-} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
-import { router } from './routes';
 import { UserProvider } from './contexts/user';
-import Header from './components/header'
 import { CookiesProvider } from 'react-cookie';
+import Container from './components/container';
 
 createRoot(document.getElementById("root")).render(
   <CookiesProvider>
     <UserProvider>
-      <Header />
-      <RouterProvider router={router} />
+      <Container />
     </UserProvider>
   </CookiesProvider>
 );

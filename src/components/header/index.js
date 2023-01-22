@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { checkIfUserLoggedIn } from '../../global/constants'
 import { useCookies } from 'react-cookie';
 import './Header.css';
@@ -6,12 +6,25 @@ import Avatar from '@mui/material/Avatar';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Fade from '@mui/material/Fade';
 import { UserContext } from '../../contexts/user';
 
-const Header = () => {
-  const [cookies] = useCookies(['user']);
+const Header = (props) => {
+  const { leftAccessory } = props
+  const [cookies, setCookie] = useCookies(['user']);
   const { userState, userDispatch } = useContext(UserContext);
   const isUserLoggedIn = checkIfUserLoggedIn(userState.user.accessToken)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   useEffect(() => {
     userDispatch({
       type: 'UPDATE_USER_RESPONSE',
@@ -20,11 +33,14 @@ const Header = () => {
   }, [cookies.accessToken])
   console.log("userState123213", userState)
   return (
-    <header className="header">
+    <div className="header">
       <nav className="header__nav">
         <ul className="header__list">
-          <li>
+
+          <li style={{ display: 'flex', alignItems: 'center' }}>
+            {leftAccessory}
             <a className="header__link" href="/">
+
               <img
                 src={require('../../assets/beleaf_Logo.png')}
                 loading="lazy"
@@ -53,20 +69,47 @@ const Header = () => {
           </FormControl>
 
           {isUserLoggedIn ?
-            <div className='header__logout_container'>
-              <Avatar alt="ML" src={require('../../assets/male.png')} className="header__avatar" />
-              <div>
+            <li className='header__logout_container'>
+              <Avatar onClick={handleClick} alt="ML" src={require('../../assets/male.png')} className="header__avatar" />
+              <div onClick={handleClick}>
                 <div className='header__avatar_heading'>{userState.user.name}</div>
                 <div className='header__avatar_heading'>{userState.user.role}</div>
               </div>
-            </div>
+              <div onClick={handleClick} style={{ cursor: 'pointer' }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.45434 10.1532C7.75792 10.4828 8.24189 10.4828 8.54547 10.1532L11.3621 7.09547C11.8645 6.55006 11.518 5.60039 10.8165 5.60039H5.18327C4.48184 5.60039 4.1353 6.55006 4.6377 7.09547L7.45434 10.1532Z" fill="#3F434A" />
+                </svg>
+              </div>
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  'aria-labelledby': 'fade-button',
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => {
+                  userDispatch({
+                    type: 'UPDATE_USER_RESPONSE',
+                    payload: { },
+                  })
+                  setCookie('accessToken', "")
 
+                  handleClose()
+                }
+                }>Logout</MenuItem>
+              </Menu>
+            </li>
             :
             <li><a className="header__link" href="/login">Login</a></li>
           }
         </ul>
       </nav>
-    </header>
+    </div >
   );
 }
 

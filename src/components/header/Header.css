@@ -1,8 +1,4 @@
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   background-color: #fff;
   z-index: 1;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
@@ -12,7 +8,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .header__list {
@@ -39,14 +36,14 @@
 
 .header__logout_container {
   display: flex;
+  align-items: center;
 }
 .header__search_bar {
   border-color: #A5A5A5;
   width: 500px; 
 }
 .header__avatar {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  cursor: pointer;
 }
 
 .header__avatar_heading {
@@ -55,4 +52,8 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 20px;
+  cursor: pointer;
+  color: black;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }

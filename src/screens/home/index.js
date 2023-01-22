@@ -1,9 +1,28 @@
 import React from 'react';
+import Heading from '../../components/heading';
 import './HomePage.css';
 
 const HomePage = () => {
   return (
+
     <div className="home-container">
+      <Heading
+        text={"Administration"}
+        buttons={[
+          {
+            text: 'Add New Mitra',
+            icon: 'Add',
+            color: '#3EB049',
+            headingColor: 'white'
+          },
+          {
+            text: 'Add Internal Farm',
+            icon: 'Add',
+            color: '#10312B',
+            headingColor: 'white'
+          }
+        ]}
+      />
       <div className="home-hero">
         <h1>Welcome to our website</h1>
         <p>We offer the best products and services in the industry.</p>
@@ -25,6 +44,10 @@ const HomePage = () => {
         </div>
       </div>
     </div>
+
+
+
+
   );
 }
 
