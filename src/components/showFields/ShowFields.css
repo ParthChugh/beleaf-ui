@@ -1,0 +1,47 @@
+.show_fields__container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.t-store-details__map-container {
+  position: relative !important;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  height: 400px !important;
+}
+
+.show_fields__box {
+  display: flex;
+  flex: 0 0 100%;
+  flex-direction: column;
+
+}
+.map__container {
+  position: relative !important;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  height: 400px !important;
+}
+
+.multiinput__box {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  text-align: left;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.multiinput__container {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  flex-direction: column;
+}
+.multiinputs__value_fields_container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-top: 1px solid #C1C1C1;
+  border-bottom: 1px solid #C1C1C1;
+}

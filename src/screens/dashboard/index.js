@@ -1,25 +1,47 @@
-import React from 'react';
+import React, { useState } /*, { useContext } */ from 'react';
+import Heading from '../../components/heading';
+import CustomTabs from '../../components/tabs'
+import ShowFields from '../../components/showFields'
+import Box from '@mui/material/Box';
+import { masterData } from './master_data'
 import './DashboardPage.css';
 
+
+
 const DashboardPage = () => {
+  // const { userState } = useContext(UserContext);
+  const data = masterData({})
+
+  // const isUserLoggedIn = checkIfUserLoggedIn(userState.user.accessToken)
   return (
-    <div className="dashboard-container">
-      <h1>Welcome to the Dashboard</h1>
-      <div className="dashboard-widgets">
-        <div className="widget">
-          <h2>Widget 1</h2>
-          <p>Content for widget 1</p>
-        </div>
-        <div className="widget">
-          <h2>Widget 2</h2>
-          <p>Content for widget 2</p>
-        </div>
-        <div className="widget">
-          <h2>Widget 3</h2>
-          <p>Content for widget 3</p>
-        </div>
-      </div>
-    </div>
+    <Box className="home-container" sx={{ mt: 3 }}>
+      <>
+        <Heading
+          text={"Administration"}
+          subHeading={"Meko Melon (LJBABGR001)"}
+        />
+        <CustomTabs
+          tabs={[
+            { name: "Master Data" },
+            { name: "Products" },
+            { name: "App Users" }
+          ]}
+
+          showSubData={Object.keys(data).map((type, index) => {
+            const values = data[type]
+            return (
+              <ShowFields
+                key={`dashboard_subheading__${index}`}
+                type={type}
+                values={values}
+              />
+
+            )
+          })}
+        />
+
+      </>
+    </Box>
   );
 }
 

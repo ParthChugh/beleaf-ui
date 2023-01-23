@@ -16,6 +16,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import PersonIcon from '@mui/icons-material/Person3';
 import Header from '../header'
+import Link from '@mui/material/Link'
 
 const drawerWidth = 240;
 
@@ -127,34 +128,36 @@ export default function MiniDrawer(props) {
         <Divider />
         <List sx={{ background: "#E6F1ED" }}>
           {['Administration'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+            <Link href="/">
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                  <PersonIcon style={{ color: "black" }} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                  primaryTypographyProps={{ fontFamily: "Poppins" }}
-                />
-              </ListItemButton>
-            </ListItem>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <PersonIcon style={{ color: "black" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={text}
+                    sx={{ opacity: open ? 1 : 0 }}
+                    primaryTypographyProps={{ fontFamily: "Poppins" }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
-        {open &&
+        {
           <div className='drawer__bottom_image'>
             <svg width="243" height="263" viewBox="0 0 243 263" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
               <rect width="243" height="263" fill="url(#pattern0)" />

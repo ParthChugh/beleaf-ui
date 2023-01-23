@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './contexts/user';
 import { CookiesProvider } from 'react-cookie';
 import Container from './components/container';
+import 'react-tabs/style/react-tabs.css';
 
 createRoot(document.getElementById("root")).render(
   <CookiesProvider>
