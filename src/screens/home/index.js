@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Heading from '../../components/heading';
 import Tabs from '../../components/tabs'
 import { checkIfUserLoggedIn } from '../../global/constants'
@@ -11,6 +11,119 @@ import './HomePage.css';
 const HomePage = () => {
   const { userState } = useContext(UserContext);
   const isUserLoggedIn = checkIfUserLoggedIn(userState.user.accessToken)
+  const [value, setValue] = useState(0)
+  const getSubData = (value) => {
+    switch (value) {
+      case 0:
+        return (<CustomTable
+          totalItems={15}
+          visibleFields={['FARM ID', 'FARM NAME', 'FARM CONTACT', 'FARM TYPE', 'PROVINCE', 'DISTRICT', 'RELATION', 'FUNCTION']}
+          data={{
+            columns: [
+              {
+                field: "id",
+                headerName: "FARM ID",
+                width: 150,
+                align: 'center',
+                headerAlign: "center",
+                renderCell: (params) => (
+                  <Link className='tabs_cell__link' href={`/dashboard/${params.id}`}>
+                    {params.id}
+                  </Link>
+                ),
+              },
+              {
+                field: "name",
+                headerName: "FARM NAME",
+                width: 150,
+                align: 'center',
+                headerAlign: "center"
+              },
+              {
+                field: "contact",
+                headerName: "FARM CONTACT",
+                width: 200,
+                align: 'center',
+                headerAlign: "center"
+              },
+              {
+                field: "type",
+                headerName: "FARM TYPE",
+                width: 150,
+                align: 'center',
+                headerAlign: "center"
+              },
+              {
+                field: "province",
+                headerName: "PROVINCE",
+                width: 150,
+                align: 'center',
+                headerAlign: "center"
+              },
+              {
+                field: "district",
+                headerName: "DISTRICT",
+                width: 150,
+                align: 'center',
+                headerAlign: "center"
+              },
+              {
+                field: "relation",
+                headerName: "RELATION",
+                width: 150,
+                align: 'center',
+                headerAlign: "center"
+              },
+              {
+                field: "function",
+                headerName: "FUNCTION",
+                width: 150,
+                align: 'center',
+                headerAlign: "center"
+              },
+            ],
+            rows: [
+              {
+                id: "LJBABGR001",
+                name: "Kapesh Farm",
+                contact: "Neal Matthews",
+                type: "water,crop,sun",
+                province: "West Java",
+                district: "Semplak",
+                relation: "Mitra",
+                function: "Producer"
+              },
+              {
+                id: "LJBABGR001",
+                name: "Kapesh Farm",
+                contact: "Neal Matthews",
+                type: "water,crop,sun",
+                province: "West Java",
+                district: "Semplak",
+                relation: "Mitra",
+                function: "Producer"
+              },
+              {
+                id: "LJBABGR001",
+                name: "Kapesh Farm",
+                contact: "Neal Matthews",
+                type: "water,crop,sun",
+                province: "West Java",
+                district: "Semplak",
+                relation: "Mitra",
+                function: "Producer"
+              },
+            ]
+          }}
+        />)
+      case 1:
+        return <div>dqwdqwdwq</div>
+      case 2:
+        return <div>dqwdqwdwq 2</div>
+      default:
+        return <div>dqwdqwdwq 2</div>
+    }
+  }
   return (
     <Box className="home-container" sx={{ mt: 3 }}>
       {isUserLoggedIn ?
@@ -38,107 +151,9 @@ const HomePage = () => {
               { name: "Products" },
               { name: "Users" }
             ]}
-            showSubData={<CustomTable
-              totalItems={15}
-              visibleFields={['FARM ID', 'FARM NAME', 'FARM CONTACT', 'FARM TYPE', 'PROVINCE', 'DISTRICT', 'RELATION', 'FUNCTION']}
-              data={{
-                columns: [
-                  {
-                    field: "id",
-                    headerName: "FARM ID",
-                    width: 150,
-                    align: 'center',
-                    headerAlign: "center",
-                    renderCell: (params) => (
-                      <Link className='tabs_cell__link' href={`/dashboard/${params.id}`}>
-                        {params.id}
-                      </Link>
-                    ),
-                  },
-                  {
-                    field: "name",
-                    headerName: "FARM NAME",
-                    width: 150,
-                    align: 'center',
-                    headerAlign: "center"
-                  },
-                  {
-                    field: "contact",
-                    headerName: "FARM CONTACT",
-                    width: 200,
-                    align: 'center',
-                    headerAlign: "center"
-                  },
-                  {
-                    field: "type",
-                    headerName: "FARM TYPE",
-                    width: 150,
-                    align: 'center',
-                    headerAlign: "center"
-                  },
-                  {
-                    field: "province",
-                    headerName: "PROVINCE",
-                    width: 150,
-                    align: 'center',
-                    headerAlign: "center"
-                  },
-                  {
-                    field: "district",
-                    headerName: "DISTRICT",
-                    width: 150,
-                    align: 'center',
-                    headerAlign: "center"
-                  },
-                  {
-                    field: "relation",
-                    headerName: "RELATION",
-                    width: 150,
-                    align: 'center',
-                    headerAlign: "center"
-                  },
-                  {
-                    field: "function",
-                    headerName: "FUNCTION",
-                    width: 150,
-                    align: 'center',
-                    headerAlign: "center"
-                  },
-                ],
-                rows: [
-                  {
-                    id: "LJBABGR001",
-                    name: "Kapesh Farm",
-                    contact: "Neal Matthews",
-                    type: "water,crop,sun",
-                    province: "West Java",
-                    district: "Semplak",
-                    relation: "Mitra",
-                    function: "Producer"
-                  },
-                  {
-                    id: "LJBABGR001",
-                    name: "Kapesh Farm",
-                    contact: "Neal Matthews",
-                    type: "water,crop,sun",
-                    province: "West Java",
-                    district: "Semplak",
-                    relation: "Mitra",
-                    function: "Producer"
-                  },
-                  {
-                    id: "LJBABGR001",
-                    name: "Kapesh Farm",
-                    contact: "Neal Matthews",
-                    type: "water,crop,sun",
-                    province: "West Java",
-                    district: "Semplak",
-                    relation: "Mitra",
-                    function: "Producer"
-                  },
-                ]
-              }}
-            />}
+            setValue={setValue}
+            value={value}
+            showSubData={getSubData(value)}
           />
         </>
         :

@@ -15,9 +15,7 @@ TabPanel.propTypes = {
 };
 
 export default function BasicTabs(props) {
-  const [value, setValue] = React.useState(0);
-
-  const { tabs, showSubData } = props;
+  const { tabs, showSubData, setValue, value } = props;
   return (
     <Box sx={{ ml: 3, mr: 3 }}>
       <Tabs

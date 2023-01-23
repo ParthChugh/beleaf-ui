@@ -34,11 +34,6 @@ export default function CustomTextField(props) {
               height: height,
             },
           }}
-          sx={{
-            '& .MuiInputBase-root.Mui-disabled': {
-              backgroundColor: '#E8E9EB',
-            },
-          }}
           onChange={handleChange}
         />
       </FormControl>

@@ -54,10 +54,7 @@ export default function MultipleSelectPlaceholder(props) {
           displayEmpty
           value={value}
           sx={{
-            // height: height,
-            '& .Mui-disabled': {
-              backgroundColor: '#E8E9EB',
-            },
+            height: height,
           }}
           onChange={handleChange}
           input={<OutlinedInput />}
