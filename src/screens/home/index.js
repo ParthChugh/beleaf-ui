@@ -7,6 +7,7 @@ import { UserContext } from '../../contexts/user';
 import CustomTable from '../../components/customTable'
 import farms from './farms'
 import products from './products'
+import appUsers from './users'
 import { useSearchParams } from 'react-router-dom'
 import './HomePage.css';
 
@@ -22,7 +23,7 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={farms.visibleFields}
-            data={{columns: farms.columns, rows: farms.rows}}
+            data={{ columns: farms.columns, rows: farms.rows }}
           />
         )
       case 1:
@@ -31,23 +32,23 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={products.visibleFields}
-            data={{columns: products.columns, rows: products.rows}}
+            data={{ columns: products.columns, rows: products.rows }}
           />
         )
       case 2:
         return (
           <CustomTable
             totalItems={15}
-            visibleFields={farms.visibleFields}
-            data={{columns: farms.columns, rows: farms.rows}}
+            visibleFields={appUsers.visibleFields}
+            data={{ columns: appUsers.columns, rows: appUsers.rows }}
           />
         )
       default:
         return (
           <CustomTable
             totalItems={15}
-            visibleFields={farms.visibleFields}
-            data={{columns: farms.columns, rows: farms.rows}}
+            visibleFields={appUsers.visibleFields}
+            data={{ columns: appUsers.columns, rows: appUsers.rows }}
           />
         )
     }

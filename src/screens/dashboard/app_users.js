@@ -1,4 +1,4 @@
-export const appUsers = (props) => {
+export function appUsers(props) {
   return {
     "App Users": [
       {
