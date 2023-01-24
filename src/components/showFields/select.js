@@ -35,7 +35,7 @@ export default function MultipleSelectPlaceholder(props) {
 
   return (
     <div>
-      <FormControl sx={{ width: width, mr: 4, mb: 2 }}>
+      <FormControl sx={{ width: width, mr: 1, mb: 2, mt:2 }}>
         {name &&
           <Typography sx={{
             fontFamily: 'Poppins',

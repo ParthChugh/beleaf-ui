@@ -62,7 +62,7 @@ const HomePage = () => {
             text: 'Add New Mitra',
             icon: 'Add',
             color: '#3EB049',
-            headingColor: 'white'
+            headingColor: 'white',
           },
           {
             text: 'Add Internal Farm',

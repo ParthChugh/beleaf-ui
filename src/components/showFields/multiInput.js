@@ -18,126 +18,142 @@ export default function CustomMultiInput(props) {
   };
   console.log('rows12321', rows)
   return (
-    <>
-      <Box className="multiinput__container">
-        <Box className="multiinput__box">
+    <div style={{
+      overflowX: "auto"
+    }}>
+      <table>
+        <tr>
           {rows.map(row => {
             return (
-              <Typography sx={{ color: "#3EB049", width: row.width, fontFamily: 'Poppins' }}>
-                {row.name}
-              </Typography>
+              <th>
+                <Typography sx={{ color: "#3EB049", width: row.width, fontFamily: 'Poppins' }}>
+                  {row.name}
+                </Typography>
+              </th>
             )
           })}
-        </Box>
+        </tr>
+
         {value.map((field, index) => {
           const keys = Object.keys(field)
           return (
-            <div className="multiinputs__value_fields_container">
+            <tr>
               {keys.map(key => {
                 const row = rows.find(el => el.name === key)
-                console.log("field[key]", row)
                 switch (row.type) {
                   case 'link':
                     return (
-                      <Link sx={{
-                        mt: 1,
-                        mb: 3,
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                      // href={`${location.pathname}/${value[index][key]}`}
-                      >
-                        <Typography>
-                          {value[index][key]}
-                        </Typography>
-                      </Link>
+                      <td>
+                        <Link sx={{
+                          mt: 1,
+                          mb: 3,
+                          alignItems: 'center',
+                          display: 'flex'
+                        }}
+                        // href={`${location.pathname}/${value[index][key]}`}
+                        >
+                          <Typography>
+                            {value[index][key]}
+                          </Typography>
+                        </Link>
+                      </td>
 
                     )
                   case 'dropdown':
                     return (
-                      <Box sx={{
-                        mt: 3,
-                        mb: 3,
-                      }}>
-                        <Select
+                      <td>
+                        <Box sx={{
+                          mt: 2,
+                          mb: 2,
+                        }}>
+                          <Select
+                            {...row}
+                            disabled={props.disabled}
+                            placeholder=""
+                            value={field[key]}
+                            onChange={(event) => {
+                              value[index][key] = event.target.value
+                              onChange(value)
+                            }}
+                            name=""
+                          />
+                        </Box>
+                      </td>
+                    )
+                  default: {
+                    return (
+                      <td>
+                        <TextField
                           {...row}
-                          disabled={props.disabled}
+                          disabled={row.disabled || props.disabled}
                           placeholder=""
                           value={field[key]}
+                          sx={{
+                            mt: 1,
+                            mb: 1,
+                            ml: 1,
+                            mr: 2
+                          }}
+                          inputProps={{
+                            style: {
+                              height: row.height,
+                              width: row.width,
+                              fontFamily: 'Poppins'
+                            },
+                          }}
                           onChange={(event) => {
                             value[index][key] = event.target.value
                             onChange(value)
                           }}
-                          name=""
                         />
-                      </Box>
-
-                    )
-                  default: {
-                    return (
-                      <TextField
-                        {...row}
-                        disabled={row.disabled || props.disabled}
-                        placeholder=""
-                        value={field[key]}
-                        sx={{
-                          mt: 3,
-                          mb: 3,
-                        }}
-                        inputProps={{
-                          style: {
-                            height: row.height,
-                            width: row.width,
-                            fontFamily: 'Poppins'
-                          },
-                        }}
-                        onChange={(event) => {
-                          value[index][key] = event.target.value
-                          onChange(value)
-                        }}
-                      />
+                      </td>
                     )
                   }
                 }
               })}
-            </div>
-
+            </tr>
           )
         })}
-        {!props.disabled &&
-          <Typography sx={{
-            fontFamily: 'Poppins',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: "14px",
-            lineHeight: "21px",
-            "&.MuiButtonBase-root:hover": {
-              bgcolor: "transparent"
-            },
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            backgroundColor: "#C4C4C424",
-            paddingTop: "16.5px",
-            paddingBottom: "16.5px",
-            color: '#3EB049',
-            cursor: 'pointer'
+      </table >
+      {
+        !props.disabled &&
+        <Typography sx={{
+          fontFamily: 'Poppins',
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: "14px",
+          lineHeight: "21px",
+          "&.MuiButtonBase-root:hover": {
+            bgcolor: "transparent"
+          },
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          backgroundColor: "#C4C4C424",
+          paddingTop: "16.5px",
+          paddingBottom: "16.5px",
+          color: '#3EB049',
+          cursor: 'pointer'
+        }}
+
+          onClick={() => {
+            let fields = {}
+            rows.forEach((row) => {
+              fields[row.name] = ""
+            })
+            if ((value || []).length > 0) {
+              if (Object.values(value[value.length - 1]).join('') === '') {
+                alert('Please add details in the previous row')
+                return;
+              }
+            }
+            value[(value || []).length] = fields
+            onChange(value)
           }}
-
-            onClick={() => {
-              let fields = {}
-              rows.forEach((row) => {
-                fields[row.name] = ""
-              })
-              value[(value || []).length + 1] = fields
-              onChange(value)
-            }}
-          >
-            Add {name} <Add />
-          </Typography>
-        }
-
-      </Box>
-    </>
+        >
+          Add {name} <Add />
+        </Typography>
+      }
+    </div >
   );
 }

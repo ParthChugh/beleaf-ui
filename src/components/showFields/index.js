@@ -58,12 +58,30 @@ export default function ShowFields(props) {
   const { control, handleSubmit, formState, reset } = useForm({
     defaultValues
   });
-  
+
   useEffect(() => {
     reset(defaultValues)
   }, [JSON.stringify(defaultValues || {})])
-  const onSubmit = (props) => {
-    setEdit({ ...edit, [type]: false })
+  const onSubmit = (params, form) => {
+    try {
+      let localErrors = []
+      const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
+        return Object.values(el)
+      }))
+      flatterdArray.forEach((el) => {
+        if (el === "") {
+          localErrors.push(el)
+        }
+      })
+      if (localErrors.length > 0) {
+        alert('Please add all the details')
+        return;
+      }
+      setEdit({ ...edit, [type]: false })
+    } catch (el) {
+      setEdit({ ...edit, [type]: false })
+    }
+
   }
   console.log('errors12312', formState)
 
@@ -79,7 +97,7 @@ export default function ShowFields(props) {
               const { field: customField } = props;
               console.log('props123123', props)
               return (
-                <AttachImage 
+                <AttachImage
                   {...customField}
                   {...field}
                   disabled={!edit[type]}
@@ -261,7 +279,7 @@ export default function ShowFields(props) {
             cursor: 'pointer'
           }}
           onClick={(event) => {
-            if(!edit[type]) {
+            if (!edit[type]) {
               setEdit({ ...edit, [type]: true })
             } else {
               handleSubmit(onSubmit)(event)

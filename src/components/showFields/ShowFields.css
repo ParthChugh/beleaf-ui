@@ -39,9 +39,9 @@
   flex-direction: column;
 }
 .multiinputs__value_fields_container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  /* display: flex;
+  justify-content: space-between; */
+  /* flex-wrap: wrap; */
   border-top: 1px solid #C1C1C1;
   border-bottom: 1px solid #C1C1C1;
 }
@@ -49,3 +49,17 @@
 .select__name {
   font-family: 'Poppins';
 }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  /* border: 1px solid #ddd; */
+}
+
+th, td {
+  text-align: left;
+  /* padding: 8px; */
+}
+
+/* tr:nth-child(even){background-color: #f2f2f2} */

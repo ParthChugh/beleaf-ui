@@ -29,12 +29,10 @@
   border-top-right-radius: 20px;
 }
 .tabs--tab--selected {
-  /* box-shadow: 2px -1px 2px 0px rgba(0,0,0,0.5); */
   background: #fff;
   color: black;
   z-index: 3;
   color: #3EB049;
-  
 } 
 
 .tabs--tab-name {
