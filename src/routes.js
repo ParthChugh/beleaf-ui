@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
         path: "dashboard",
         children: [
           {
-            path: ":id",
+            path: ":page_id/:id",
             element: <Dashboard />,
           }
         ]

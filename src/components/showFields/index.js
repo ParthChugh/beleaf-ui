@@ -6,6 +6,7 @@ import './ShowFields.css'
 import TextField from './textField';
 import DatePicker from './date';
 import MultiInput from './multiInput';
+import AttachImage from './attachImage'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Typography } from '@mui/material';
@@ -68,6 +69,27 @@ export default function ShowFields(props) {
 
   const createField = (field, index) => {
     switch (field.type) {
+      case "attach-image":
+        return (
+          <Controller
+            name={field.name}
+            control={control}
+            rules={{ required: field.required }}
+            render={(props) => {
+              const { field: customField } = props;
+              console.log('props123123', props)
+              return (
+                <AttachImage 
+                  {...customField}
+                  {...field}
+                  disabled={!edit[type]}
+                  value={customField.value || ""}
+                />
+              )
+            }
+            }
+          />
+        )
       case "dropdown":
         return (
           <Controller

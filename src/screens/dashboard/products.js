@@ -12,8 +12,14 @@ export const products = (props) => {
           },
           {
             name: "Method",
+            type: "dropdown",
+            options: [
+              "Open Field",
+              "Hydroponic",
+              "Soilless",
+            ],
             width: "185.46px",
-            height: 9
+            height: 41
           },
           {
             name: "Quantity",
@@ -23,12 +29,24 @@ export const products = (props) => {
           {
             name: "UOM",
             width: "96.11px",
-            height: 9
+            height: 41,
+            type: "dropdown",
+            options: [
+              "Kg",
+              "Ton"
+            ],
           },
           {
             name: "Frequency",
             width: "132.74px",
-            height: 9
+            height: 41,
+            type: "dropdown",
+            options: [
+              "Week",
+              "Month",
+              "Week",
+              "Day"
+            ],
           },
           {
             name: "Area",
@@ -65,6 +83,12 @@ export const products = (props) => {
           },
           {
             name: "Method",
+            type: "dropdown",
+            options: [
+              "Open Field",
+              "Hydroponic",
+              "Soilless",
+            ],
             width: "185.46px",
           },
           {
@@ -77,6 +101,11 @@ export const products = (props) => {
           },
           {
             name: "UOM",
+            type: "dropdown",
+            options: [
+              "Kg",
+              "Ton"
+            ],
             width: "96.11px"
           }
         ],

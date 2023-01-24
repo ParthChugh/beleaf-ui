@@ -2,16 +2,21 @@ import * as React from 'react';
 import FormControl from '@mui/material/FormControl';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import Select from './select';
 import Add from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
+import { useLocation } from 'react-router-dom';
+import Link from '@mui/material/Link'
 
 export default function CustomMultiInput(props) {
-  const { onChange, value, width, height, rows, name } = props;
+  const { onChange, value, rows, name } = props;
   console.log('props12312321', props)
+  let location = useLocation();
+
   const handleChange = (event) => {
     onChange(event)
   };
-
+  console.log('rows12321', rows)
   return (
     <>
       <Box className="multiinput__container">
@@ -30,30 +35,70 @@ export default function CustomMultiInput(props) {
             <div className="multiinputs__value_fields_container">
               {keys.map(key => {
                 const row = rows.find(el => el.name === key)
-                console.log("field[key]", field[key])
-                return (
-                  <TextField
-                    {...row}
-                    disabled={props.disabled}
-                    placeholder=""
-                    value={field[key]}
-                    sx={{
-                      mt: 3,
-                      mb: 3,
-                    }}
-                    inputProps={{
-                      style: {
-                        height: row.height,
-                        width: row.width,
-                        fontFamily: 'Poppins'
-                      },
-                    }}
-                    onChange={(event) => {
-                      value[index][key] = event.target.value
-                      onChange(value)
-                    }}
-                  />
-                )
+                console.log("field[key]", row)
+                switch (row.type) {
+                  case 'link':
+                    return (
+                      <Link sx={{
+                        mt: 1,
+                        mb: 3,
+                        alignItems: 'center',
+                        display: 'flex'
+                      }}
+                      // href={`${location.pathname}/${value[index][key]}`}
+                      >
+                        <Typography>
+                          {value[index][key]}
+                        </Typography>
+                      </Link>
+
+                    )
+                  case 'dropdown':
+                    return (
+                      <Box sx={{
+                        mt: 3,
+                        mb: 3,
+                      }}>
+                        <Select
+                          {...row}
+                          disabled={props.disabled}
+                          placeholder=""
+                          value={field[key]}
+                          onChange={(event) => {
+                            value[index][key] = event.target.value
+                            onChange(value)
+                          }}
+                          name=""
+                        />
+                      </Box>
+
+                    )
+                  default: {
+                    return (
+                      <TextField
+                        {...row}
+                        disabled={row.disabled || props.disabled}
+                        placeholder=""
+                        value={field[key]}
+                        sx={{
+                          mt: 3,
+                          mb: 3,
+                        }}
+                        inputProps={{
+                          style: {
+                            height: row.height,
+                            width: row.width,
+                            fontFamily: 'Poppins'
+                          },
+                        }}
+                        onChange={(event) => {
+                          value[index][key] = event.target.value
+                          onChange(value)
+                        }}
+                      />
+                    )
+                  }
+                }
               })}
             </div>
 

@@ -36,19 +36,22 @@ export default function MultipleSelectPlaceholder(props) {
   return (
     <div>
       <FormControl sx={{ width: width, mr: 4, mb: 2 }}>
-        <Typography sx={{
-          fontFamily: 'Poppins',
-          fontStyle: 'normal',
-          fontWeight: 400,
-          fontSize: "14px",
-          lineHeight: "21px",
-          "&.MuiButtonBase-root:hover": {
-            bgcolor: "transparent"
-          }
-        }}
-        >
-          {name}{props.required ? "*" : ""}
-        </Typography>
+        {name &&
+          <Typography sx={{
+            fontFamily: 'Poppins',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: "14px",
+            lineHeight: "21px",
+            "&.MuiButtonBase-root:hover": {
+              bgcolor: "transparent"
+            }
+          }}
+          >
+            {name}{props.required ? "*" : ""}
+          </Typography>
+        }
+
         <Select
           {...props}
           displayEmpty
@@ -70,6 +73,7 @@ export default function MultipleSelectPlaceholder(props) {
               key={name}
               value={name}
               style={getStyles(name, value, theme)}
+              className="select__name"
             >
               {name}
             </MenuItem>

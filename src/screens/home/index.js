@@ -5,123 +5,105 @@ import { checkIfUserLoggedIn } from '../../global/constants'
 import Box from '@mui/material/Box';
 import { UserContext } from '../../contexts/user';
 import CustomTable from '../../components/customTable'
-import Link from '@mui/material/Link'
+import farms from './farms'
+import products from './products'
+import { useSearchParams } from 'react-router-dom'
 import './HomePage.css';
 
 const HomePage = () => {
   const { userState } = useContext(UserContext);
   const isUserLoggedIn = checkIfUserLoggedIn(userState.user.accessToken)
-  const [value, setValue] = useState(0)
+  let [searchParams, setSearchParams] = useSearchParams();
+  const [value, setValue] = useState(parseInt(searchParams.get('tab') || 0));
   const getSubData = (value) => {
     switch (value) {
       case 0:
-        return (<CustomTable
-          totalItems={15}
-          visibleFields={['FARM ID', 'FARM NAME', 'FARM CONTACT', 'FARM TYPE', 'PROVINCE', 'DISTRICT', 'RELATION', 'FUNCTION']}
-          data={{
-            columns: [
-              {
-                field: "id",
-                headerName: "FARM ID",
-                width: 150,
-                align: 'center',
-                headerAlign: "center",
-                renderCell: (params) => (
-                  <Link className='tabs_cell__link' href={`/dashboard/${params.id}`}>
-                    {params.id}
-                  </Link>
-                ),
-              },
-              {
-                field: "name",
-                headerName: "FARM NAME",
-                width: 150,
-                align: 'center',
-                headerAlign: "center"
-              },
-              {
-                field: "contact",
-                headerName: "FARM CONTACT",
-                width: 200,
-                align: 'center',
-                headerAlign: "center"
-              },
-              {
-                field: "type",
-                headerName: "FARM TYPE",
-                width: 150,
-                align: 'center',
-                headerAlign: "center"
-              },
-              {
-                field: "province",
-                headerName: "PROVINCE",
-                width: 150,
-                align: 'center',
-                headerAlign: "center"
-              },
-              {
-                field: "district",
-                headerName: "DISTRICT",
-                width: 150,
-                align: 'center',
-                headerAlign: "center"
-              },
-              {
-                field: "relation",
-                headerName: "RELATION",
-                width: 150,
-                align: 'center',
-                headerAlign: "center"
-              },
-              {
-                field: "function",
-                headerName: "FUNCTION",
-                width: 150,
-                align: 'center',
-                headerAlign: "center"
-              },
-            ],
-            rows: [
-              {
-                id: "LJBABGR001",
-                name: "Kapesh Farm",
-                contact: "Neal Matthews",
-                type: "water,crop,sun",
-                province: "West Java",
-                district: "Semplak",
-                relation: "Mitra",
-                function: "Producer"
-              },
-              {
-                id: "LJBABGR001",
-                name: "Kapesh Farm",
-                contact: "Neal Matthews",
-                type: "water,crop,sun",
-                province: "West Java",
-                district: "Semplak",
-                relation: "Mitra",
-                function: "Producer"
-              },
-              {
-                id: "LJBABGR001",
-                name: "Kapesh Farm",
-                contact: "Neal Matthews",
-                type: "water,crop,sun",
-                province: "West Java",
-                district: "Semplak",
-                relation: "Mitra",
-                function: "Producer"
-              },
-            ]
-          }}
-        />)
+        return (
+          <CustomTable
+            totalItems={15}
+            visibleFields={farms.visibleFields}
+            data={{columns: farms.columns, rows: farms.rows}}
+          />
+        )
       case 1:
-        return <div>dqwdqwdwq</div>
+        console.log('products12321', products)
+        return (
+          <CustomTable
+            totalItems={15}
+            visibleFields={products.visibleFields}
+            data={{columns: products.columns, rows: products.rows}}
+          />
+        )
       case 2:
-        return <div>dqwdqwdwq 2</div>
+        return (
+          <CustomTable
+            totalItems={15}
+            visibleFields={farms.visibleFields}
+            data={{columns: farms.columns, rows: farms.rows}}
+          />
+        )
       default:
-        return <div>dqwdqwdwq 2</div>
+        return (
+          <CustomTable
+            totalItems={15}
+            visibleFields={farms.visibleFields}
+            data={{columns: farms.columns, rows: farms.rows}}
+          />
+        )
+    }
+  }
+
+  const buttons = (value) => {
+    switch (value) {
+      case 0:
+        return [
+          {
+            text: 'Add New Mitra',
+            icon: 'Add',
+            color: '#3EB049',
+            headingColor: 'white'
+          },
+          {
+            text: 'Add Internal Farm',
+            icon: 'Add',
+            color: '#10312B',
+            headingColor: 'white'
+          }
+        ]
+      case 1:
+        return [
+          {
+            text: 'Add New Product',
+            icon: 'Add',
+            color: '#3EB049',
+            headingColor: 'white'
+          },
+
+        ]
+      case 2:
+        return [
+          {
+            text: 'Add New User',
+            icon: 'Add',
+            color: '#3EB049',
+            headingColor: 'white'
+          },
+        ]
+      default:
+        return [
+          {
+            text: 'Add New Mitra',
+            icon: 'Add',
+            color: '#3EB049',
+            headingColor: 'white'
+          },
+          {
+            text: 'Add Internal Farm',
+            icon: 'Add',
+            color: '#10312B',
+            headingColor: 'white'
+          }
+        ]
     }
   }
   return (
@@ -130,20 +112,7 @@ const HomePage = () => {
         <>
           <Heading
             text={"Administration"}
-            buttons={[
-              {
-                text: 'Add New Mitra',
-                icon: 'Add',
-                color: '#3EB049',
-                headingColor: 'white'
-              },
-              {
-                text: 'Add Internal Farm',
-                icon: 'Add',
-                color: '#10312B',
-                headingColor: 'white'
-              }
-            ]}
+            buttons={buttons(value)}
           />
           <Tabs
             tabs={[
@@ -151,7 +120,10 @@ const HomePage = () => {
               { name: "Products" },
               { name: "Users" }
             ]}
-            setValue={setValue}
+            setValue={(index) => {
+              setValue(index)
+              setSearchParams({ tab: index });
+            }}
             value={value}
             showSubData={getSubData(value)}
           />
