@@ -13,7 +13,7 @@ export const internalFarm = {
           width: '100%',
           // value: props["Company Name"] || "",
           required: true,
-          height: 41,
+          height: 9,
           placeholder: "PT Beleaf Farms"
         },
         {
@@ -22,7 +22,7 @@ export const internalFarm = {
           // value: props["Farm Name"] || "",
           width: '100%',
           required: true,
-          height: 41,
+          height: 9,
           placeholder: "Bojong Farm"
         },
       ],
@@ -51,7 +51,7 @@ export const internalFarm = {
           // value: props["Farm Address"] || "",
           width: '518px',
           required: true,
-          multiline: 2,
+          // multiline: 2,
           height: '9px'
         },
         {

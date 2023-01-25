@@ -47,8 +47,10 @@ export default function Heading(props) {
     maxHeight: "70%",
     bgcolor: 'background.paper',
     boxShadow: 24,
-    p: 4,
-    overflow: "auto"
+    // p: 4,
+    overflow: "auto",
+    background: 'transparent',
+    boxShadow: ""
   };
 
   console.log("sendRequest12321", userState.errors)

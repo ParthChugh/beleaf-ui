@@ -77,7 +77,7 @@ export const masterData = (props) => {
         value: props["Farm Address"] || "",
         width: '518px',
         required: true,
-        multiline: 2,
+        // multiline: 2,
         height: '9px'
       },
       {
