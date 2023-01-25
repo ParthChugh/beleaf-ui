@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/beleaf-ui/static/css/main.5739eeb6.css",
-    "main.js": "/beleaf-ui/static/js/main.da96531e.js",
+    "main.js": "/beleaf-ui/static/js/main.3c61d765.js",
     "static/js/787.d2288237.chunk.js": "/beleaf-ui/static/js/787.d2288237.chunk.js",
     "index.html": "/beleaf-ui/index.html",
     "main.5739eeb6.css.map": "/beleaf-ui/static/css/main.5739eeb6.css.map",
-    "main.da96531e.js.map": "/beleaf-ui/static/js/main.da96531e.js.map",
+    "main.3c61d765.js.map": "/beleaf-ui/static/js/main.3c61d765.js.map",
     "787.d2288237.chunk.js.map": "/beleaf-ui/static/js/787.d2288237.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5739eeb6.css",
-    "static/js/main.da96531e.js"
+    "static/js/main.3c61d765.js"
   ]
 }
