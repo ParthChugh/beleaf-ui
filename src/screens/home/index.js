@@ -11,6 +11,7 @@ import appUsers from './users'
 import { useSearchParams } from 'react-router-dom'
 import { internalFarm } from './internal_farm'
 import { newMitra } from './new_mitra'
+import { newProduct } from './new_product'
 import './HomePage.css';
 
 const HomePage = () => {
@@ -82,7 +83,7 @@ const HomePage = () => {
             icon: 'Add',
             color: '#3EB049',
             headingColor: 'white',
-            payload: newMitra
+            payload: newProduct
           },
         ]
       case 2:
