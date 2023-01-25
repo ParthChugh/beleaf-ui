@@ -16,7 +16,7 @@ export default function CustomMultiInput(props) {
   const handleChange = (event) => {
     onChange(event)
   };
-  console.log('rows12321', rows)
+  console.log('rows12321', value)
   return (
     <div style={{
       overflowX: "auto"
@@ -33,7 +33,7 @@ export default function CustomMultiInput(props) {
             )
           })}
         </tr>
-
+        
         {value.map((field, index) => {
           const keys = Object.keys(field)
           return (

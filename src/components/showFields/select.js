@@ -34,24 +34,24 @@ export default function MultipleSelectPlaceholder(props) {
   };
 
   return (
-    <div>
-      <FormControl sx={{ width: width, mr: 1, mb: 2, mt:2 }}>
+    <div style={{width: width,}}>
+      <FormControl sx={{ width: width, pr: 1, }}>
         {name &&
-          <Typography sx={{
-            fontFamily: 'Poppins',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: "14px",
-            lineHeight: "21px",
-            "&.MuiButtonBase-root:hover": {
-              bgcolor: "transparent"
-            }
-          }}
+          <Typography
+            sx={{
+              fontFamily: 'Poppins',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: "14px",
+              lineHeight: "21px",
+              "&.MuiButtonBase-root:hover": {
+                bgcolor: "transparent"
+              }
+            }}
           >
             {name}{props.required ? "*" : ""}
           </Typography>
         }
-
         <Select
           {...props}
           displayEmpty

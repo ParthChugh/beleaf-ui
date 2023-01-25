@@ -9,6 +9,8 @@ import farms from './farms'
 import products from './products'
 import appUsers from './users'
 import { useSearchParams } from 'react-router-dom'
+import { internalFarm } from './internal_farm'
+import { newMitra } from './new_mitra'
 import './HomePage.css';
 
 const HomePage = () => {
@@ -63,12 +65,14 @@ const HomePage = () => {
             icon: 'Add',
             color: '#3EB049',
             headingColor: 'white',
+            payload: newMitra
           },
           {
             text: 'Add Internal Farm',
             icon: 'Add',
             color: '#10312B',
-            headingColor: 'white'
+            headingColor: 'white',
+            payload: internalFarm
           }
         ]
       case 1:
@@ -77,9 +81,9 @@ const HomePage = () => {
             text: 'Add New Product',
             icon: 'Add',
             color: '#3EB049',
-            headingColor: 'white'
+            headingColor: 'white',
+            payload: newMitra
           },
-
         ]
       case 2:
         return [
@@ -130,7 +134,6 @@ const HomePage = () => {
           />
         </>
         :
-
         <>
           <div className="home-hero">
             <h1>Welcome to our website</h1>
@@ -152,9 +155,8 @@ const HomePage = () => {
               <p>Description of service 3</p>
             </div>
           </div>
-        </>}
-
-
+        </>
+      }
     </Box>
   );
 }

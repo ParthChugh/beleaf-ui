@@ -10,8 +10,8 @@ export default function CustomTextField(props) {
   };
 
   return (
-    <div>
-      <FormControl sx={{ width: width, pr: 4, mb: 2 }}>
+    <div style={{width: width,}}>
+      <FormControl sx={{ width: width, pr: 1, mb: 2 }}>
         <Typography sx={{
           fontFamily: 'Poppins',
           fontStyle: 'normal',

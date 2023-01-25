@@ -15,8 +15,6 @@ import './DashboardPage.css';
 import { useSearchParams, useParams } from 'react-router-dom'
 
 
-
-
 const DashboardPage = () => {
   // const { userState } = useContext(UserContext);
   let params = useParams();

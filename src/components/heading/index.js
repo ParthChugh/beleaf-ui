@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import IconButton from '@mui/material/IconButton';
 import './heading.css'
 import Add from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
+import ShowFields from '../../components/showFields'
 import Modal from '@mui/material/Modal';
-
+import CustomTabs from '../../components/tabs'
+import { UserContext } from '../../contexts/user';
 
 export default function Heading(props) {
   const { text, buttons = [], subHeading } = props
   const [open, setOpen] = useState({});
+  const { userState, userDispatch } = useContext(UserContext);
+  const [value, setValue] = useState(0);
+  const [sendRequest, setSendRequest] = useState('');
   const handleOpen = (button) => {
-    console.log('button12312', button)
+    userDispatch({
+      type: 'REMOVE_ERROR',
+      payload: {},
+    });
+    userDispatch({
+      type: 'REMOVE_DRAFT',
+      payload: {},
+    });
+    setValue(0)
     setOpen(button)
   };
   const handleClose = () => setOpen({});
@@ -28,12 +41,69 @@ export default function Heading(props) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 995,
+    // height: "70%", 
+    minHeight: "50%",
+    maxHeight: "70%",
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    overflow: "auto"
   };
+
+  console.log("sendRequest12321", userState.errors)
+
+  useEffect(() => {
+    if (sendRequest) {
+
+      const localErrors = []
+      if (!Object.values(userState.errors).length) {
+        return;
+      }
+      Object.values(userState.errors).forEach((el) => {
+        if (typeof el === "object" || (typeof el === "string" && el !== '')) {
+          localErrors.push(el)
+        }
+      })
+      setSendRequest('')
+      console.log("localErrors12321", localErrors)
+      if (localErrors.length === 0) {
+        setValue(value + 1)
+        let types = {}
+        Object.keys(userState.errors).forEach(el => {
+          types[el] = null
+        })
+        userDispatch({
+          type: 'REMOVE_ERROR',
+          payload: {},
+        });
+      }
+    }
+  }, [JSON.stringify(userState.errors), sendRequest])
+
+  const getSubData = (payload) => {
+    if (Object.values(payload)[value].length === 0) {
+      return <div />
+    }
+    const data = Object.values(payload)[value]
+    return Object.keys(data).map((type, index) => {
+      const values = data[type]
+      return (
+        <ShowFields
+          key={`dashboard_subheading__${index}`}
+          edit={{ [type]: true }}
+          type={type}
+          sendRequest={sendRequest}
+          values={values}
+          setSendRequest={setSendRequest}
+          goToNextPage={() => setValue(value + 1)}
+          value={Object.keys(data).length - 1}
+          index={index}
+        />
+      )
+    })
+  }
+
 
   return (
     <div className='heading__container'>
@@ -44,12 +114,40 @@ export default function Heading(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          {Object.values(open).length > 0 &&
+            <CustomTabs
+              tabs={Object.keys(open.payload.tabs || {}).map(el => ({ name: el }))}
+              setValue={() => { }}
+              value={value}
+              hideSearch={true}
+              showSubData={
+                <Box>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Poppins',
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      fontSize: "32px",
+                      lineHeight: "48px",
+                    }}
+                  >
+                    {open.payload.title[Object.keys(open.payload.tabs || {})[value]]}
+                  </Typography>
+                  {getSubData(open.payload.tabs)}
+                </Box>
+              }
+              showRoutingButton
+              showBackButton={value !== 0}
+              changeRoute={(route) => {
+                if (route == 'back') {
+                  setValue(value - 1)
+                } else {
+                  setSendRequest(Math.random().toString(36).slice(2))
+                }
+              }}
+              showNextButton={value !== (Object.keys(open.payload.tabs || {}).length - 1)}
+            />
+          }
         </Box>
       </Modal>
       <div className='heading__text_container'>

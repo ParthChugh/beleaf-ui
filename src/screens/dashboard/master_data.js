@@ -154,7 +154,14 @@ export const masterData = (props) => {
             width: "232.41px"
           }
         ],
-        value: props["Open Field"] || [],
+        value: props["Open Field"] || [
+          {
+            "Farmable Land Area": "",
+            "Farmed Land Area": "",
+            "Irrigation": "",
+            "Land Area Irrigated": ""
+          }
+        ],
       }
     ],
     "Soilless": [
@@ -179,7 +186,14 @@ export const masterData = (props) => {
             width: "232.41px"
           }
         ],
-        value: props["Soilless"] || [],
+        value: props["Soilless"] || [
+          { 
+            "Greenhouse Name": "",
+            "Floor Area": "",
+            "Number of Holes": "",
+            "Dosing": ""
+           }
+        ],
       }
     ],
     "Feature Governance": [

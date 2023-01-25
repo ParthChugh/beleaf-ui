@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Select from './select';
 import { useForm, Controller } from "react-hook-form";
 import Box from '@mui/material/Box';
@@ -12,6 +12,7 @@ import Tab from '@mui/material/Tab';
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import MapContainer from './map';
+import { UserContext } from '../../contexts/user';
 
 function a11yProps(index) {
   return {
@@ -47,21 +48,77 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function ShowFields(props) {
-  const { type, values } = props
-  const [edit, setEdit] = useState({})
+  const { type, values, goToNextPage } = props
+  const [edit, setEdit] = useState(props.edit || {})
+  const { userState, userDispatch } = useContext(UserContext);
   const classes = useStyles();
   // console.log('props21321', props)
   const defaultValues = {}
   values.forEach((value) => {
-    defaultValues[value.name] = value.value
+    defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
   })
-  const { control, handleSubmit, formState, reset } = useForm({
+  console.log('defaultValues123123', defaultValues)
+  console.log('userState.drafts23123', userState.drafts)
+  const { control, handleSubmit, formState, reset, watch } = useForm({
     defaultValues
   });
 
   useEffect(() => {
     reset(defaultValues)
   }, [JSON.stringify(defaultValues || {})])
+
+  useEffect(() => {
+    if (props.sendRequest) {
+      handleSubmit(onSendReq)()
+    }
+  }, [props.sendRequest])
+  
+  useEffect(() => {
+    if(Object.values(formState.errors).length > 0) {
+      userDispatch({
+        type: 'UPDATE_ERROR',
+        payload: { [type]: formState.errors },
+      });
+    }
+  },[JSON.stringify(formState.errors || {})])
+
+  console.log('userState12321', userState)
+  const onSendReq = (params) => {
+    try {
+      let localErrors = []
+      const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
+        return Object.values(el)
+      }))
+      flatterdArray.forEach((el) => {
+        if (el === "") {
+          localErrors.push(el)
+        }
+      })
+      if (localErrors.length > 0) {
+        userDispatch({
+          type: 'UPDATE_ERROR',
+          payload: { [type]: `Please add the details in ${type}` },
+        });
+        // props.setSendRequest && props.setSendRequest(false)
+        alert(`Please add details in ${type}`)
+        return;
+      }
+      // props.setSendRequest && props.setSendRequest(false)
+      // if (userState.errors[type]) {
+      userDispatch({
+        type: 'UPDATE_ERROR',
+        payload: { [type]: "" },
+      });
+      // }
+      userDispatch({
+        type: 'UPDATE_DATA',
+        payload: { [type]: params },
+      });
+    } catch (el) {
+    }
+
+  }
+
   const onSubmit = (params, form) => {
     try {
       let localErrors = []
@@ -74,18 +131,23 @@ export default function ShowFields(props) {
         }
       })
       if (localErrors.length > 0) {
-        alert('Please add all the details')
+        alert(`Please add the details in ${type}`)
         return;
       }
       setEdit({ ...edit, [type]: false })
     } catch (el) {
       setEdit({ ...edit, [type]: false })
     }
-
   }
-  console.log('errors12312', formState)
-
+  
   const createField = (field, index) => {
+    const name = field.name
+    const dependant = (field.dependant || "")?.split('.')
+    if (dependant.length > 0 && watch(dependant[0]) !== dependant[1]) {
+      return <div />
+    }
+
+    // if(dependant.length > 0 && )
     switch (field.type) {
       case "attach-image":
         return (
@@ -187,7 +249,6 @@ export default function ShowFields(props) {
                   <Box
                     className="show_fields__box"
                     onClick={() => {
-                      console.log('wdqwdwqd')
                       if (edit[type]) {
                         const options = {
                           enableHighAccuracy: true,
@@ -240,6 +301,7 @@ export default function ShowFields(props) {
             rules={{ required: true }}
             render={(props) => {
               const { field: customField } = props;
+              console.log("customField.value", customField.value)
               return (
                 <>
                   <MultiInput
@@ -271,23 +333,24 @@ export default function ShowFields(props) {
           value={0} onChange={() => { }} aria-label="basic tabs example">
           <Tab label={<span style={{ color: 'black', fontFamily: 'Poppins' }}>{type}</span>} {...a11yProps(0)} />
         </Tabs>
-
-        <Typography
-          className={`${edit[type] ? "dashboard_tabs__save" : "dashboard_tabs__edit"}`}
-          sx={{
-            fontSize: '10px',
-            cursor: 'pointer'
-          }}
-          onClick={(event) => {
-            if (!edit[type]) {
-              setEdit({ ...edit, [type]: true })
-            } else {
-              handleSubmit(onSubmit)(event)
-            }
-          }}
-        >
-          {edit[type] ? "Save" : "Edit"}
-        </Typography>
+        {!(props.edit || {})[type] &&
+          <Typography
+            className={`${edit[type] ? "dashboard_tabs__save" : "dashboard_tabs__edit"}`}
+            sx={{
+              fontSize: '10px',
+              cursor: 'pointer'
+            }}
+            onClick={(event) => {
+              if (!edit[type]) {
+                setEdit({ ...edit, [type]: true })
+              } else {
+                handleSubmit(onSubmit)(event)
+              }
+            }}
+          >
+            {edit[type] ? "Save" : "Edit"}
+          </Typography>
+        }
 
 
       </div>
