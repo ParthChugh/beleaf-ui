@@ -12,6 +12,7 @@ import { useSearchParams } from 'react-router-dom'
 import { internalFarm } from './internal_farm'
 import { newMitra } from './new_mitra'
 import { newProduct } from './new_product'
+import { newUser } from './new_user'
 import './HomePage.css';
 
 const HomePage = () => {
@@ -92,7 +93,8 @@ const HomePage = () => {
             text: 'Add New User',
             icon: 'Add',
             color: '#3EB049',
-            headingColor: 'white'
+            headingColor: 'white',
+            payload: newUser
           },
         ]
       default:
@@ -101,13 +103,15 @@ const HomePage = () => {
             text: 'Add New Mitra',
             icon: 'Add',
             color: '#3EB049',
-            headingColor: 'white'
+            headingColor: 'white',
+            payload: newMitra
           },
           {
             text: 'Add Internal Farm',
             icon: 'Add',
             color: '#10312B',
-            headingColor: 'white'
+            headingColor: 'white',
+            payload: internalFarm
           }
         ]
     }
