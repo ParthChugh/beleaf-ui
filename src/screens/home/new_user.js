@@ -6,13 +6,11 @@ export const newUser = {
     "User": {
       "User": [
         {
-          type: "dropdown",
+          type: "switch",
           name: "Staff Status",
           width: '100%',
-          options: [
-            'Beleaf',
-            'Mitra'
-          ],
+          left: 'Beleaf',
+          right: 'Mitra',
           value: "Mitra",
           required: true,
           height: 41
@@ -25,7 +23,6 @@ export const newUser = {
           width: '100%',
           required: true,
           height: '9px',
-          dependant: "Ownership.Company"
         },
         {
           type: "input",

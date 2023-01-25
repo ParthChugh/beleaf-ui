@@ -10,12 +10,10 @@ export const newMitra = {
     "Mitra Data": {
       "Mitra Data": [
         {
-          type: "dropdown",
+          type: "switch",
           name: "Ownership",
-          options: [
-            'Company',
-            'Employee'
-          ],
+          left: 'Company',
+          right: 'Employee',
           width: '100%',
           value: "Company",
           required: true,

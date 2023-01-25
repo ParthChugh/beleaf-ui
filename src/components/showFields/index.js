@@ -7,6 +7,7 @@ import TextField from './textField';
 import DatePicker from './date';
 import MultiInput from './multiInput';
 import AttachImage from './attachImage'
+import Switch from './switch'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Typography } from '@mui/material';
@@ -149,6 +150,27 @@ export default function ShowFields(props) {
 
     // if(dependant.length > 0 && )
     switch (field.type) {
+      case "switch":
+        return (
+          <Controller
+            name={field.name}
+            control={control}
+            rules={{ required: field.required }}
+            render={(props) => {
+              const { field: customField } = props;
+              console.log('props123123', props)
+              return (
+                <Switch
+                  {...customField}
+                  {...field}
+                  disabled={!edit[type]}
+                  value={customField.value || ""}
+                />
+              )
+            }
+            }
+          />
+        )
       case "attach-image":
         return (
           <Controller

@@ -22,7 +22,6 @@ export const newProduct = {
           width: '100%',
           required: true,
           height: '9px',
-          dependant: "Ownership.Company"
         },
         {
           type: "input",
