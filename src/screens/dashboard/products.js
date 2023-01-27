@@ -13,7 +13,7 @@ export const products = (props) => {
           {
             name: "Method",
             type: "dropdown",
-            optionUrl: '/api/rest/metadata',
+            optionUrl: '/rest/metadata',
             optionMainVariable: "farmTypes",
             optionVariable: "farm_type_name",
             width: "185.46px",
@@ -81,7 +81,7 @@ export const products = (props) => {
           {
             name: "Method",
             type: "dropdown",
-            optionUrl: '/api/rest/metadata',
+            optionUrl: '/rest/metadata',
             optionMainVariable: "farmTypes",
             optionVariable: "farm_type_name",
             width: "185.46px",

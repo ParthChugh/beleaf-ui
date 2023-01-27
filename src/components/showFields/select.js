@@ -46,7 +46,7 @@ export default function MultipleSelectPlaceholder(props) {
       }
     } else {
       console.log("optionUrl12312", optionUrl)
-      const response = await fetch(optionUrl, { method: 'GET' })
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${optionUrl}`, { method: 'GET' })
       json = await response.json()
       if (json.data) {
         json = json.data

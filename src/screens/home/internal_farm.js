@@ -32,7 +32,7 @@ export const internalFarm = {
         {
           type: "dropdown",
           name: "Select Province",
-          optionUrl: '/api/rest/provinces',
+          optionUrl: '/rest/provinces',
           optionVariable: "province",
           width: '100%',
           required: true,
@@ -171,7 +171,7 @@ export const internalFarm = {
         {
           type: "dropdown",
           name: "Farm Function",
-          optionUrl: '/api/rest/metadata',
+          optionUrl: '/rest/metadata',
           optionMainVariable: "farmFunctions",
           optionVariable: "function",
           width: '100%',
@@ -182,7 +182,7 @@ export const internalFarm = {
         {
           type: "dropdown",
           name: "Batch Tracking Method",
-          optionUrl: '/api/rest/metadata',
+          optionUrl: '/rest/metadata',
           optionMainVariable: "batchTrackingMethods",
           optionVariable: "method_name",
           width: '100%',

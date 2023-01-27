@@ -35,7 +35,7 @@ const LoginPage = () => {
     // alert('Logging in...');
     console.log('username12321', formData)
     // http://localhost:88/rest/admin/login
-    const response = await fetch(`api/rest/admin/login`, {
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/rest/admin/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

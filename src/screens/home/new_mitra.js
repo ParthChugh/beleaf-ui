@@ -69,7 +69,7 @@ export const newMitra = {
           type: "dropdown",
           name: "Select Province",
           // value: props[" Select Province"] || "",
-          optionUrl: '/api/rest/provinces',
+          optionUrl: '/rest/provinces',
           optionVariable: "province",
           width: '100%',
           required: true,
@@ -208,7 +208,7 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Farm Function",
-          optionUrl: '/api/rest/metadata',
+          optionUrl: '/rest/metadata',
           optionMainVariable: "farmFunctions",
           optionVariable: "function",
           width: '293px',
@@ -219,7 +219,7 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Batch Tracking Method",
-          optionUrl: '/api/rest/metadata',
+          optionUrl: '/rest/metadata',
           optionMainVariable: "batchTrackingMethods",
           optionVariable: "method_name",
           width: '293px',
@@ -243,7 +243,7 @@ export const newMitra = {
             {
               name: "Method",
               type: "dropdown",
-              optionUrl: '/api/rest/metadata',
+              optionUrl: '/rest/metadata',
               optionMainVariable: "farmTypes",
               optionVariable: "farm_type_name",
               width: "185.46px",
@@ -311,7 +311,7 @@ export const newMitra = {
             {
               name: "Method",
               type: "dropdown",
-              optionUrl: '/api/rest/metadata',
+              optionUrl: '/rest/metadata',
               optionMainVariable: "farmTypes",
               optionVariable: "farm_type_name",
               width: "185.46px",
@@ -351,7 +351,7 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Farm Function",
-          optionUrl: '/api/rest/metadata',
+          optionUrl: '/rest/metadata',
           optionMainVariable: "farmFunctions",
           optionVariable: "function",
           width: '100%',
@@ -362,7 +362,7 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Batch Tracking Method",
-          optionUrl: '/api/rest/metadata',
+          optionUrl: '/rest/metadata',
           optionMainVariable: "batchTrackingMethods",
           optionVariable: "method_name",
           width: '100%',
