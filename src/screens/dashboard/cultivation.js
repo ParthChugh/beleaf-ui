@@ -19,7 +19,7 @@ export const cultivation = (props) => {
             name: "Annual",
             width: "112px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropTypes",
             optionVariable: "crop_type_name",
             height: 41
@@ -28,7 +28,7 @@ export const cultivation = (props) => {
             name: "Harvest class",
             width: "115px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropHarvestClasses",
             optionVariable: "class_name",
             height: 41
@@ -37,7 +37,7 @@ export const cultivation = (props) => {
             name: "Grow Media",
             width: "120px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropGrowingMedia",
             optionVariable: "media_type",
             height: 41
@@ -67,7 +67,7 @@ export const cultivation = (props) => {
             name: "Maturity",
             width: "160px",
             height: 41,
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropMaturities",
             optionVariable: "maturity_type",
           },
@@ -113,7 +113,7 @@ export const cultivation = (props) => {
             name: "Annual",
             width: "112px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropTypes",
             optionVariable: "crop_type_name",
             height: 41
@@ -122,7 +122,7 @@ export const cultivation = (props) => {
             name: "Harvest class",
             width: "115px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropHarvestClasses",
             optionVariable: "class_name",
             height: 41
@@ -131,7 +131,7 @@ export const cultivation = (props) => {
             name: "Grow Media",
             width: "120px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropGrowingMedia",
             optionVariable: "media_type",
             height: 41
@@ -161,7 +161,7 @@ export const cultivation = (props) => {
             name: "Maturity",
             width: "160px",
             height: 41,
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropMaturities",
             optionVariable: "maturity_type",
           },
@@ -207,7 +207,7 @@ export const cultivation = (props) => {
             name: "Annual",
             width: "112px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropTypes",
             optionVariable: "crop_type_name",
             height: 41
@@ -216,7 +216,7 @@ export const cultivation = (props) => {
             name: "Harvest class",
             width: "115px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropHarvestClasses",
             optionVariable: "class_name",
             height: 41
@@ -225,7 +225,7 @@ export const cultivation = (props) => {
             name: "Grow Media",
             width: "120px",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropGrowingMedia",
             optionVariable: "media_type",
             height: 41
@@ -255,7 +255,7 @@ export const cultivation = (props) => {
             name: "Maturity",
             width: "160px",
             height: 41,
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "cropMaturities",
             optionVariable: "maturity_type",
           },

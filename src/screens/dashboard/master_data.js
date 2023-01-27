@@ -58,7 +58,7 @@ export const masterData = (props) => {
       {
         type: "dropdown",
         name: "Province",
-        optionUrl: '/rest/provinces',
+        optionUrl: '/api/rest/provinces',
         optionVariable: "province",
         value: props["Province"] || "",
         width: '245px',
@@ -202,7 +202,7 @@ export const masterData = (props) => {
       {
         type: "dropdown",
         name: "Farm Function",
-        optionUrl: '/rest/metadata',
+        optionUrl: '/api/rest/metadata',
         optionMainVariable: "farmFunctions",
         optionVariable: "function",
         width: '293px',
@@ -213,7 +213,7 @@ export const masterData = (props) => {
       {
         type: "dropdown",
         name: "Batch Tracking Method",
-        optionUrl: '/rest/metadata',
+        optionUrl: '/api/rest/metadata',
         optionMainVariable: "batchTrackingMethods",
         optionVariable: "method_name",
         width: '293px',

@@ -34,7 +34,7 @@ export function appUsers(props) {
           {
             name: "App Status",
             type: "dropdown",
-            optionUrl: '/rest/metadata',
+            optionUrl: '/api/rest/metadata',
             optionMainVariable: "userAppStatus",
             optionVariable: "status",
             width: "132.74px",
