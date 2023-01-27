@@ -45,6 +45,7 @@ export default function MultipleSelectPlaceholder(props) {
         json = userState.serverOptions?.[optionUrl]?.[optionMainVariable]
       }
     } else {
+      console.log("optionUrl12312", optionUrl)
       const response = await fetch(optionUrl, { method: 'GET' })
       json = await response.json()
       if (json.data) {
