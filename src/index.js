@@ -4,13 +4,16 @@ import { createRoot } from "react-dom/client";
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './contexts/user';
 import { CookiesProvider } from 'react-cookie';
+import { ToastContainer } from 'react-toastify';
 import Container from './components/container';
 import 'react-tabs/style/react-tabs.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 createRoot(document.getElementById("root")).render(
   <CookiesProvider>
     <UserProvider>
       <Container />
+      <ToastContainer />
     </UserProvider>
   </CookiesProvider>
 );

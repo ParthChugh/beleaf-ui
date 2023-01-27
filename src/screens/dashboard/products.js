@@ -13,11 +13,9 @@ export const products = (props) => {
           {
             name: "Method",
             type: "dropdown",
-            options: [
-              "Open Field",
-              "Hydroponic",
-              "Soilless",
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "farmTypes",
+            optionVariable: "farm_type_name",
             width: "185.46px",
             height: 41
           },
@@ -44,8 +42,7 @@ export const products = (props) => {
             options: [
               "Week",
               "Month",
-              "Week",
-              "Day"
+              "Week"
             ],
           },
           {
@@ -84,11 +81,9 @@ export const products = (props) => {
           {
             name: "Method",
             type: "dropdown",
-            options: [
-              "Open Field",
-              "Hydroponic",
-              "Soilless",
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "farmTypes",
+            optionVariable: "farm_type_name",
             width: "185.46px",
           },
           {

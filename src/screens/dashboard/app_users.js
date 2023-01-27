@@ -34,13 +34,9 @@ export function appUsers(props) {
           {
             name: "App Status",
             type: "dropdown",
-            options: [
-              "Downloaded",
-              "Registered",
-              "Active",
-              "Not Downloaded",
-              "Not Registered"
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "userAppStatus",
+            optionVariable: "status",
             width: "132.74px",
             height: 41
           },

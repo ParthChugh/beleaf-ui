@@ -5,7 +5,8 @@ const initialState = {
   isLoggedIn: false,
   loginType: '',
   drafts: {},
-  errors: {}
+  errors: {},
+  serverOptions: {}
 };
 
 const userReducer = (state, action) => {
@@ -30,6 +31,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         errors: { ...state.errors, ...action.payload },
+      };
+    case 'UPDATE_SERVER_OPTIONS':
+      return {
+        ...state,
+        serverOptions: { ...state.serverOptions, ...action.payload },
       };
     case 'REMOVE_ERROR':
       return {

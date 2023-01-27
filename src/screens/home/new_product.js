@@ -43,17 +43,9 @@ export const newProduct = {
           type: "dropdown",
           name: "Category",
           // value: props["Farm Contact"] || "",
-          options: [
-            'Asian Greens',
-            'Beans',
-            'DIY Pot',
-            'Fruits',
-            'Fruity Vegetable',
-            'Herbs',
-            'Microgreens',
-            'Root Vegetables',
-            'Western Greens'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "cropCategories",
+          optionVariable: "category_name",
           width: '100%',
           required: true,
           height: '41px'
@@ -84,17 +76,15 @@ export const newProduct = {
         },
         {
           type: "dropdown",
-          name: "Maturity",
           placeholder: 'Select Maturity',
-          options: [
-            'Baby',
-            'Mini',
-            'Full Grown',
-          ],
-          // value: props["Contact Number"] || "",
           width: '350px',
           required: true,
-          height: '41px'
+          height: '41px',
+          type: "dropdown",
+          name: "Maturity",
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "cropMaturities",
+          optionVariable: "maturity_type",
         },
       ]
     },

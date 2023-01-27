@@ -30,12 +30,13 @@ export const internalFarm = {
     "Location & Facilities": {
       "Location & Facilities": [
         {
-          type: "input",
+          type: "dropdown",
           name: "Select Province",
-          // value: props[" Select Province"] || "",
+          optionUrl: '/rest/provinces',
+          optionVariable: "province",
           width: '100%',
           required: true,
-          height: '9px'
+          height: '41px'
         },
         {
           type: "input",
@@ -170,10 +171,9 @@ export const internalFarm = {
         {
           type: "dropdown",
           name: "Farm Function",
-          options: [
-            'Consolidator',
-            'Producer'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "farmFunctions",
+          optionVariable: "function",
           width: '100%',
           // value: props["Farm Function"] || "",
           required: true,
@@ -182,10 +182,9 @@ export const internalFarm = {
         {
           type: "dropdown",
           name: "Batch Tracking Method",
-          options: [
-            'Direct Batch',
-            'Time'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "batchTrackingMethods",
+          optionVariable: "method_name",
           width: '100%',
           // value: props["Batch Tracking Method"] || "",
           required: true,

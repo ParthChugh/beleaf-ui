@@ -56,12 +56,14 @@ export const masterData = (props) => {
     ],
     "Location & Facilities": [
       {
-        type: "input",
+        type: "dropdown",
         name: "Province",
+        optionUrl: '/rest/provinces',
+        optionVariable: "province",
         value: props["Province"] || "",
         width: '245px',
         required: true,
-        height: '9px'
+        height: '41px'
       },
       {
         type: "input",
@@ -200,10 +202,9 @@ export const masterData = (props) => {
       {
         type: "dropdown",
         name: "Farm Function",
-        options: [
-          'Consolidator',
-          'Producer'
-        ],
+        optionUrl: '/rest/metadata',
+        optionMainVariable: "farmFunctions",
+        optionVariable: "function",
         width: '293px',
         value: props["Farm Function"] || "",
         required: true,
@@ -212,10 +213,9 @@ export const masterData = (props) => {
       {
         type: "dropdown",
         name: "Batch Tracking Method",
-        options: [
-          'Direct Batch',
-          'Time'
-        ],
+        optionUrl: '/rest/metadata',
+        optionMainVariable: "batchTrackingMethods",
+        optionVariable: "method_name",
         width: '293px',
         value: props["Batch Tracking Method"] || "",
         required: true,

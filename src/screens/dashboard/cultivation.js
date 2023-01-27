@@ -19,32 +19,27 @@ export const cultivation = (props) => {
             name: "Annual",
             width: "112px",
             type: "dropdown",
-            options: [
-              "Annual",
-              "Biennial",
-              "Perennial"
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropTypes",
+            optionVariable: "crop_type_name",
             height: 41
           },
           {
             name: "Harvest class",
             width: "115px",
             type: "dropdown",
-            options: [
-              "Single",
-              "Multi",
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropHarvestClasses",
+            optionVariable: "class_name",
             height: 41
           },
           {
             name: "Grow Media",
             width: "120px",
             type: "dropdown",
-            options: [
-              "Soil",
-              "Rockwool",
-              "Cocopeat"
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropGrowingMedia",
+            optionVariable: "media_type",
             height: 41
           },
           {
@@ -68,9 +63,13 @@ export const cultivation = (props) => {
             height: 9
           },
           {
+            type: "dropdown",
             name: "Maturity",
-            width: "81px",
-            height: 9
+            width: "160px",
+            height: 41,
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropMaturities",
+            optionVariable: "maturity_type",
           },
           {
             name: "duration (Days)",
@@ -114,32 +113,27 @@ export const cultivation = (props) => {
             name: "Annual",
             width: "112px",
             type: "dropdown",
-            options: [
-              "Annual",
-              "Biennial",
-              "Perennial"
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropTypes",
+            optionVariable: "crop_type_name",
             height: 41
           },
           {
             name: "Harvest class",
             width: "115px",
             type: "dropdown",
-            options: [
-              "Single",
-              "Multi",
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropHarvestClasses",
+            optionVariable: "class_name",
             height: 41
           },
           {
             name: "Grow Media",
             width: "120px",
             type: "dropdown",
-            options: [
-              "Soil",
-              "Rockwool",
-              "Cocopeat"
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropGrowingMedia",
+            optionVariable: "media_type",
             height: 41
           },
           {
@@ -163,9 +157,13 @@ export const cultivation = (props) => {
             height: 9
           },
           {
+            type: "dropdown",
             name: "Maturity",
-            width: "81px",
-            height: 9
+            width: "160px",
+            height: 41,
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropMaturities",
+            optionVariable: "maturity_type",
           },
           {
             name: "duration (Days)",
@@ -209,32 +207,27 @@ export const cultivation = (props) => {
             name: "Annual",
             width: "112px",
             type: "dropdown",
-            options: [
-              "Annual",
-              "Biennial",
-              "Perennial"
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropTypes",
+            optionVariable: "crop_type_name",
             height: 41
           },
           {
             name: "Harvest class",
             width: "115px",
             type: "dropdown",
-            options: [
-              "Single",
-              "Multi",
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropHarvestClasses",
+            optionVariable: "class_name",
             height: 41
           },
           {
             name: "Grow Media",
             width: "120px",
             type: "dropdown",
-            options: [
-              "Soil",
-              "Rockwool",
-              "Cocopeat"
-            ],
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropGrowingMedia",
+            optionVariable: "media_type",
             height: 41
           },
           {
@@ -258,9 +251,13 @@ export const cultivation = (props) => {
             height: 9
           },
           {
+            type: "dropdown",
             name: "Maturity",
-            width: "81px",
-            height: 9
+            width: "160px",
+            height: 41,
+            optionUrl: '/rest/metadata',
+            optionMainVariable: "cropMaturities",
+            optionVariable: "maturity_type",
           },
           {
             name: "duration (Days)",

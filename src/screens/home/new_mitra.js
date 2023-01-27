@@ -66,12 +66,14 @@ export const newMitra = {
     "Location & Facilities": {
       "Location & Facilities": [
         {
-          type: "input",
+          type: "dropdown",
           name: "Select Province",
           // value: props[" Select Province"] || "",
+          optionUrl: '/rest/provinces',
+          optionVariable: "province",
           width: '100%',
           required: true,
-          height: '9px'
+          height: '41px'
         },
         {
           type: "input",
@@ -206,10 +208,9 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Farm Function",
-          options: [
-            'Consolidator',
-            'Producer'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "farmFunctions",
+          optionVariable: "function",
           width: '293px',
           // value: props["Farm Function"] || "",
           required: true,
@@ -218,10 +219,9 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Batch Tracking Method",
-          options: [
-            'Direct Batch',
-            'Time'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "batchTrackingMethods",
+          optionVariable: "method_name",
           width: '293px',
           // value: props["Batch Tracking Method"] || "",
           required: true,
@@ -243,11 +243,9 @@ export const newMitra = {
             {
               name: "Method",
               type: "dropdown",
-              options: [
-                "Open Field",
-                "Hydroponic",
-                "Soilless",
-              ],
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmTypes",
+              optionVariable: "farm_type_name",
               width: "185.46px",
               height: 41
             },
@@ -274,8 +272,7 @@ export const newMitra = {
               options: [
                 "Week",
                 "Month",
-                "Week",
-                "Day"
+                "Week"
               ],
             },
             {
@@ -314,11 +311,9 @@ export const newMitra = {
             {
               name: "Method",
               type: "dropdown",
-              options: [
-                "Open Field",
-                "Hydroponic",
-                "Soilless",
-              ],
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmTypes",
+              optionVariable: "farm_type_name",
               width: "185.46px",
             },
             {
@@ -356,10 +351,9 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Farm Function",
-          options: [
-            'Consolidator',
-            'Producer'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "farmFunctions",
+          optionVariable: "function",
           width: '100%',
           // value: props["Farm Function"] || "",
           required: true,
@@ -368,10 +362,9 @@ export const newMitra = {
         {
           type: "dropdown",
           name: "Batch Tracking Method",
-          options: [
-            'Direct Batch',
-            'Time'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "batchTrackingMethods",
+          optionVariable: "method_name",
           width: '100%',
           // value: props["Batch Tracking Method"] || "",
           required: true,
