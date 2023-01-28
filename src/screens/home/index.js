@@ -36,6 +36,7 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={products.visibleFields}
+            getServerDetails={products.getServerDetails}
             data={{ columns: products.columns, rows: products.rows }}
           />
         )

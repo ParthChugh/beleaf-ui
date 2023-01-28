@@ -39,7 +39,6 @@ export default function MultipleSelectPlaceholder(props) {
   const fetchOptions = async () => {
     let json = {}
     if (userState.serverOptions?.[optionUrl]) {
-      debugger;
       json = userState.serverOptions?.[optionUrl]
       if (optionMainVariable) {
         json = userState.serverOptions?.[optionUrl]?.[optionMainVariable]

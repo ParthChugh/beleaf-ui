@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import {
   DataGrid,
@@ -10,6 +10,7 @@ import {
 } from '@mui/x-data-grid';
 import './CustomTable.css'
 import PaginationItem from '@mui/material/PaginationItem';
+import { UserContext } from '../../contexts/user';
 import KeyboardDoubleArrowLeft from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
@@ -18,13 +19,13 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import KeyboardDoubleArrowRight from '@mui/icons-material/KeyboardDoubleArrowRight';
 
-function CustomPagination({totalItems}) {
+function CustomPagination({ totalItems }) {
   const apiRef = useGridApiContext();
   const page = useGridSelector(apiRef, gridPageSelector);
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
   return (
     <Box className="custom_table__container">
-      <Typography>Showing {page * 15 + 1} - {(page + 1) * 15} of {totalItems}</Typography>
+      <Typography>Showing {page * 15 + 1} - {totalItems < (page + 1) * 15 ? totalItems : (page + 1) * 15} of {totalItems}</Typography>
       <Pagination
         // color="primary"
         count={pageCount}
@@ -37,7 +38,7 @@ function CustomPagination({totalItems}) {
           "& .MuiPaginationItem-root": {
             color: "#fff",
             backgroundColor: "#3EB049"
-            
+
           },
         }}
         renderItem={(item) => (
@@ -54,13 +55,32 @@ function CustomPagination({totalItems}) {
 
 export default function QuickFilteringCustomizedGrid(props) {
   const VISIBLE_FIELDS = props.visibleFields
-  const totalItems = props.totalItems
   const farmDetails = props.data
+  const [page, setPage] = useState(0)
+  const { userState, userDispatch } = useContext(UserContext);
+
   const columns = React.useMemo(
     () => farmDetails.columns.filter((column) => VISIBLE_FIELDS.includes(column.headerName)),
     [farmDetails.columns],
   );
-
+  const rows = userState.tableData?.[`${props.getServerDetails}-${page}`] || {}
+  const totalItems = rows?.totalItems || userState.tableData?.[`${props.getServerDetails}-${0}`]?.totalItems
+  const fetchServerDetails = async () => {
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${props.getServerDetails}?page=${page}&size=15`, { method: 'GET' })
+    let json = await response.json()
+    if (json.data) {
+      json = json.data
+    }
+    userDispatch({
+      type: 'UPDATE_TABLE_DATA',
+      payload: { [`${props.getServerDetails}-${page}`]: json },
+    });
+  }
+  useEffect(() => {
+    if (props.getServerDetails) {
+      fetchServerDetails()
+    }
+  }, [props.getServerDetails, page])
   return (
     <Box sx={{
       height: 500,
@@ -74,6 +94,7 @@ export default function QuickFilteringCustomizedGrid(props) {
     }}>
       <DataGrid
         {...farmDetails}
+        rows={rows?.data || []}
         columns={columns}
         pageSize={15}
         autoHeight
@@ -94,7 +115,7 @@ export default function QuickFilteringCustomizedGrid(props) {
         }}
         components={{
           ColumnUnsortedIcon: () => <ArrowDropDownIcon style={{ color: '#8A9099' }} />,
-          Pagination: (props) => <CustomPagination {...props} totalItems={totalItems}  />,
+          Pagination: (props) => <CustomPagination {...props} totalItems={totalItems} />,
         }}
         density='comfortable'
         disableColumnMenu

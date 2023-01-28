@@ -6,7 +6,8 @@ const initialState = {
   loginType: '',
   drafts: {},
   errors: {},
-  serverOptions: {}
+  serverOptions: {},
+  tableData: {}
 };
 
 const userReducer = (state, action) => {
@@ -36,6 +37,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         serverOptions: { ...state.serverOptions, ...action.payload },
+      };
+    case 'UPDATE_TABLE_DATA':
+      return {
+        ...state,
+        tableData: { ...state.tableData, ...action.payload },
       };
     case 'REMOVE_ERROR':
       return {
