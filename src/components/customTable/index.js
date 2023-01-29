@@ -19,7 +19,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import KeyboardDoubleArrowRight from '@mui/icons-material/KeyboardDoubleArrowRight';
 
-function CustomPagination({ totalItems }) {
+function CustomPagination({ totalItems, setPage }) {
   const apiRef = useGridApiContext();
   const page = useGridSelector(apiRef, gridPageSelector);
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
@@ -47,7 +47,10 @@ function CustomPagination({ totalItems }) {
             {...item}
           />
         )}
-        onChange={(event, value) => apiRef.current.setPage(value - 1)}
+        onChange={(event, value) => {
+          apiRef.current.setPage(value - 1)
+          setPage(value - 1)
+        }}
       />
     </Box>
   );
@@ -115,7 +118,7 @@ export default function QuickFilteringCustomizedGrid(props) {
         }}
         components={{
           ColumnUnsortedIcon: () => <ArrowDropDownIcon style={{ color: '#8A9099' }} />,
-          Pagination: (props) => <CustomPagination {...props} totalItems={totalItems} />,
+          Pagination: (props) => <CustomPagination {...props} totalItems={totalItems} setPage={setPage} />,
         }}
         density='comfortable'
         disableColumnMenu

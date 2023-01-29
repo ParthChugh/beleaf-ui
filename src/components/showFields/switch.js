@@ -27,7 +27,7 @@ const ToggleButton = styled(MuiToggleButton)({
 
 
 export default function SwitchContainer(props) {
-  const { onChange, value, width, height, name, left, right } = props
+  const { onChange, value, width, height, name, left, right, headerName } = props
   let defaultCase = 'left'
   if (value === right) {
     defaultCase = 'right'
@@ -60,7 +60,7 @@ export default function SwitchContainer(props) {
           },
         }}
         >
-          {name}{props.required ? "*" : ""}
+          {headerName}{props.required ? "*" : ""}
         </Typography>
         <ToggleButtonGroup
           value={alignment}

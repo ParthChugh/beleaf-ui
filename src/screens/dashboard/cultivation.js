@@ -3,10 +3,12 @@ export const cultivation = (props) => {
     "Hydroponics": [
       {
         type: "multi-inputs",
-        name: "Product",
+        name: "name",
+        headerName: "Product",
         rows: [
           {
-            name: "Status",
+            name: "status",
+            headerName: "Status",
             width: "116px",
             type: "dropdown",
             options: [
@@ -16,7 +18,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Annual",
+            name: "annual",
+            headerName: "Annual",
             width: "112px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -25,7 +28,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Harvest class",
+            name: "harvest_class",
+            headerName: "Harvest class",
             width: "115px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -34,7 +38,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Grow Media",
+            name: "grow_media",
+            headerName: "Grow Media",
             width: "120px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -43,28 +48,33 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Germination",
+            name: "germination",
+            headerName: "Germination",
             width: "81px",
             height: 9
           },
           {
-            name: "Juvenile",
+            name: "juvenile",
+            headerName: "Juvenile",
             width: "81px",
             height: 9
           },
           {
-            name: "Vegetative",
+            name: "vegetative",
+            headerName: "Vegetative",
             width: "81px",
             height: 9
           },
           {
-            name: "Generative",
+            name: "generative",
+            headerName: "Generative",
             width: "81px",
             height: 9
           },
           {
             type: "dropdown",
-            name: "Maturity",
+            name: "maturity",
+            headerName: "Maturity",
             width: "160px",
             height: 41,
             optionUrl: '/rest/metadata',
@@ -72,23 +82,24 @@ export const cultivation = (props) => {
             optionVariable: "maturity_type",
           },
           {
-            name: "duration (Days)",
+            name: "duration",
+            headerName: "duration (Days)",
             width: "81px",
             height: 9
           },
         ],
         value: props["Add Greenhouse"] || [
           {
-            Status: "",
-            Annual: "",
-            "Harvest class": "",
-            "Grow Media": "",
-            "Germination": "",
-            Juvenile: "",
-            Vegetative: "",
-            Generative: "",
-            Maturity: "",
-            "duration (Days)": ""
+            status: "",
+            annual: "",
+            "harvest_class": "",
+            "grow_media": "",
+            "germination": "",
+            juvenile: "",
+            vegetative: "",
+            generative: "",
+            maturity: "",
+            "duration": ""
           }
 
         ],
@@ -97,10 +108,12 @@ export const cultivation = (props) => {
     "Open Field": [
       {
         type: "multi-inputs",
-        name: "Product",
+        headerName: "Product",
+        name: "product",
         rows: [
           {
-            name: "Status",
+            name: "status",
+            headerName: "Status",
             width: "116px",
             type: "dropdown",
             options: [
@@ -110,7 +123,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Annual",
+            name: "annual",
+            headerName: "Annual",
             width: "112px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -119,7 +133,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Harvest class",
+            name: "harvest_class",
+            headerName: "Harvest class",
             width: "115px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -128,7 +143,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Grow Media",
+            name: "grow_media",
+            headerName: "Grow Media",
             width: "120px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -137,28 +153,33 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Germination",
+            name: "germination",
+            headerName: "Germination",
             width: "81px",
             height: 9
           },
           {
-            name: "Juvenile",
+            name: "juvenile",
+            headerName: "Juvenile",
             width: "81px",
             height: 9
           },
           {
-            name: "Vegetative",
+            name: "vegetative",
+            headerName: "Vegetative",
             width: "81px",
             height: 9
           },
           {
-            name: "Generative",
+            name: "generative",
+            headerName: "Generative",
             width: "81px",
             height: 9
           },
           {
             type: "dropdown",
-            name: "Maturity",
+            name: "maturity",
+            headerName: "Maturity",
             width: "160px",
             height: 41,
             optionUrl: '/rest/metadata',
@@ -166,23 +187,24 @@ export const cultivation = (props) => {
             optionVariable: "maturity_type",
           },
           {
-            name: "duration (Days)",
+            name: "duration",
+            headerName: "duration (Days)",
             width: "81px",
             height: 9
           },
         ],
         value: props["Add Greenhouse"] || [
           {
-            Status: "",
-            Annual: "",
-            "Harvest class": "",
-            "Grow Media": "",
-            "Germination": "",
-            Juvenile: "",
-            Vegetative: "",
-            Generative: "",
-            Maturity: "",
-            "duration (Days)": ""
+            status: "",
+            annual: "",
+            "harvest_class": "",
+            "grow_media": "",
+            "germination": "",
+            juvenile: "",
+            vegetative: "",
+            generative: "",
+            maturity: "",
+            "duration": ""
           }
 
         ],
@@ -192,9 +214,11 @@ export const cultivation = (props) => {
       {
         type: "multi-inputs",
         name: "Product",
+        headerName: "product",
         rows: [
           {
-            name: "Status",
+            name: "status",
+            headerName: "Status",
             width: "116px",
             type: "dropdown",
             options: [
@@ -204,7 +228,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Annual",
+            name: "annual",
+            headerName: "Annual",
             width: "112px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -213,7 +238,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Harvest class",
+            name: "harvest_class",
+            headerName: "Harvest class",
             width: "115px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -222,7 +248,8 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Grow Media",
+            name: "grow_media",
+            headerName: "Grow Media",
             width: "120px",
             type: "dropdown",
             optionUrl: '/rest/metadata',
@@ -231,28 +258,33 @@ export const cultivation = (props) => {
             height: 41
           },
           {
-            name: "Germination",
+            name: "germination",
+            headerName: "Germination",
             width: "81px",
             height: 9
           },
           {
-            name: "Juvenile",
+            name: "juvenile",
+            headerName: "Juvenile",
             width: "81px",
             height: 9
           },
           {
-            name: "Vegetative",
+            name: "vegetative",
+            headerName: "Vegetative",
             width: "81px",
             height: 9
           },
           {
-            name: "Generative",
+            name: "generative",
+            headerName: "Generative",
             width: "81px",
             height: 9
           },
           {
             type: "dropdown",
-            name: "Maturity",
+            name: "maturity",
+            headerName: "Maturity",
             width: "160px",
             height: 41,
             optionUrl: '/rest/metadata',
@@ -260,23 +292,24 @@ export const cultivation = (props) => {
             optionVariable: "maturity_type",
           },
           {
-            name: "duration (Days)",
+            name: "duration",
+            headerName: "duration (Days)",
             width: "81px",
             height: 9
           },
         ],
         value: props["Soilless"] || [
           {
-            Status: "",
-            Annual: "",
-            "Harvest class": "",
-            "Grow Media": "",
-            "Germination": "",
-            Juvenile: "",
-            Vegetative: "",
-            Generative: "",
-            Maturity: "",
-            "duration (Days)": ""
+            status: "",
+            annual: "",
+            "harvest_class": "",
+            "grow_media": "",
+            "germination": "",
+            juvenile: "",
+            vegetative: "",
+            generative: "",
+            maturity: "",
+            "duration": ""
           }
 
         ],

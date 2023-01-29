@@ -3,7 +3,8 @@ export const general = (props) => {
     "General": [
       {
         type: "attach-image",
-        name: "Image",
+        name: "image",
+        headerName: "Image",
         width: '272.05px',
         height: 240,
         value: props["Image"] || "",
@@ -11,7 +12,8 @@ export const general = (props) => {
       },
       {
         type: "input",
-        name: "Product Name",
+        name: "product_name",
+        headerName: "Product Name",
         value: props["Product Name"] || "",
         width: '460px',
         required: true,
@@ -19,7 +21,8 @@ export const general = (props) => {
       },
       {
         type: "input",
-        name: "Product Code",
+        name: "product_code",
+        headerName: "Product Code",
         value: props["Product Code"] || "",
         width: '464px',
         required: true,
@@ -27,7 +30,8 @@ export const general = (props) => {
       },
       {
         type: "input",
-        name: "Category",
+        name: "category",
+        headerName: "Category",
         value: props["Category"] || "",
         width: '464px',
         required: true,
@@ -35,7 +39,8 @@ export const general = (props) => {
       },
       {
         type: "input",
-        name: "Variant",
+        name: "variant",
+        headerName: "Variant",
         value: props["Variant"] || "",
         width: '464px',
         required: true,
@@ -43,7 +48,8 @@ export const general = (props) => {
       },
       {
         type: "input",
-        name: "Maturity",
+        name: "maturity",
+        headerName: "Maturity",
         value: props["Maturity"] || "",
         width: '464px',
         required: true,

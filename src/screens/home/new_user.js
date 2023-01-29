@@ -7,7 +7,8 @@ export const newUser = {
       "User": [
         {
           type: "switch",
-          name: "Staff Status",
+          name: "staff_status",
+          headerName: "Staff Status",
           width: '100%',
           left: 'Beleaf',
           right: 'Mitra',
@@ -17,7 +18,8 @@ export const newUser = {
         },
         {
           type: "input",
-          name: "Production Code",
+          name: "production_code",
+          headerName: "Production Code",
           // value: props["Company Name"] || "",
           placeholder: "XX-XXX-XX-XX",
           width: '100%',
@@ -26,7 +28,8 @@ export const newUser = {
         },
         {
           type: "input",
-          name: "Name",
+          name: "name",
+          headerName: "Name",
           placeholder: "John Doe",
           width: '100%',
           height: "9px",
@@ -34,7 +37,8 @@ export const newUser = {
         },
         {
           type: "input",
-          name: "Contact Number",
+          name: "contact_number",
+          headerName: "Contact Number",
           placeholder: "0878803033399",
           width: '100%',
           height: "9px",
@@ -42,7 +46,8 @@ export const newUser = {
         },
         {
           type: "input",
-          name: "NIK",
+          name: "nik",
+          headerName: "NIK",
           placeholder: "301287800190001",
           width: '431px',
           height: "9px",
@@ -50,7 +55,8 @@ export const newUser = {
         },
         {
           type: "dropdown",
-          name: "Role",
+          name: "role",
+          headerName: "Role",
           width: '431px',
           options: [
             'Owner',
@@ -62,7 +68,8 @@ export const newUser = {
         },
         {
           type: "input",
-          name: "Farm Name",
+          name: "farm_name",
+          headerName: "Farm Name",
           placeholder: "Kutani Farms",
           width: '100%',
           height: "9px",

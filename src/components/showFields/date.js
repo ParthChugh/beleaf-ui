@@ -8,7 +8,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function CustomDatePicker(props) {
-  const { onChange, width, height, name, error } = props;
+  const { onChange, width, height, name, error, headerName } = props;
   const handleChange = (event) => {
     onChange(event)
   };
@@ -29,7 +29,7 @@ export default function CustomDatePicker(props) {
           }
         }}
         >
-          {name}{props.required ? "*" : ""}
+          {headerName}{props.required ? "*" : ""}
         </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker

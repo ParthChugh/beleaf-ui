@@ -4,9 +4,11 @@ export function appUsers(props) {
       {
         type: "multi-inputs",
         name: "User",
+        headerName: "User",
         rows: [
           {
-            name: "User ID",
+            name: "user_id",
+            headerName: "User ID",
             type: "link",
             href: "/:id",
             width: "185.46px",
@@ -14,25 +16,29 @@ export function appUsers(props) {
             disabled: true
           },
           {
-            name: "Name",
+            name: "name",
+            headerName: "Name",
             width: "185.46px",
             type: "text",
             height: 9
           },
           {
-            name: "Contact No.",
+            name: "contact_number",
+            headerName: "Contact No.",
             width: "98px",
             type: "text",
             height: 9
           },
           {
-            name: "Role",
+            name: "role",
+            headerName: "Role",
             width: "96.11px",
             type: "text",
             height: 9
           },
           {
-            name: "App Status",
+            name: "app_status",
+            headerName: "App Status",
             type: "dropdown",
             optionUrl: '/rest/metadata',
             optionMainVariable: "userAppStatus",
@@ -43,11 +49,11 @@ export function appUsers(props) {
         ],
         value: props["App Users"] || [
           {
-            "User ID": "LJBABGR001",
-            Name: "Neal Matthews",
-            "Contact No.": "087882233909",
-            Role: "Owner",
-            "App Status": "Active"
+            "user_id": "LJBABGR001",
+            name: "Neal Matthews",
+            "contact_number": "087882233909",
+            role: "Owner",
+            "app_status": "Active"
           }
         ]
       }

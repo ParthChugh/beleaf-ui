@@ -8,7 +8,8 @@ export const newProduct = {
       "Product": [
         {
           type: "input",
-          name: "Product Name",
+          name: "product_name",
+          headerName: "Product Name",
           width: '100%',
           value: "",
           required: true,
@@ -16,7 +17,8 @@ export const newProduct = {
         },
         {
           type: "input",
-          name: "Production Code",
+          name: "production_code",
+          headerName: "Production Code",
           // value: props["Company Name"] || "",
           placeholder: "XX-XXX-XX-XX",
           width: '100%',
@@ -25,7 +27,8 @@ export const newProduct = {
         },
         {
           type: "input",
-          name: "Product",
+          name: "product",
+          headerName: "Product",
           // value: props["Farm Name"] || "",
           width: '100%',
           height: "9px",
@@ -33,7 +36,8 @@ export const newProduct = {
         },
         {
           type: "attach-image",
-          name: "Image",
+          name: "image",
+          headerName: "Image",
           // value: props["Farm Name"] || "",
           width: '272.05px',
           height: 240,
@@ -41,7 +45,8 @@ export const newProduct = {
         },
         {
           type: "dropdown",
-          name: "Category",
+          name: "category",
+          headerName: "Category",
           // value: props["Farm Contact"] || "",
           optionUrl: '/rest/metadata',
           optionMainVariable: "cropCategories",
@@ -52,7 +57,8 @@ export const newProduct = {
         },
         {
           type: "dropdown",
-          name: "Variant",
+          name: "variant",
+          headerName: "Variant",
           placeholder: 'Variant Name...',
           options: [
             'Green',
@@ -77,6 +83,7 @@ export const newProduct = {
         {
           type: "dropdown",
           placeholder: 'Select Maturity',
+          headerName: "maturity",
           width: '350px',
           required: true,
           height: '41px',

@@ -28,7 +28,7 @@ function getStyles(name, personName, theme) {
 }
 
 export default function MultipleSelectPlaceholder(props) {
-  const { options, placeholder, onChange, value, width, height, name, optionUrl, optionVariable, optionMainVariable } = props;
+  const { options, placeholder, onChange, value, width, height, name, optionUrl, optionVariable, optionMainVariable, headerName } = props;
   const { userState, userDispatch } = useContext(UserContext);
   const [serverOptions, setServerOptions] = useState([])
   const theme = useTheme();
@@ -84,7 +84,7 @@ export default function MultipleSelectPlaceholder(props) {
               }
             }}
           >
-            {name}{props.required ? "*" : ""}
+            {headerName}{props.required ? "*" : ""}
           </Typography>
         }
         <Select

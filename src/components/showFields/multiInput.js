@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import Link from '@mui/material/Link'
 
 export default function CustomMultiInput(props) {
-  const { onChange, value, rows, name } = props;
+  const { onChange, value, rows, headerName } = props;
   console.log('props12312321', props)
   let location = useLocation();
 
@@ -27,7 +27,7 @@ export default function CustomMultiInput(props) {
             return (
               <th>
                 <Typography sx={{ color: "#3EB049", width: row.width, fontFamily: 'Poppins' }}>
-                  {row.name}
+                  {row.headerName}
                 </Typography>
               </th>
             )
@@ -151,7 +151,7 @@ export default function CustomMultiInput(props) {
             onChange(value)
           }}
         >
-          Add {name} <Add />
+          Add {headerName} <Add />
         </Typography>
       }
     </div >

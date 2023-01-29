@@ -3,7 +3,8 @@ export const masterData = (props) => {
     "Basic Data": [
       {
         type: "dropdown",
-        name: "Ownership",
+        name: "ownership",
+        headerName: "Ownership",
         options: [
           'Company',
           'Employee'
@@ -15,7 +16,8 @@ export const masterData = (props) => {
       },
       {
         type: "input",
-        name: "Company Name",
+        name: "company_name",
+        headerName: "Company Name",
         value: props["Company Name"] || "",
         width: '412px',
         required: true,
@@ -23,7 +25,8 @@ export const masterData = (props) => {
       },
       {
         type: "input",
-        name: "Farm Name",
+        name: "farm_name",
+        headerName: "Farm Name",
         value: props["Farm Name"] || "",
         width: '704px',
         required: true,
@@ -31,7 +34,8 @@ export const masterData = (props) => {
       },
       {
         type: "input",
-        name: "Farm Contact",
+        name: "farm_contact",
+        headerName: "Farm Contact",
         value: props["Farm Contact"] || "",
         width: '330px',
         required: true,
@@ -39,7 +43,8 @@ export const masterData = (props) => {
       },
       {
         type: "input",
-        name: "Contact Number",
+        name: "contact_number",
+        headerName: "Contact Number",
         value: props["Contact Number"] || "",
         width: '330px',
         required: true,
@@ -47,7 +52,8 @@ export const masterData = (props) => {
       },
       {
         type: "date",
-        name: "Creation Date",
+        name: "creation_date",
+        headerName: "Creation Date",
         value: props["Creation Date"] || "",
         width: '167px',
         required: true,
@@ -57,7 +63,8 @@ export const masterData = (props) => {
     "Location & Facilities": [
       {
         type: "dropdown",
-        name: "Province",
+        name: "province",
+        headerName: "Province",
         optionUrl: '/rest/provinces',
         optionVariable: "province",
         value: props["Province"] || "",
@@ -67,7 +74,8 @@ export const masterData = (props) => {
       },
       {
         type: "input",
-        name: "District",
+        name: "district",
+        headerName: "District",
         value: props["District"] || "",
         width: '245px',
         required: true,
@@ -75,7 +83,8 @@ export const masterData = (props) => {
       },
       {
         type: "input",
-        name: "Farm Address",
+        name: "farm_address",
+        headerName: "Farm Address",
         value: props["Farm Address"] || "",
         width: '518px',
         required: true,
@@ -84,7 +93,8 @@ export const masterData = (props) => {
       },
       {
         type: "location",
-        name: "Lat/Long",
+        name: "location",
+        headerName: "Lat/Long",
         value: props["Lat/Long"] || "",
         width: '371px',
         required: true,
@@ -95,35 +105,40 @@ export const masterData = (props) => {
     "Hydroponics": [
       {
         type: "multi-inputs",
-        name: "Greenhouse",
+        name: "greenhouse",
+        headerName: "Greenhouse",
         rows: [
           {
-            name: "Greenhouse Name",
+            name: "greenhouse_name",
+            headerName: "Greenhouse Name",
             width: "228px",
             height: 9
           },
           {
-            name: "Floor Area",
+            name: "floor_area",
+            headerName: "Floor Area",
             width: "144px",
             height: 9
           },
           {
-            name: "Number of Holes",
+            name: "holes",
+            headerName: "Number of Holes",
             width: "132px",
             height: 9
           },
           {
-            name: "Dosing",
+            name: "dosing",
+            headerName: "Dosing",
             width: "167px",
             height: 9
           }
         ],
         value: [
           {
-            "Greenhouse Name": "",
-            "Floor Area": "",
-            "Number of Holes": "",
-            "Dosing": ""
+            "greenhouse_name": "",
+            "floor_area": "",
+            "holes": "",
+            "dosing": ""
           }
         ],
       }
@@ -131,31 +146,36 @@ export const masterData = (props) => {
     "Open Field": [
       {
         type: "multi-inputs",
-        name: "Open Field",
+        name: "open_field",
+        headerName: "Open Field",
         rows: [
           {
-            name: "Farmable Land Area",
+            name: "farmable_land_area",
+            headerName: "Farmable Land Area",
             width: "228px"
           },
           {
-            name: "Farmed Land Area",
+            name: "farmed_land_area",
+            headerName: "Farmed Land Area",
             width: "144px"
           },
           {
-            name: "Irrigation",
+            name: "irrigation",
+            headerName: "Irrigation",
             width: "132px"
           },
           {
-            name: "Land Area Irrigated",
+            name: "land_area_irrigated",
+            headerName: "Land Area Irrigated",
             width: "167px"
           }
         ],
         value: [
           {
-            "Farmable Land Area": "",
-            "Farmed Land Area": "",
-            "Irrigation": "",
-            "Land Area Irrigated": ""
+            "farmable_land_area": "",
+            "farmed_land_area": "",
+            "irrigation": "",
+            "land_area_irrigated": ""
           }
         ]
       }
@@ -163,31 +183,36 @@ export const masterData = (props) => {
     "Soilless": [
       {
         type: "multi-inputs",
-        name: "Soilless",
+        name: "soilless",
+        headerName: "Soilless",
         rows: [
           {
-            name: "Greenhouse Name",
+            name: "greenhouse_name",
+            headerName: "Greenhouse Name",
             width: "228px"
           },
           {
-            name: "Floor Area",
+            name: "floor_area",
+            headerName: "Floor Area",
             width: "144px"
           },
           {
-            name: "Number of Holes",
+            name: "holes",
+            headerName: "Number of Holes",
             width: "132px"
           },
           {
-            name: "Dosing",
+            name: "dosing",
+            headerName: "Dosing",
             width: "167px"
           }
         ],
         value: [
           {
-            "Greenhouse Name": "",
-            "Floor Area": "",
-            "Number of Holes": "",
-            "Dosing": ""
+            "greenhouse_name": "",
+            "floor_area": "",
+            "holes": "",
+            "dosing": ""
           }
         ],
       }
@@ -195,7 +220,8 @@ export const masterData = (props) => {
     "Feature Governance": [
       {
         type: "dropdown",
-        name: "Farm Function",
+        name: "farm_function",
+        headerName: "Farm Function",
         optionUrl: '/rest/metadata',
         optionMainVariable: "farmFunctions",
         optionVariable: "function",
@@ -206,7 +232,8 @@ export const masterData = (props) => {
       },
       {
         type: "dropdown",
-        name: "Batch Tracking Method",
+        name: "batch_tracking_method",
+        headerName: "Batch Tracking Method",
         optionUrl: '/rest/metadata',
         optionMainVariable: "batchTrackingMethods",
         optionVariable: "method_name",

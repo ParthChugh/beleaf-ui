@@ -10,6 +10,7 @@ export const internalFarm = {
         {
           type: "input",
           name: "Company Name",
+          headerName: "Company Name",
           width: '100%',
           // value: props["Company Name"] || "",
           required: true,
@@ -18,7 +19,8 @@ export const internalFarm = {
         },
         {
           type: "input",
-          name: "Farm Name",
+          name: "farm_name",
+          headerName: "Farm Name",
           // value: props["Farm Name"] || "",
           width: '100%',
           required: true,
@@ -31,7 +33,8 @@ export const internalFarm = {
       "Location & Facilities": [
         {
           type: "dropdown",
-          name: "Select Province",
+          name: "province",
+          headerName: "Select Province",
           optionUrl: '/rest/provinces',
           optionVariable: "province",
           width: '100%',
@@ -40,7 +43,8 @@ export const internalFarm = {
         },
         {
           type: "input",
-          name: "Select District",
+          name: "district",
+          headerName: "Select District",
           // value: props[" Select District"] || "",
           width: '100%',
           required: true,
@@ -48,7 +52,8 @@ export const internalFarm = {
         },
         {
           type: "input",
-          name: "Farm Address",
+          name: "address",
+          headerName: "Farm Address",
           // value: props["Farm Address"] || "",
           width: '518px',
           required: true,
@@ -57,7 +62,8 @@ export const internalFarm = {
         },
         {
           type: "location",
-          name: "Latitude/Longitude",
+          name: "location",
+          headerName: "Latitude/Longitude",
           // value: props["Latitude/Longitude"] || "",
           width: '371px',
           required: true,
@@ -68,35 +74,40 @@ export const internalFarm = {
       "Hydroponics": [
         {
           type: "multi-inputs",
-          name: "Greenhouse",
+          name: "greenhouse",
+          headerName: "Greenhouse",
           rows: [
             {
-              name: "Greenhouse Name",
+              name: "greenhouse_name",
+              headerName: "Greenhouse Name",
               width: "228px",
               height: 9
             },
             {
-              name: "Floor Area",
+              name: "floor_area",
+              headerName: "Floor Area",
               width: "144px",
               height: 9
             },
             {
-              name: "Number of Holes",
+              name: "holes",
+              headerName: "Number of Holes",
               width: "132px",
               height: 9
             },
             {
-              name: "Dosing",
+              name: "dosing",
+              headerName: "Dosing",
               width: "167px",
               height: 9
             }
           ],
           value: [
             {
-              "Greenhouse Name": "",
-              "Floor Area": "",
-              "Number of Holes": "",
-              "Dosing": ""
+              "greenhouse_name": "",
+              "floor_area": "",
+              "holes": "",
+              "dosing": ""
             }
           ],
         }
@@ -104,31 +115,36 @@ export const internalFarm = {
       "Open Field": [
         {
           type: "multi-inputs",
-          name: "Open Field",
+          name: "open_field",
+          headerName: "Open Field",
           rows: [
             {
-              name: "Farmable Land Area",
+              name: "farmable_land_area",
+              headerName: "Farmable Land Area",
               width: "228px"
             },
             {
-              name: "Farmed Land Area",
+              name: "farmed_land_area",
+              headerName: "Farmed Land Area",
               width: "144px"
             },
             {
-              name: "Irrigation",
+              name: "irrigation",
+              headerName: "Irrigation",
               width: "132px"
             },
             {
-              name: "Land Area Irrigated",
+              name: "land_area_irrigated",
+              headerName: "Land Area Irrigated",
               width: "167px"
             }
           ],
           value: [
             {
-              "Farmable Land Area": "",
-              "Farmed Land Area": "",
-              "Irrigation": "",
-              "Land Area Irrigated": ""
+              "farmable_land_area": "",
+              "farmed_land_area": "",
+              "irrigation": "",
+              "land_area_irrigated": ""
             }
           ]
         }
@@ -136,31 +152,36 @@ export const internalFarm = {
       "Soilless": [
         {
           type: "multi-inputs",
-          name: "Soilless",
+          name: "soilless",
+          headerName: "Soilless",
           rows: [
             {
-              name: "Greenhouse Name",
+              name: "greenhouse_name",
+              headerName: "Greenhouse Name",
               width: "228px"
             },
             {
-              name: "Floor Area",
+              name: "floor_area",
+              headerName: "Floor Area",
               width: "144px"
             },
             {
-              name: "Number of Holes",
+              name: "holes",
+              headerName: "Number of Holes",
               width: "132px"
             },
             {
-              name: "Dosing",
+              name: "dosing",
+              headerName: "Dosing",
               width: "167px"
             }
           ],
           value: [
             {
-              "Greenhouse Name": "",
-              "Floor Area": "",
-              "Number of Holes": "",
-              "Dosing": ""
+              "greenhouse_name": "",
+              "floor_area": "",
+              "holes": "",
+              "dosing": ""
             }
           ],
         }
@@ -170,7 +191,8 @@ export const internalFarm = {
       "Features Governance": [
         {
           type: "dropdown",
-          name: "Farm Function",
+          name: "farm_function",
+          headerName: "Farm Function",
           optionUrl: '/rest/metadata',
           optionMainVariable: "farmFunctions",
           optionVariable: "function",
@@ -181,7 +203,8 @@ export const internalFarm = {
         },
         {
           type: "dropdown",
-          name: "Batch Tracking Method",
+          name: "batch_tracking_method",
+          headerName: "Batch Tracking Method",
           optionUrl: '/rest/metadata',
           optionMainVariable: "batchTrackingMethods",
           optionVariable: "method_name",

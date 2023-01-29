@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 export default function CustomTextField(props) {
-  const { onChange, value, width, height, name } = props;
+  const { onChange, value, width, height, headerName } = props;
   const handleChange = (event) => {
     onChange(event)
   };
@@ -23,7 +23,7 @@ export default function CustomTextField(props) {
           },
         }}
         >
-          {name}{props.required ? "*": ""}
+          {headerName}{props.required ? "*": ""}
         </Typography>
         <TextField
           hiddenLabel
