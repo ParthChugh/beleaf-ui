@@ -25,7 +25,7 @@ export const newProduct = {
         },
         {
           type: "input",
-          name: "Product Image",
+          name: "Product",
           // value: props["Farm Name"] || "",
           width: '100%',
           height: "9px",

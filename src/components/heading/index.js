@@ -41,8 +41,8 @@ export default function Heading(props) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 995,
-    // height: "70%", 
+    maxWidth: 1227,
+    minWidth: "70%", 
     minHeight: "50%",
     maxHeight: "70%",
     bgcolor: 'background.paper',
@@ -70,7 +70,10 @@ export default function Heading(props) {
       setSendRequest('')
       console.log("localErrors12321", localErrors)
       if (localErrors.length === 0) {
-        setValue(value + 1)
+        if(value < (Object.keys(open.payload.tabs || {}).length - 1)) {
+          setValue(value + 1)
+        }
+        
         let types = {}
         Object.keys(userState.errors).forEach(el => {
           types[el] = null
@@ -79,6 +82,10 @@ export default function Heading(props) {
           type: 'REMOVE_ERROR',
           payload: {},
         });
+        if(!(value < (Object.keys(open.payload.tabs || {}).length - 1))) {
+          console.log("userState1232132", userState)
+          setOpen({})
+        }
       }
     }
   }, [JSON.stringify(userState.errors), sendRequest])
@@ -99,6 +106,9 @@ export default function Heading(props) {
           values={values}
           setSendRequest={setSendRequest}
           goToNextPage={() => setValue(value + 1)}
+          onSubmitCustomField={(params) => {
+            console.log('qweqweqwe', params)
+          }}
           value={Object.keys(data).length - 1}
           index={index}
         />
@@ -140,12 +150,17 @@ export default function Heading(props) {
               }
               showRoutingButton
               showBackButton={value !== 0}
+              showSubmitButton={Object.keys(open.payload.tabs || {}).length - 1 === value}
               changeRoute={(route) => {
                 if (route == 'back') {
                   setValue(value - 1)
                 } else {
                   setSendRequest(Math.random().toString(36).slice(2))
                 }
+              }}
+              onSubmit={() => {
+                console.log("onSubmit123213")
+                setSendRequest(Math.random().toString(36).slice(2))
               }}
               showNextButton={value !== (Object.keys(open.payload.tabs || {}).length - 1)}
             />

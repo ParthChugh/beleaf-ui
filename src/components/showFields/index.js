@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function ShowFields(props) {
-  const { type, values, goToNextPage } = props
+  const { type, values, onSubmitCustomField } = props
   const [edit, setEdit] = useState(props.edit || {})
   const { userState, userDispatch } = useContext(UserContext);
   const classes = useStyles();
@@ -115,6 +115,7 @@ export default function ShowFields(props) {
         type: 'UPDATE_DATA',
         payload: { [type]: params },
       });
+      onSubmitCustomField && onSubmitCustomField(params)
     } catch (el) {
     }
 

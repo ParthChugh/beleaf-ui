@@ -99,37 +99,31 @@ export const masterData = (props) => {
         rows: [
           {
             name: "Greenhouse Name",
-            width: "317.07px",
+            width: "228px",
             height: 9
           },
           {
             name: "Floor Area",
-            width: "200.09px",
+            width: "144px",
             height: 9
           },
           {
             name: "Number of Holes",
-            width: "184.7px",
+            width: "132px",
             height: 9
           },
           {
             name: "Dosing",
-            width: "232.41px",
+            width: "167px",
             height: 9
           }
         ],
-        value: props["Add Greenhouse"] || [
+        value: [
           {
-            "Greenhouse Name": "Greenhouse A",
-            "Floor Area": "1000 Meters",
-            "Number of Holes": "1000",
-            "Dosing": "Automatic"
-          },
-          {
-            "Greenhouse Name": "Greenhouse B",
-            "Floor Area": "1000 Meters",
-            "Number of Holes": "1000",
-            "Dosing": "Automatic"
+            "Greenhouse Name": "",
+            "Floor Area": "",
+            "Number of Holes": "",
+            "Dosing": ""
           }
         ],
       }
@@ -141,29 +135,29 @@ export const masterData = (props) => {
         rows: [
           {
             name: "Farmable Land Area",
-            width: "317.07px"
+            width: "228px"
           },
           {
             name: "Farmed Land Area",
-            width: "200.09px"
+            width: "144px"
           },
           {
             name: "Irrigation",
-            width: "184.7px"
+            width: "132px"
           },
           {
             name: "Land Area Irrigated",
-            width: "232.41px"
+            width: "167px"
           }
         ],
-        value: props["Open Field"] || [
+        value: [
           {
             "Farmable Land Area": "",
             "Farmed Land Area": "",
             "Irrigation": "",
             "Land Area Irrigated": ""
           }
-        ],
+        ]
       }
     ],
     "Soilless": [
@@ -173,28 +167,28 @@ export const masterData = (props) => {
         rows: [
           {
             name: "Greenhouse Name",
-            width: "317.07px"
+            width: "228px"
           },
           {
             name: "Floor Area",
-            width: "200.09px"
+            width: "144px"
           },
           {
             name: "Number of Holes",
-            width: "184.7px"
+            width: "132px"
           },
           {
             name: "Dosing",
-            width: "232.41px"
+            width: "167px"
           }
         ],
-        value: props["Soilless"] || [
-          { 
+        value: [
+          {
             "Greenhouse Name": "",
             "Floor Area": "",
             "Number of Holes": "",
             "Dosing": ""
-           }
+          }
         ],
       }
     ],

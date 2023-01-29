@@ -16,7 +16,15 @@ TabPanel.propTypes = {
 };
 
 export default function BasicTabs(props) {
-  const { tabs, showSubData, setValue, value, hideSearch, showRoutingButton, changeRoute} = props;
+  const { tabs,
+    showSubData,
+    setValue,
+    value,
+    hideSearch,
+    showRoutingButton,
+    changeRoute,
+    onSubmit
+  } = props;
   return (
     <Box sx={{ ml: 3, mr: 3 }}>
       <Tabs
@@ -105,6 +113,15 @@ export default function BasicTabs(props) {
                   }}
                     onClick={() => changeRoute("next")}
                   >Next</Button>
+                }
+                {props.showSubmitButton &&
+                  <Button variant="outlined" style={{
+                    borderRadius: 35,
+                    color: '#3EB049',
+                    borderColor: '#3EB049'
+                  }}
+                    onClick={() => onSubmit()}
+                  >Submit</Button>
                 }
 
               </Box>

@@ -72,22 +72,22 @@ export const internalFarm = {
           rows: [
             {
               name: "Greenhouse Name",
-              width: "317.07px",
+              width: "228px",
               height: 9
             },
             {
               name: "Floor Area",
-              width: "200.09px",
+              width: "144px",
               height: 9
             },
             {
               name: "Number of Holes",
-              width: "184.7px",
+              width: "132px",
               height: 9
             },
             {
               name: "Dosing",
-              width: "232.41px",
+              width: "167px",
               height: 9
             }
           ],
@@ -108,19 +108,19 @@ export const internalFarm = {
           rows: [
             {
               name: "Farmable Land Area",
-              width: "317.07px"
+              width: "228px"
             },
             {
               name: "Farmed Land Area",
-              width: "200.09px"
+              width: "144px"
             },
             {
               name: "Irrigation",
-              width: "184.7px"
+              width: "132px"
             },
             {
               name: "Land Area Irrigated",
-              width: "232.41px"
+              width: "167px"
             }
           ],
           value: [
@@ -140,19 +140,19 @@ export const internalFarm = {
           rows: [
             {
               name: "Greenhouse Name",
-              width: "317.07px"
+              width: "228px"
             },
             {
               name: "Floor Area",
-              width: "200.09px"
+              width: "144px"
             },
             {
               name: "Number of Holes",
-              width: "184.7px"
+              width: "132px"
             },
             {
               name: "Dosing",
-              width: "232.41px"
+              width: "167px"
             }
           ],
           value: [

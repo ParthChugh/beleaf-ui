@@ -35,6 +35,9 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
+                  onSubmitCustomField={(params) => {
+                    console.log('qweqweqwe', params)
+                  }}
                 />
 
               )
@@ -48,6 +51,9 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
+                  onSubmitCustomField={(params) => {
+                    console.log('qweqweqwe', params)
+                  }}
                 />
 
               )
@@ -61,6 +67,9 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
+                  onSubmitCustomField={(params) => {
+                    console.log('qweqweqwe', params)
+                  }}
                 />
 
               )
@@ -79,6 +88,9 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
+                  onSubmitCustomField={(params) => {
+                    console.log('qweqweqwe', params)
+                  }}
                 />
 
               )
@@ -92,6 +104,9 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
+                  onSubmitCustomField={(params) => {
+                    console.log('qweqweqwe', params)
+                  }}
                 />
 
               )
