@@ -31,7 +31,7 @@ const HomePage = () => {
           />
         )
       case 1:
-        console.log('products12321', products)
+        // console.log('products12321', products)
         return (
           <CustomTable
             totalItems={15}

@@ -1,5 +1,5 @@
 export const logoutUser = () => {
-  console.log('earearear')
+  // console.log('earearear')
 }
 export const redirectIfUser = () => {
   return true;

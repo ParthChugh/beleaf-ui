@@ -31,7 +31,7 @@ const Header = (props) => {
       payload: { accessToken: cookies.accessToken, name: "Jacob Holmes", role: "Manager" },
     });
   }, [cookies.accessToken])
-  console.log("userState123213", userState)
+  // console.log("userState123213", userState)
   return (
     <div className="header">
       <nav className="header__nav">

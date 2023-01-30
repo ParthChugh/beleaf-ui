@@ -33,7 +33,7 @@ const LoginPage = () => {
     event.preventDefault();
     // Perform login here, for example by sending the form data to a server
     // alert('Logging in...');
-    console.log('username12321', formData)
+    // console.log('username12321', formData)
     // http://localhost:88/rest/admin/login
     const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/rest/admin/login`, {
       method: 'POST',
@@ -73,7 +73,7 @@ const LoginPage = () => {
       });
       navigate('/')
     }
-    console.log('response.json()', json); // parses JSON response into native JavaScript objects
+    // console.log('response.json()', json); // parses JSON response into native JavaScript objects
 
     
   }

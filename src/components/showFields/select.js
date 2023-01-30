@@ -35,7 +35,7 @@ export default function MultipleSelectPlaceholder(props) {
 
   const fetchOptions = async () => {
     let json = {}
-    console.log("userState.serverOptions?.[optionUrl]", userState.serverOptions?.[optionUrl])
+    // console.log("userState.serverOptions?.[optionUrl]", userState.serverOptions?.[optionUrl])
     if (userState.serverOptions?.[optionUrl]) {
       json = userState.serverOptions?.[optionUrl]
       if (optionMainVariable) {
@@ -58,7 +58,7 @@ export default function MultipleSelectPlaceholder(props) {
       
     }
 
-    console.log("json.map(el =>", json.map(el => el[optionVariable]))
+    // console.log("json.map(el =>", json.map(el => el[optionVariable]))
     setServerOptions(json.map(el => el[optionVariable]))
   }
   useEffect(() => {

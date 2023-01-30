@@ -10,13 +10,13 @@ import Link from '@mui/material/Link'
 
 export default function CustomMultiInput(props) {
   const { onChange, value, rows, headerName } = props;
-  console.log('props12312321', props)
+  // console.log('props12312321', props)
   let location = useLocation();
 
   const handleChange = (event) => {
     onChange(event)
   };
-  console.log('rows12321', value)
+  // console.log('rows12321', value)
   return (
     <div style={{
       overflowX: "auto"
@@ -40,7 +40,7 @@ export default function CustomMultiInput(props) {
             <tr>
               {keys.map(key => {
                 const row = rows.find(el => el.name === key)
-                console.log("row123123", row)
+                // console.log("row123123", row)
                  if(typeof row === 'undefined') return <div />
                 switch (row.type) {
                   case 'link':

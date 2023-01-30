@@ -29,7 +29,7 @@ const userReducer = (state, action) => {
         drafts: {  },
       };
     case 'UPDATE_ERROR':
-      console.log("{ ...state.errors, ...action.payload }", { ...state.errors, ...action.payload })
+      // console.log("{ ...state.errors, ...action.payload }", { ...state.errors, ...action.payload })
       return {
         ...state,
         errors: { ...state.errors, ...action.payload },

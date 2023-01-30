@@ -1,6 +1,10 @@
 export const general = (props) => {
   return {
     getServerDetails: '/rest/admin/products?production_code=',
+    updateServerDetails: {
+      url: '/rest/admin/product/',
+      isFormData: true,
+    },
     fields: {
       "General": [
         {

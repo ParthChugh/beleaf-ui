@@ -2,7 +2,10 @@ export const newProduct = {
   title: {
     "Product": "Add New Product",
   },
-  getServerDetails: 'rest/admin/new_product',
+  getServerDetails: {
+    url: 'rest/admin/new_product',
+    isFormData: true,
+  },
   tabs: {
     "Product": {
       "Product": [

@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
       {
         path: "logout",
         action: () => {
-          console.log('qwdqwdwqddwq')
+          // console.log('qwdqwdwqddwq')
         },
       },
     ],

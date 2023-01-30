@@ -35,9 +35,10 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   serverUrl={data.getServerDetails}
+                  updateUrl={data.updateServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
-                    console.log('qweqweqwe', params)
+                    // console.log('qweqweqwe', params)
                   }}
                 />
 
@@ -52,9 +53,10 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
+                  updateUrl={productsTemp.updateServerDetails}
                   serverUrl={productsTemp.getServerDetails}
                   onSubmitCustomField={(params) => {
-                    console.log('qweqweqwe', params)
+                    // console.log('qweqweqwe', params)
                   }}
                 />
 
@@ -69,9 +71,10 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   serverUrl={appUsersTemp.getServerDetails}
+                  updateUrl={appUsersTemp.updateServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
-                    console.log('qweqweqwe', params)
+                    // console.log('qweqweqwe', params)
                   }}
                 />
 
@@ -91,9 +94,10 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   serverUrl={data.getServerDetails}
+                  updateUrl={data.updateServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
-                    console.log('qweqweqwe', params)
+                    // console.log('qweqweqwe', params)
                   }}
                 />
 
@@ -108,9 +112,10 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   serverUrl={cultivationTemp.getServerDetails}
+                  updateUrl={cultivationTemp.updateServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
-                    console.log('qweqweqwe', params)
+                    // console.log('qweqweqwe', params)
                   }}
                 />
 

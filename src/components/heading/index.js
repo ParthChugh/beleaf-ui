@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import ShowFields from '../../components/showFields'
 import Modal from '@mui/material/Modal';
+import { toast } from 'react-toastify';
 import CustomTabs from '../../components/tabs'
 import { UserContext } from '../../contexts/user';
 
@@ -27,7 +28,7 @@ export default function Heading(props) {
     setValue(0)
     setOpen(button)
   };
-  console.log('openn----', open)
+  // console.log('openn----', open)
   const handleClose = () => setOpen({});
   const icons = (text, color) => {
     switch (text) {
@@ -44,8 +45,8 @@ export default function Heading(props) {
     transform: 'translate(-50%, -50%)',
     maxWidth: 1227,
     minWidth: "70%",
-    minHeight: "50%",
-    maxHeight: "70%",
+    minHeight: "70%",
+    maxHeight: "80%",
     bgcolor: 'background.paper',
     boxShadow: 24,
     // p: 4,
@@ -54,7 +55,58 @@ export default function Heading(props) {
     boxShadow: ""
   };
 
-  console.log("sendRequest12321", userState.errors)
+  // console.log("sendRequest12321", userState.errors)
+  const createElement = async (params) => {
+    const isFormData = open.payload.getServerDetails.isFormData
+    const values = params["Product"]
+    let formdata = null
+    if (isFormData) {
+      formdata = new FormData();
+      Object.keys(values).forEach((key) => {
+        const value = values[key];
+        console.log("value123123", value)
+        formdata.append(key, value?.[0]?.file ? value[0].file : value)
+      })
+    }
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/${open.payload.getServerDetails.url}`, {
+      method: 'POST',
+      ...!isFormData && {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
+      body: isFormData ? formdata : JSON.stringify(values)
+    })
+    let json = await response.json()
+    if (json.error) {
+      toast.error(json.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast.success("Added", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setTimeout(()=> {
+        window.location.reload();
+      }, 2000)
+      
+    }
+    setOpen({})
+  }
 
   useEffect(() => {
     if (sendRequest) {
@@ -69,7 +121,7 @@ export default function Heading(props) {
         }
       })
       setSendRequest('')
-      console.log("localErrors12321", localErrors)
+      // console.log("localErrors12321", localErrors)
       if (localErrors.length === 0) {
         if (value < (Object.keys(open.payload.tabs || {}).length - 1)) {
           setValue(value + 1)
@@ -84,18 +136,18 @@ export default function Heading(props) {
           payload: {},
         });
         if (!(value < (Object.keys(open.payload.tabs || {}).length - 1))) {
-          console.log("userState1232132", userState)
+          // console.log("userState1232132", userState)
           let correctedJson = {}
-          console.log('open ----------232131', open)
+          // console.log('open ----------232131', open)
 
           const tabs = Object.values(open.payload.tabs)[0]
-          
+
           Object.keys(tabs).forEach((key) => {
             correctedJson[key] = {}
             const tabValues = tabs[key];
             const values = userState.drafts[key];
             tabValues.map(valuesKey => {
-              let value = values[valuesKey.name] 
+              let value = values[valuesKey.name]
               if (valuesKey.optionUrl) {
                 const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
                 value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
@@ -103,8 +155,9 @@ export default function Heading(props) {
               correctedJson[key][valuesKey.name] = value
             })
           })
-          console.log('correctedJson123123', correctedJson)
-          setOpen({})
+          // console.log('correctedJson123123', correctedJson)
+          // setOpen({})
+          createElement(correctedJson)
         }
       }
     }
@@ -127,7 +180,7 @@ export default function Heading(props) {
           setSendRequest={setSendRequest}
           goToNextPage={() => setValue(value + 1)}
           onSubmitCustomField={(params) => {
-            console.log('qweqweqwe', params)
+            // console.log('qweqweqwe', params)
           }}
           value={Object.keys(data).length - 1}
           index={index}
@@ -179,7 +232,7 @@ export default function Heading(props) {
                 }
               }}
               onSubmit={() => {
-                console.log("onSubmit123213")
+                // console.log("onSubmit123213")
                 setSendRequest(Math.random().toString(36).slice(2))
               }}
               showNextButton={value !== (Object.keys(open.payload.tabs || {}).length - 1)}

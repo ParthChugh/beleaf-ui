@@ -10,6 +10,7 @@ import AttachImage from './attachImage'
 import Switch from './switch'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { toast } from 'react-toastify';
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import MapContainer from './map';
@@ -50,20 +51,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function ShowFields(props) {
-  const { type, values, onSubmitCustomField, serverUrl } = props
+  const { type, values, onSubmitCustomField, serverUrl, updateUrl } = props
   const [edit, setEdit] = useState(props.edit || {})
-  const [defaultValues, setDefaultValues] = useState({})
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
   const classes = useStyles();
+  let defaultValues = {}
   values.forEach((value) => {
     defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
   })
+  const [tempDefaultValues, setDefaultValues] = useState(defaultValues || {})
   // let serverData = JSON.parse(userState.editTable[`${serverUrl}${urlParams.id}`] || "{}")
   const { control, handleSubmit, formState, reset, watch } = useForm({
     defaultValues
   });
-  // console.log("defaultValues12321", serverData)
+  // // console.log("defaultValues12321", serverData)
 
   const fetchDataServer = async () => {
     let json = {}
@@ -91,6 +93,7 @@ export default function ShowFields(props) {
           defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
         })
         reset(defaultValues)
+        setDefaultValues(defaultValues)
       }
     } else if (Object.values(json?.data).length > 0) {
       let defaultValues = {}
@@ -111,14 +114,14 @@ export default function ShowFields(props) {
           defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
         }
       })
-      console.log("123213tempDefaultValues12321", defaultValues)
+      // console.log("123213tempDefaultValues12321", defaultValues)
       reset(JSON.parse(JSON.stringify(defaultValues)))
       setDefaultValues(defaultValues)
     }
   }
 
   useEffect(() => {
-    console.log("serverUrl123123", serverUrl)
+    // console.log("serverUrl123123", serverUrl)
     if (serverUrl) {
       fetchDataServer()
     } else {
@@ -126,11 +129,13 @@ export default function ShowFields(props) {
         defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
       })
       reset(defaultValues)
+      setDefaultValues(defaultValues)
     }
   }, [serverUrl])
 
   useEffect(() => {
     reset(defaultValues)
+    setDefaultValues(defaultValues)
   }, [JSON.stringify(defaultValues || {})])
 
   useEffect(() => {
@@ -148,7 +153,7 @@ export default function ShowFields(props) {
     }
   }, [JSON.stringify(formState.errors || {})])
 
-  console.log('userState12321', userState)
+  // console.log('userState12321', userState)
   const onSendReq = (params) => {
     try {
       let localErrors = []
@@ -183,9 +188,57 @@ export default function ShowFields(props) {
       onSubmitCustomField && onSubmitCustomField(params)
     } catch (el) {
     }
-
   }
 
+  const updateServerDetails = async (params) => {
+    const isFormData = updateUrl.isFormData
+  
+    let formdata = null
+    if (isFormData) {
+      formdata = new FormData();
+      Object.keys(params).forEach((key) => {
+        const value = params[key];
+        if(JSON.stringify(value) !== JSON.stringify(tempDefaultValues[key])) {
+          formdata.append(key, value?.[0]?.file ? value[0].file : value)
+        }
+        
+      })
+    }
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${updateUrl.url}${urlParams.id}`, {
+      method: 'PUT',
+      ...!isFormData && {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
+      body: isFormData ? formdata : JSON.stringify(params)
+    })
+    let json = await response.json()
+    if (json.error) {
+      toast.error(json.error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast.success(json.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+    setEdit({ ...edit, [type]: false })
+  }
   const onSubmit = (params, form) => {
     try {
       let localErrors = []
@@ -201,7 +254,8 @@ export default function ShowFields(props) {
         alert(`Please add the details in ${type}`)
         return;
       }
-      setEdit({ ...edit, [type]: false })
+      updateServerDetails(params)
+
     } catch (el) {
       setEdit({ ...edit, [type]: false })
     }
@@ -224,7 +278,7 @@ export default function ShowFields(props) {
             rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
-              console.log('props123123', props)
+              // console.log('props123123', props)
               return (
                 <Switch
                   {...customField}
@@ -245,7 +299,7 @@ export default function ShowFields(props) {
             rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
-              console.log('props123123', props)
+              // console.log('props123123', props)
               return (
                 <AttachImage
                   {...customField}
@@ -266,7 +320,7 @@ export default function ShowFields(props) {
             rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
-              console.log('props123123', props)
+              // console.log('props123123', props)
               return (
                 <Select
                   {...customField}
@@ -331,7 +385,7 @@ export default function ShowFields(props) {
             rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
-              console.log('customField12321', customField)
+              // console.log('customField12321', customField)
               return (
                 <>
                   <Box
@@ -345,11 +399,11 @@ export default function ShowFields(props) {
                         };
                         function success(pos) {
                           const crd = pos.coords;
-                          console.log('Your current position is:');
-                          console.log(`Latitude : ${crd.latitude}`);
-                          console.log(`Longitude: ${crd.longitude}`);
+                          // console.log('Your current position is:');
+                          // console.log(`Latitude : ${crd.latitude}`);
+                          // console.log(`Longitude: ${crd.longitude}`);
                           customField.onChange({ latitude: crd.latitude, longitude: crd.longitude })
-                          console.log(`More or less ${crd.accuracy} meters.`);
+                          // console.log(`More or less ${crd.accuracy} meters.`);
                         }
 
                         function error(err) {

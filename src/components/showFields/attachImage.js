@@ -5,7 +5,7 @@ import "./ImageUpload.css";
 
 function ImageUpload(props) {
   // const [image, setImage] = useState(null);
-  console.log('props12321', props)
+  // console.log('props12321', props)
   const [images, setImages] = React.useState([]);
   const maxNumber = 69;
 
@@ -14,9 +14,9 @@ function ImageUpload(props) {
     props.onChange(imageList)
     setImages(imageList);
   };
-
+  // console.log("props.value", props.value)
   useEffect(() => {
-    if (typeof props.value === 'string') {
+    if (typeof props.value === 'string' && props.value !== '') {
       setImages([{ "data_url": props.value }]);
     }
   }, [props.value])
