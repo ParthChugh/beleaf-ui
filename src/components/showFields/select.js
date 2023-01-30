@@ -18,12 +18,9 @@ const MenuProps = {
   },
 };
 
-function getStyles(name, personName, theme) {
+function getStyles(theme) {
   return {
-    fontWeight:
-      personName.includes(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
+    fontWeight: theme.typography.fontWeightRegular
   };
 }
 
@@ -38,14 +35,15 @@ export default function MultipleSelectPlaceholder(props) {
 
   const fetchOptions = async () => {
     let json = {}
+    console.log("userState.serverOptions?.[optionUrl]", userState.serverOptions?.[optionUrl])
     if (userState.serverOptions?.[optionUrl]) {
       json = userState.serverOptions?.[optionUrl]
       if (optionMainVariable) {
         json = userState.serverOptions?.[optionUrl]?.[optionMainVariable]
       }
     } else {
-      console.log("optionUrl12312", optionUrl)
       const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${optionUrl}`, { method: 'GET' })
+
       json = await response.json()
       if (json.data) {
         json = json.data
@@ -60,6 +58,7 @@ export default function MultipleSelectPlaceholder(props) {
       
     }
 
+    console.log("json.map(el =>", json.map(el => el[optionVariable]))
     setServerOptions(json.map(el => el[optionVariable]))
   }
   useEffect(() => {
@@ -107,7 +106,7 @@ export default function MultipleSelectPlaceholder(props) {
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, value, theme)}
+              style={getStyles(theme)}
               className="select__name"
             >
               {name}

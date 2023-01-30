@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageUploading from 'react-images-uploading';
 import "./ImageUpload.css";
 
@@ -9,12 +9,17 @@ function ImageUpload(props) {
   const [images, setImages] = React.useState([]);
   const maxNumber = 69;
 
-  const onChange = (imageList, addUpdateIndex) => {
+  const onChange = (imageList) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     props.onChange(imageList)
     setImages(imageList);
   };
+
+  useEffect(() => {
+    if (typeof props.value === 'string') {
+      setImages([{ "data_url": props.value }]);
+    }
+  }, [props.value])
 
   return (
     <div className="image-upload-container">
@@ -30,7 +35,6 @@ function ImageUpload(props) {
           onImageUpload,
           onImageUpdate,
           onImageRemove,
-          isDragging,
           dragProps,
         }) => (
           // write your building UI

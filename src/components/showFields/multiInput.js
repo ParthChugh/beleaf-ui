@@ -40,6 +40,8 @@ export default function CustomMultiInput(props) {
             <tr>
               {keys.map(key => {
                 const row = rows.find(el => el.name === key)
+                console.log("row123123", row)
+                 if(typeof row === 'undefined') return <div />
                 switch (row.type) {
                   case 'link':
                     return (

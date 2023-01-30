@@ -13,6 +13,7 @@ import Tab from '@mui/material/Tab';
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import MapContainer from './map';
+import { useParams } from 'react-router-dom'
 import { UserContext } from '../../contexts/user';
 
 function a11yProps(index) {
@@ -49,20 +50,84 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function ShowFields(props) {
-  const { type, values, onSubmitCustomField } = props
+  const { type, values, onSubmitCustomField, serverUrl } = props
   const [edit, setEdit] = useState(props.edit || {})
+  const [defaultValues, setDefaultValues] = useState({})
   const { userState, userDispatch } = useContext(UserContext);
+  let urlParams = useParams();
   const classes = useStyles();
-  // console.log('props21321', props)
-  const defaultValues = {}
   values.forEach((value) => {
     defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
   })
-  console.log('defaultValues123123', defaultValues)
-  console.log('userState.drafts23123', userState.drafts)
+  // let serverData = JSON.parse(userState.editTable[`${serverUrl}${urlParams.id}`] || "{}")
   const { control, handleSubmit, formState, reset, watch } = useForm({
     defaultValues
   });
+  // console.log("defaultValues12321", serverData)
+
+  const fetchDataServer = async () => {
+    let json = {}
+    // if (Object.values(serverData?.data || {}).length === 0) {
+    const response = await fetch(`${serverUrl}${urlParams.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    json = await response.json()
+    // userDispatch({
+    //   type: 'EDIT_TABLE',
+    //   payload: { [`${serverUrl}${urlParams.id}`]: JSON.stringify(json) },
+    // });
+    // } else {
+    //   json = serverData
+    // }
+
+
+    if (json?.data?.data?.[0]) {
+      const serverValues = json?.data?.data?.[0]
+      if (serverValues) {
+        values.forEach((value) => {
+          defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
+        })
+        reset(defaultValues)
+      }
+    } else if (Object.values(json?.data).length > 0) {
+      let defaultValues = {}
+      values.forEach((value) => {
+        if (value.type === 'multi-inputs') {
+          const serverValues = Object.values(json?.data)
+          const type = (serverValues.find(el => el.farm_type_name === value.name)).cultivation_info
+          defaultValues[value.name] = []
+          type.forEach((serverValue) => {
+            let tempValues = {}
+            value.rows.forEach((row) => {
+              tempValues[row.name] = row?.serverVaraible ? serverValue?.[row?.serverVaraible]?.[row.optionVariable] : serverValue[row.name]
+            })
+            defaultValues[value.name].push(tempValues)
+          })
+        } else {
+          const serverValues = json?.data
+          defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
+        }
+      })
+      console.log("123213tempDefaultValues12321", defaultValues)
+      reset(JSON.parse(JSON.stringify(defaultValues)))
+      setDefaultValues(defaultValues)
+    }
+  }
+
+  useEffect(() => {
+    console.log("serverUrl123123", serverUrl)
+    if (serverUrl) {
+      fetchDataServer()
+    } else {
+      values.forEach((value) => {
+        defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
+      })
+      reset(defaultValues)
+    }
+  }, [serverUrl])
 
   useEffect(() => {
     reset(defaultValues)
@@ -73,15 +138,15 @@ export default function ShowFields(props) {
       handleSubmit(onSendReq)()
     }
   }, [props.sendRequest])
-  
+
   useEffect(() => {
-    if(Object.values(formState.errors).length > 0) {
+    if (Object.values(formState.errors).length > 0) {
       userDispatch({
         type: 'UPDATE_ERROR',
         payload: { [type]: formState.errors },
       });
     }
-  },[JSON.stringify(formState.errors || {})])
+  }, [JSON.stringify(formState.errors || {})])
 
   console.log('userState12321', userState)
   const onSendReq = (params) => {
@@ -141,7 +206,7 @@ export default function ShowFields(props) {
       setEdit({ ...edit, [type]: false })
     }
   }
-  
+
   const createField = (field, index) => {
     const name = field.name
     const dependant = (field.dependant || "")?.split('.')
@@ -324,7 +389,6 @@ export default function ShowFields(props) {
             rules={{ required: true }}
             render={(props) => {
               const { field: customField } = props;
-              console.log("customField.value", customField.value)
               return (
                 <>
                   <MultiInput

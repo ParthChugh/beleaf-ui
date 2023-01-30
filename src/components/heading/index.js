@@ -27,6 +27,7 @@ export default function Heading(props) {
     setValue(0)
     setOpen(button)
   };
+  console.log('openn----', open)
   const handleClose = () => setOpen({});
   const icons = (text, color) => {
     switch (text) {
@@ -42,7 +43,7 @@ export default function Heading(props) {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     maxWidth: 1227,
-    minWidth: "70%", 
+    minWidth: "70%",
     minHeight: "50%",
     maxHeight: "70%",
     bgcolor: 'background.paper',
@@ -70,10 +71,10 @@ export default function Heading(props) {
       setSendRequest('')
       console.log("localErrors12321", localErrors)
       if (localErrors.length === 0) {
-        if(value < (Object.keys(open.payload.tabs || {}).length - 1)) {
+        if (value < (Object.keys(open.payload.tabs || {}).length - 1)) {
           setValue(value + 1)
         }
-        
+
         let types = {}
         Object.keys(userState.errors).forEach(el => {
           types[el] = null
@@ -82,8 +83,27 @@ export default function Heading(props) {
           type: 'REMOVE_ERROR',
           payload: {},
         });
-        if(!(value < (Object.keys(open.payload.tabs || {}).length - 1))) {
+        if (!(value < (Object.keys(open.payload.tabs || {}).length - 1))) {
           console.log("userState1232132", userState)
+          let correctedJson = {}
+          console.log('open ----------232131', open)
+
+          const tabs = Object.values(open.payload.tabs)[0]
+          
+          Object.keys(tabs).forEach((key) => {
+            correctedJson[key] = {}
+            const tabValues = tabs[key];
+            const values = userState.drafts[key];
+            tabValues.map(valuesKey => {
+              let value = values[valuesKey.name] 
+              if (valuesKey.optionUrl) {
+                const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
+                value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
+              }
+              correctedJson[key][valuesKey.name] = value
+            })
+          })
+          console.log('correctedJson123123', correctedJson)
           setOpen({})
         }
       }

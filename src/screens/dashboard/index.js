@@ -28,12 +28,13 @@ const DashboardPage = () => {
         switch (value) {
           case 0:
             const data = masterData({})
-            return Object.keys(data).map((type, index) => {
-              const values = data[type]
+            return Object.keys(data.fields).map((type, index) => {
+              const values = data.fields[type]
               return (
                 <ShowFields
                   key={`dashboard_subheading__${index}`}
                   type={type}
+                  serverUrl={data.getServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
                     console.log('qweqweqwe', params)
@@ -44,13 +45,14 @@ const DashboardPage = () => {
             })
           case 1:
             const productsTemp = products({})
-            return Object.keys(productsTemp).map((type, index) => {
-              const values = productsTemp[type]
+            return Object.keys(productsTemp.fields).map((type, index) => {
+              const values = productsTemp.fields[type]
               return (
                 <ShowFields
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
+                  serverUrl={productsTemp.getServerDetails}
                   onSubmitCustomField={(params) => {
                     console.log('qweqweqwe', params)
                   }}
@@ -60,12 +62,13 @@ const DashboardPage = () => {
             })
           case 2:
             const appUsersTemp = appUsers({})
-            return Object.keys(appUsersTemp).map((type, index) => {
-              const values = appUsersTemp[type]
+            return Object.keys(appUsersTemp.fields).map((type, index) => {
+              const values = appUsersTemp.fields[type]
               return (
                 <ShowFields
                   key={`dashboard_subheading__${index}`}
                   type={type}
+                  serverUrl={appUsersTemp.getServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
                     console.log('qweqweqwe', params)
@@ -81,12 +84,13 @@ const DashboardPage = () => {
         switch (value) {
           case 0:
             const data = general({})
-            return Object.keys(data).map((type, index) => {
-              const values = data[type]
+            return Object.keys(data.fields).map((type, index) => {
+              const values = data.fields[type]
               return (
                 <ShowFields
                   key={`dashboard_subheading__${index}`}
                   type={type}
+                  serverUrl={data.getServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
                     console.log('qweqweqwe', params)
@@ -97,12 +101,13 @@ const DashboardPage = () => {
             })
           case 1:
             const cultivationTemp = cultivation({})
-            return Object.keys(cultivationTemp).map((type, index) => {
-              const values = cultivationTemp[type]
+            return Object.keys(cultivationTemp.fields).map((type, index) => {
+              const values = cultivationTemp.fields[type]
               return (
                 <ShowFields
                   key={`dashboard_subheading__${index}`}
                   type={type}
+                  serverUrl={cultivationTemp.getServerDetails}
                   values={values}
                   onSubmitCustomField={(params) => {
                     console.log('qweqweqwe', params)

@@ -7,7 +7,8 @@ const initialState = {
   drafts: {},
   errors: {},
   serverOptions: {},
-  tableData: {}
+  tableData: {},
+  editTable: {}
 };
 
 const userReducer = (state, action) => {
@@ -42,6 +43,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         tableData: { ...state.tableData, ...action.payload },
+      };
+    case 'EDIT_TABLE':
+      return {
+        ...state,
+        editTable: { ...state.editTable, ...action.payload },
       };
     case 'REMOVE_ERROR':
       return {

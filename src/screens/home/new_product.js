@@ -1,8 +1,8 @@
 export const newProduct = {
-
   title: {
     "Product": "Add New Product",
   },
+  getServerDetails: 'rest/admin/new_product',
   tabs: {
     "Product": {
       "Product": [
@@ -27,7 +27,7 @@ export const newProduct = {
         },
         {
           type: "input",
-          name: "product",
+          name: "product_general_name",
           headerName: "Product",
           // value: props["Farm Name"] || "",
           width: '100%',
@@ -36,7 +36,7 @@ export const newProduct = {
         },
         {
           type: "attach-image",
-          name: "image",
+          name: "product_picture",
           headerName: "Image",
           // value: props["Farm Name"] || "",
           width: '272.05px',
@@ -45,7 +45,7 @@ export const newProduct = {
         },
         {
           type: "dropdown",
-          name: "category",
+          name: "category_id",
           headerName: "Category",
           // value: props["Farm Contact"] || "",
           optionUrl: '/rest/metadata',
@@ -57,7 +57,7 @@ export const newProduct = {
         },
         {
           type: "dropdown",
-          name: "variant",
+          name: "variant_name",
           headerName: "Variant",
           placeholder: 'Variant Name...',
           options: [
@@ -83,12 +83,12 @@ export const newProduct = {
         {
           type: "dropdown",
           placeholder: 'Select Maturity',
-          headerName: "maturity",
+          headerName: "Maturity",
           width: '350px',
           required: true,
           height: '41px',
           type: "dropdown",
-          name: "Maturity",
+          name: "maturity_id",
           optionUrl: '/rest/metadata',
           optionMainVariable: "cropMaturities",
           optionVariable: "maturity_type",
