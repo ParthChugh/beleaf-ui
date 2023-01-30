@@ -68,7 +68,7 @@ export default function ShowFields(props) {
   const fetchDataServer = async () => {
     let json = {}
     // if (Object.values(serverData?.data || {}).length === 0) {
-    const response = await fetch(`${serverUrl}${urlParams.id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverUrl}${urlParams.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
