@@ -36,6 +36,7 @@ const DashboardPage = () => {
                   type={type}
                   serverUrl={data.getServerDetails}
                   updateUrl={data.updateServerDetails}
+                  getKeyInformation={data.getKeyInformation}
                   values={values}
                   onSubmitCustomField={(params) => {
                     // console.log('qweqweqwe', params)
@@ -55,6 +56,7 @@ const DashboardPage = () => {
                   values={values}
                   updateUrl={productsTemp.updateServerDetails}
                   serverUrl={productsTemp.getServerDetails}
+                  getKeyInformation={productsTemp.getKeyInformation}
                   onSubmitCustomField={(params) => {
                     // console.log('qweqweqwe', params)
                   }}
@@ -72,6 +74,7 @@ const DashboardPage = () => {
                   type={type}
                   serverUrl={appUsersTemp.getServerDetails}
                   updateUrl={appUsersTemp.updateServerDetails}
+                  getKeyInformation={appUsersTemp.getKeyInformation}
                   values={values}
                   onSubmitCustomField={(params) => {
                     // console.log('qweqweqwe', params)
@@ -95,6 +98,7 @@ const DashboardPage = () => {
                   type={type}
                   serverUrl={data.getServerDetails}
                   updateUrl={data.updateServerDetails}
+                  getKeyInformation={data.getKeyInformation}
                   values={values}
                   onSubmitCustomField={(params) => {
                     // console.log('qweqweqwe', params)
@@ -113,6 +117,7 @@ const DashboardPage = () => {
                   type={type}
                   serverUrl={cultivationTemp.getServerDetails}
                   updateUrl={cultivationTemp.updateServerDetails}
+                  getKeyInformation={cultivationTemp.getKeyInformation}
                   values={values}
                   onSubmitCustomField={(params) => {
                     // console.log('qweqweqwe', params)

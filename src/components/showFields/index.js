@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function ShowFields(props) {
-  const { type, values, onSubmitCustomField, serverUrl, updateUrl } = props
+  const { type, values, onSubmitCustomField, serverUrl, updateUrl, getKeyInformation } = props
   const [edit, setEdit] = useState(props.edit || {})
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
@@ -194,6 +194,7 @@ export default function ShowFields(props) {
     const isFormData = updateUrl.isFormData
   
     let formdata = null
+    let correctedValues = {}
     if (isFormData) {
       formdata = new FormData();
       Object.keys(params).forEach((key) => {
@@ -201,9 +202,39 @@ export default function ShowFields(props) {
         if(JSON.stringify(value) !== JSON.stringify(tempDefaultValues[key])) {
           formdata.append(key, value?.[0]?.file ? value[0].file : value)
         }
-        
+      })
+    } else {
+      values.forEach((value) => {
+        if (value.type === 'multi-inputs') {
+          const serverValues = params[type]
+          let keyName = ''
+          if(getKeyInformation) {
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type).id
+          }
+          correctedValues[keyName || value.name] = []
+          serverValues.forEach((serverValue) => {
+            let tempValues = {}
+            value.rows.forEach((row) => {
+              if(serverValue[row.name] === "true" || serverValue[row.name] === "false") {
+                tempValues[row.name] = serverValue[row.name] === "true"
+              }else {
+                tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
+              }
+              
+            })
+            correctedValues[keyName || value.name].push(tempValues)
+          })
+        } else {
+          const serverValues = params[type]
+          let keyName = ''
+          if(getKeyInformation) {
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type).id
+          }
+          correctedValues[keyName || value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
+        }
       })
     }
+    console.log("correctedValues123213", correctedValues)
     const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${updateUrl.url}${urlParams.id}`, {
       method: 'PUT',
       ...!isFormData && {
@@ -211,7 +242,7 @@ export default function ShowFields(props) {
           'Content-Type': 'application/json'
         }
       },
-      body: isFormData ? formdata : JSON.stringify(params)
+      body: isFormData ? formdata : JSON.stringify(correctedValues)
     })
     let json = await response.json()
     if (json.error) {
@@ -257,7 +288,8 @@ export default function ShowFields(props) {
       updateServerDetails(params)
 
     } catch (el) {
-      setEdit({ ...edit, [type]: false })
+      console.log('el213123', el)
+      // setEdit({ ...edit, [type]: false })
     }
   }
 

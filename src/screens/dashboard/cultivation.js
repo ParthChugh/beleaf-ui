@@ -1,6 +1,15 @@
 export const cultivation = (props) => {
   return {
     getServerDetails: "/rest/admin/product-cultivation/",
+    updateServerDetails: {
+      url: '/rest/admin/product-cultivation/',
+      isFormData: false,
+    },
+    getKeyInformation: {
+      url: '/rest/metadata',
+      optionMainVariable: "farmTypes",
+      optionVariable: "farm_type_name"
+    },
     fields: {
       "Hydroponics": [
         {
