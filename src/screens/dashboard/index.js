@@ -166,7 +166,7 @@ const DashboardPage = () => {
       <>
         <Heading
           text={"Administration"}
-          subHeading={"Meko Melon (LJBABGR001)"}
+          subHeading={`${params.id.toUpperCase()}`}
         />
         <CustomTabs
           tabs={getTabs(params.page_id)}

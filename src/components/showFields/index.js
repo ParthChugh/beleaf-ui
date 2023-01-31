@@ -257,7 +257,7 @@ export default function ShowFields(props) {
         theme: "dark",
       });
     } else {
-      toast.success(json.data.message, {
+      toast.success("Fields Updated", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

@@ -29,7 +29,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "crop_type_id",
+              name: "crop_type",
               headerName: "Annual",
               width: "112px",
               serverVaraible: "crop_type",
@@ -40,7 +40,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "harvest_class_id",
+              name: "harvest_class",
               headerName: "Harvest class",
               serverVaraible: "harvest_class",
               width: "115px",
@@ -51,7 +51,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "grow_media_id",
+              name: "grow_media",
               headerName: "Grow Media",
               width: "120px",
               type: "dropdown",
@@ -103,9 +103,9 @@ export const cultivation = (props) => {
           value: props["Add Greenhouse"] || [
             {
               is_active: "",
-              crop_type_id: "",
-              "harvest_class_id": "",
-              "grow_media_id": "",
+              crop_type: "",
+              "harvest_class": "",
+              "grow_media": "",
               "germination": "",
               juvenile: "",
               vegetative: "",
@@ -134,7 +134,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "crop_type_id",
+              name: "crop_type",
               headerName: "Annual",
               width: "112px",
               serverVaraible: "crop_type",
@@ -145,7 +145,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "harvest_class_id",
+              name: "harvest_class",
               headerName: "Harvest class",
               serverVaraible: "harvest_class",
               width: "115px",
@@ -156,7 +156,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "grow_media_id",
+              name: "grow_media",
               headerName: "Grow Media",
               width: "120px",
               type: "dropdown",
@@ -208,9 +208,9 @@ export const cultivation = (props) => {
           value: props["Add Greenhouse"] || [
             {
               is_active: "",
-              crop_type_id: "",
-              "harvest_class_id": "",
-              "grow_media_id": "",
+              crop_type: "",
+              "harvest_class": "",
+              "grow_media": "",
               "germination": "",
               juvenile: "",
               vegetative: "",
@@ -239,7 +239,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "crop_type_id",
+              name: "crop_type",
               headerName: "Annual",
               width: "112px",
               serverVaraible: "crop_type",
@@ -250,7 +250,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "harvest_class_id",
+              name: "harvest_class",
               headerName: "Harvest class",
               serverVaraible: "harvest_class",
               width: "115px",
@@ -261,7 +261,7 @@ export const cultivation = (props) => {
               height: 41
             },
             {
-              name: "grow_media_id",
+              name: "grow_media",
               headerName: "Grow Media",
               width: "120px",
               type: "dropdown",
@@ -313,9 +313,9 @@ export const cultivation = (props) => {
           value: props["Soilless"] || [
             {
               is_active: "",
-              crop_type_id: "",
-              "harvest_class_id": "",
-              "grow_media_id": "",
+              crop_type: "",
+              "harvest_class": "",
+              "grow_media": "",
               "germination": "",
               juvenile: "",
               vegetative: "",
