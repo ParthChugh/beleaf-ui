@@ -56,16 +56,11 @@ export default function ShowFields(props) {
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
   const classes = useStyles();
-  
-  // values.forEach((value) => {
-  //   defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
-  // })
-  const [tempDefaultValues, setDefaultValues] = useState({})
-  // let serverData = JSON.parse(userState.editTable[`${serverUrl}${urlParams.id}`] || "{}")
+
   const fetchDataServer = () => {
     let defaultValues = {}
     let json = userState.editTable?.[`${serverUrl}${urlParams.id}`]
-    console.log('jsonqwe123213',json)
+    console.log('jsonqwe123213', json)
     if (json?.data?.data?.[0]) {
       const serverValues = json?.data?.data?.[0]
       if (serverValues) {
@@ -75,22 +70,22 @@ export default function ShowFields(props) {
         // reset(defaultValues)
         // setDefaultValues(defaultValues)
       }
-    } else if (Object.values(json?.data).length > 0) {
+    } else if (Object.values(json?.data || {}).length > 0) {
       values.forEach((value) => {
         if (value.type === 'multi-inputs') {
           let serverValues = []
-          if(getKeyInformation.fieldType) {
+          if (getKeyInformation.fieldType) {
             serverValues = Object.values(json?.data[getKeyInformation.fieldType])
           } else {
             serverValues = Object.values(json?.data)
           }
           let type = []
-          if(getKeyInformation.typeInfo) {
+          if (getKeyInformation.typeInfo) {
             type = (serverValues.find(el => el.farm_type_name === value.name))?.[getKeyInformation.typeInfo] || value.value
           } else {
             type = json?.data[getKeyInformation.fieldType][value.name]
           }
-          
+
           defaultValues[value.name] = []
           type.forEach((serverValue) => {
             let tempValues = {}
@@ -113,7 +108,7 @@ export default function ShowFields(props) {
   });
   console.log("defaultValues12321", fetchDataServer())
 
-  
+
 
   useEffect(() => {
     // console.log("serverUrl123123", serverUrl)
@@ -192,9 +187,15 @@ export default function ShowFields(props) {
     let correctedValues = {}
     if (isFormData) {
       formdata = new FormData();
-      Object.keys(params).forEach((key) => {
-        const value = params[key];
+      const tempDefaultValues = fetchDataServer()
+      values.map(valuesKey => {
+        const key = valuesKey.name
+        let value = params[key];
         if (JSON.stringify(value) !== JSON.stringify(tempDefaultValues[key])) {
+          if (valuesKey.optionUrl) {
+            const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
+            value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
+          }
           formdata.append(key, value?.[0]?.file ? value[0].file : value)
         }
       })
@@ -220,12 +221,12 @@ export default function ShowFields(props) {
             correctedValues[keyName || value.name].push(tempValues)
           })
         } else {
-          const serverValues = params[type]
+          const serverValues = params
           let keyName = ''
           if (getKeyInformation) {
             keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
           }
-          correctedValues[keyName || value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
+          correctedValues[keyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
         }
       })
     }

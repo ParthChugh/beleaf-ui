@@ -5,7 +5,7 @@ export default {
   getServerDetails: '/rest/admin/products',
   columns: [
     {
-      field: "product_image",
+      field: "product_picture",
       headerName: "",
       // file_type:  "product_image",
       width: 100,
