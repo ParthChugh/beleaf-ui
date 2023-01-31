@@ -8,6 +8,10 @@ export const masterData = (props) => {
       fieldType: "facility",
       typeInfo: 'facility_info'
     },
+    updateServerDetails: {
+      url: '/rest/admin/farm/',
+      isFormData: false,
+    },
     fields: {
       "Basic Data": [
         {
@@ -29,7 +33,7 @@ export const masterData = (props) => {
           headerName: "Company Name",
           value: props["Company Name"] || "",
           width: '412px',
-          required: true,
+          required: false,
           height: '9px'
         },
         {
@@ -43,7 +47,7 @@ export const masterData = (props) => {
         },
         {
           type: "input",
-          name: "farm_name",
+          name: "contact_name",
           headerName: "Farm Contact Name",
           value: props["Farm Contact"] || "",
           width: '330px',
@@ -131,6 +135,7 @@ export const masterData = (props) => {
               name: "irrigation",
               headerName: "Irrigation",
               width: "132px",
+              type: "dropdown",
               serverVaraible: "irrigation",
               optionUrl: '/rest/metadata',
               optionMainVariable: "farmIrrigationTypes",
@@ -171,6 +176,7 @@ export const masterData = (props) => {
             {
               name: "irrigation",
               headerName: "Irrigation",
+              type: "dropdown",
               width: "132px",
               serverVaraible: "irrigation",
               optionUrl: '/rest/metadata',

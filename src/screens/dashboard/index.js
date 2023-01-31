@@ -1,4 +1,4 @@
-import React, { useState } /*, { useContext } */ from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Heading from '../../components/heading';
 import CustomTabs from '../../components/tabs'
 import ShowFields from '../../components/showFields'
@@ -8,6 +8,7 @@ import { masterData } from './master_data'
 import { products } from './products'
 import { appUsers } from './app_users'
 // products
+import { UserContext } from '../../contexts/user';
 import { general } from './general';
 import { cultivation } from './cultivation'
 
@@ -16,13 +17,66 @@ import { useSearchParams, useParams } from 'react-router-dom'
 
 
 const DashboardPage = () => {
-  // const { userState } = useContext(UserContext);
+  const { userState, userDispatch } = useContext(UserContext);
   let params = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
   const [value, setValue] = useState(parseInt(searchParams.get('tab') || 0));
-
+  const getServerUrl = () => {
+    switch (params.page_id) {
+      case "farms":
+        switch (value) {
+          case 0:
+            const data = masterData({})
+            return data.getServerDetails
+          case 1:
+            const productsTemp = products({})
+            return productsTemp.getServerDetails
+          case 2:
+            const appUsersTemp = appUsers({})
+            return appUsersTemp.getServerDetails
+          default:
+            return <div>dqwdqwdwq 2</div>
+        }
+      case "products":
+        switch (value) {
+          case 0:
+            const data = general({})
+            return data.getServerDetails
+          case 1:
+            const cultivationTemp = cultivation({})
+            return cultivationTemp.getServerDetails
+          default:
+            return <div>dqwdqwdwq 2</div>
+        }
+      case "users":
+        return <div>dqwdqwdwq 2 Users</div>
+      default:
+        return <div>dqwdqwdwq default</div>
+    }
+  }
+  const fetchServerValues = async () => {
+    const serverUrl = getServerUrl()
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverUrl}${params.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    const json = await response.json()
+    console.log('json12312321', json)
+    userDispatch({
+      type: 'EDIT_TABLE',
+      payload: { [`${serverUrl}${params.id}`]: json },
+    });
+  }
+  useEffect(() => {
+    fetchServerValues()
+  }, [value])
   // const isUserLoggedIn = checkIfUserLoggedIn(userState.user.accessToken)
   const getSubData = (value) => {
+    if (!userState.editTable?.[`${getServerUrl()}${params.id}`]) {
+      return <div />
+    }
     switch (params.page_id) {
       case "farms":
         switch (value) {

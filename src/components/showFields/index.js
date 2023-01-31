@@ -56,48 +56,26 @@ export default function ShowFields(props) {
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
   const classes = useStyles();
-  let defaultValues = {}
-  values.forEach((value) => {
-    defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
-  })
-  const [tempDefaultValues, setDefaultValues] = useState(defaultValues || {})
+  
+  // values.forEach((value) => {
+  //   defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
+  // })
+  const [tempDefaultValues, setDefaultValues] = useState({})
   // let serverData = JSON.parse(userState.editTable[`${serverUrl}${urlParams.id}`] || "{}")
-  const { control, handleSubmit, formState, reset, watch } = useForm({
-    defaultValues
-  });
-  // // console.log("defaultValues12321", serverData)
-
-  const fetchDataServer = async () => {
-    let json = {}
-    // if (Object.values(serverData?.data || {}).length === 0) {
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverUrl}${urlParams.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-    json = await response.json()
-    console.log('json12312321', json)
-    // userDispatch({
-    //   type: 'EDIT_TABLE',
-    //   payload: { [`${serverUrl}${urlParams.id}`]: JSON.stringify(json) },
-    // });
-    // } else {
-    //   json = serverData
-    // }
-
-
+  const fetchDataServer = () => {
+    let defaultValues = {}
+    let json = userState.editTable?.[`${serverUrl}${urlParams.id}`]
+    console.log('jsonqwe123213',json)
     if (json?.data?.data?.[0]) {
       const serverValues = json?.data?.data?.[0]
       if (serverValues) {
         values.forEach((value) => {
           defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
         })
-        reset(defaultValues)
-        setDefaultValues(defaultValues)
+        // reset(defaultValues)
+        // setDefaultValues(defaultValues)
       }
     } else if (Object.values(json?.data).length > 0) {
-      let defaultValues = {}
       values.forEach((value) => {
         if (value.type === 'multi-inputs') {
           let serverValues = []
@@ -108,7 +86,7 @@ export default function ShowFields(props) {
           }
           let type = []
           if(getKeyInformation.typeInfo) {
-            type = (serverValues.find(el => el.farm_type_name === value.name))[getKeyInformation.typeInfo]
+            type = (serverValues.find(el => el.farm_type_name === value.name))?.[getKeyInformation.typeInfo] || value.value
           } else {
             type = json?.data[getKeyInformation.fieldType][value.name]
           }
@@ -117,7 +95,7 @@ export default function ShowFields(props) {
           type.forEach((serverValue) => {
             let tempValues = {}
             value.rows.forEach((row) => {
-              tempValues[row.name] = row?.serverVaraible ? serverValue?.[row?.serverVaraible]?.[row.optionVariable] : serverValue[row.name]
+              tempValues[row.name] = (row?.serverVaraible ? serverValue?.[row?.serverVaraible]?.[row.optionVariable] : serverValue[row.name]) || ""
             })
             defaultValues[value.name].push(tempValues)
           })
@@ -126,29 +104,34 @@ export default function ShowFields(props) {
           defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
         }
       })
-      // console.log("123213tempDefaultValues12321", defaultValues)
-      reset(JSON.parse(JSON.stringify(defaultValues)))
-      setDefaultValues(defaultValues)
     }
+    console.log("defaultValues12321,123123", defaultValues)
+    return defaultValues
   }
+  const { control, handleSubmit, formState, reset, watch } = useForm({
+    defaultValues: (fetchDataServer())
+  });
+  console.log("defaultValues12321", fetchDataServer())
+
+  
 
   useEffect(() => {
     // console.log("serverUrl123123", serverUrl)
     if (serverUrl) {
       fetchDataServer()
     } else {
-      values.forEach((value) => {
-        defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
-      })
-      reset(defaultValues)
-      setDefaultValues(defaultValues)
+      // values.forEach((value) => {
+      //   defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
+      // })
+      // reset(defaultValues)
+      // setDefaultValues(defaultValues)
     }
   }, [serverUrl])
 
-  useEffect(() => {
-    reset(defaultValues)
-    setDefaultValues(defaultValues)
-  }, [JSON.stringify(defaultValues || {})])
+  // useEffect(() => {
+  //   // reset(defaultValues)
+  //   setDefaultValues(defaultValues)
+  // }, [JSON.stringify(defaultValues || {})])
 
   useEffect(() => {
     if (props.sendRequest) {
@@ -221,7 +204,7 @@ export default function ShowFields(props) {
           const serverValues = params[type]
           let keyName = ''
           if (getKeyInformation) {
-            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type).id
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
           }
           correctedValues[keyName || value.name] = []
           serverValues.forEach((serverValue) => {
@@ -240,7 +223,7 @@ export default function ShowFields(props) {
           const serverValues = params[type]
           let keyName = ''
           if (getKeyInformation) {
-            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type).id
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
           }
           correctedValues[keyName || value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
         }
@@ -282,7 +265,9 @@ export default function ShowFields(props) {
     }
     setEdit({ ...edit, [type]: false })
   }
+  console.log('ereroeee', formState)
   const onSubmit = (params, form) => {
+    console.log('params123123', params)
     try {
       let localErrors = []
       const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
@@ -382,7 +367,7 @@ export default function ShowFields(props) {
           <Controller
             name={field.name}
             control={control}
-            rules={{ required: true }}
+            rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
               return (
@@ -487,7 +472,7 @@ export default function ShowFields(props) {
           <Controller
             name={field.name}
             control={control}
-            rules={{ required: true }}
+            rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
               console.log('customFieldvalueeeee', customField.value)

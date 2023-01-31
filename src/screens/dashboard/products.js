@@ -11,23 +11,24 @@ export const products = (props) => {
           name: "historic_yield",
           rows: [
             {
-              name: "product",
+              name: "product_id",
               width: "185.46px",
               headerName: "Product",
-              height: 9
+              height: 9,
             },
             {
-              name: "method",
+              name: "farm_type",
               headerName: "Method",
               type: "dropdown",
               optionUrl: '/rest/metadata',
               optionMainVariable: "farmTypes",
               optionVariable: "farm_type_name",
+              serverVaraible: "farm_type",
               width: "185.46px",
-              height: 41
+              height: 41,
             },
             {
-              name: "quantity",
+              name: "quantity_produced",
               headerName: "Quantity",
               width: "98px",
               height: 9
@@ -40,42 +41,47 @@ export const products = (props) => {
               type: "dropdown",
               serverVaraible: "uom",
               optionUrl: '/rest/metadata',
-              optionMainVariable: "uom",
+              optionMainVariable: "productQtyUnits",
               optionVariable: "uom",
             },
             {
-              name: "frequency",
+              name: "harvest_frequency",
               headerName: "Frequency",
               width: "132.74px",
-              height: 41,
               type: "dropdown",
-              options: [
-                "Week",
-                "Month"
-              ],
+              serverVaraible: "harvest_frequency",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "productHarvestFrequency",
+              optionVariable: "frequency",
+              height: 41
             },
             {
-              name: "area",
+              name: "farmed_area",
               headerName: "Area",
               width: "117px",
               height: 9
             },
             {
-              name: "unit",
+              name: "farm_area_unit",
               headerName: "UNIT",
               width: "117px",
-              height: 9
+              type: "dropdown",
+              height: 41,
+              serverVaraible: "farm_area_unit",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmAreaUnits",
+              optionVariable: "unit_name",
             },
           ],
           value: props["Historic Yields"] || [
             {
-              product: "",
+              product_id: "",
               method: "",
-              quantity: "",
+              quantity_produced: "",
               uom: "",
-              frequency: "",
-              area: "",
-              unit: ""
+              harvest_frequency: "",
+              farmed_area: "",
+              farm_area_unit: ""
             }
           ]
         }
@@ -87,28 +93,33 @@ export const products = (props) => {
           headerName: "Product Price",
           rows: [
             {
-              name: "product",
+              name: "product_id",
               headerName: "Product",
               width: "185.46px",
+              height: 9,
             },
             {
               name: "farm_type",
               headerName: "Method",
               type: "dropdown",
               optionUrl: '/rest/metadata',
+              serverVaraible: "farm_type",
               optionMainVariable: "farmTypes",
               optionVariable: "farm_type_name",
               width: "185.46px",
+              height: 41,
             },
             {
               name: "agreed_price",
               headerName: "PRICE",
               width: "185.46px",
+              height: 9,
             },
             {
               name: "agreed_min_yield",
               headerName: "Min. Yield",
-              width: "151px"
+              width: "151px",
+              height: 9,
             },
             {
               name: "uom",
@@ -116,14 +127,15 @@ export const products = (props) => {
               type: "dropdown",
               serverVaraible: "uom",
               optionUrl: '/rest/metadata',
-              optionMainVariable: "uom",
+              optionMainVariable: "productQtyUnits",
               optionVariable: "uom",
-              width: "96.11px"
+              width: "96.11px",
+              height: 41,
             }
           ],
           value: props["Contracted Products"] || [
             {
-              product: '',
+              product_id: '',
               farm_type: '',
               agreed_price: '',
               "agreed_min_yield": "",

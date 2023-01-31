@@ -26,7 +26,7 @@ export const newMitra = {
           headerName: "Company Name",
           // value: props["Company Name"] || "",
           width: '100%',
-          required: true,
+          required: false,
           height: '9px',
           dependant: "Ownership.Company"
         },
@@ -279,7 +279,7 @@ export const newMitra = {
               height: 41
             },
             {
-              name: "quantity",
+              name: "quantity_produced",
               headerName: "Quantity",
               width: "98px",
               height: 9
@@ -292,32 +292,36 @@ export const newMitra = {
               type: "dropdown",
               serverVaraible: "uom",
               optionUrl: '/rest/metadata',
-              optionMainVariable: "uom",
+              optionMainVariable: "productQtyUnits",
               optionVariable: "uom",
             },
             {
-              name: "frequency",
+              name: "harvest_frequency",
               headerName: "Frequency",
               width: "132.74px",
-              height: 41,
               type: "dropdown",
-              options: [
-                "Week",
-                "Month",
-                "Week"
-              ],
+              serverVaraible: "harvest_frequency",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "productHarvestFrequency",
+              optionVariable: "frequency",
+              height: 41
             },
             {
-              name: "area",
+              name: "farmed_area",
               headerName: "Area",
               width: "117px",
               height: 9
             },
             {
-              name: "unit",
+              name: "farm_area_unit",
               headerName: "UNIT",
               width: "117px",
-              height: 9
+              type: "dropdown",
+              height: 41,
+              serverVaraible: "farm_area_unit",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmAreaUnits",
+              optionVariable: "unit_name"
             },
           ],
           value: [
@@ -328,7 +332,7 @@ export const newMitra = {
               uom: "",
               frequency: "",
               area: "",
-              unit: ""
+              farm_area_unit: ""
             }
           ]
         }
@@ -369,7 +373,7 @@ export const newMitra = {
               type: "dropdown",
               serverVaraible: "uom",
               optionUrl: '/rest/metadata',
-              optionMainVariable: "uom",
+              optionMainVariable: "productQtyUnits",
               optionVariable: "uom",
               width: "96.11px"
             }

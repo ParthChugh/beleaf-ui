@@ -13,7 +13,7 @@ export const internalFarm = {
           headerName: "Company Name",
           width: '100%',
           // value: props["Company Name"] || "",
-          required: true,
+          required: false,
           height: 9,
           placeholder: "PT Beleaf Farms"
         },

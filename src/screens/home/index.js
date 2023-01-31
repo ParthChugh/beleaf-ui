@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Heading from '../../components/heading';
 import Tabs from '../../components/tabs'
 import { checkIfUserLoggedIn } from '../../global/constants'
