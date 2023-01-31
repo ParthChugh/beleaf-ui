@@ -60,7 +60,6 @@ export default function ShowFields(props) {
   const fetchDataServer = () => {
     let defaultValues = {}
     let json = userState.editTable?.[`${serverUrl}${urlParams.id}`]
-    console.log('jsonqwe123213', json)
     if (json?.data?.data?.[0]) {
       const serverValues = json?.data?.data?.[0]
       if (serverValues) {
@@ -99,6 +98,19 @@ export default function ShowFields(props) {
           defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
         }
       })
+    } else {
+      values.forEach((value) => {
+        if (value.type === 'multi-inputs') {
+          defaultValues[value.name] = []
+          let tempValues = {}
+          value.rows.forEach((row) => {
+            tempValues[row.name] = userState.drafts?.[type]?.[value.name] || value.value[row.name] || ""
+          })
+          defaultValues[value.name].push(tempValues)
+        } else {
+          defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
+        }
+      })
     }
     console.log("defaultValues12321,123123", defaultValues)
     return defaultValues
@@ -110,18 +122,18 @@ export default function ShowFields(props) {
 
 
 
-  useEffect(() => {
-    // console.log("serverUrl123123", serverUrl)
-    if (serverUrl) {
-      fetchDataServer()
-    } else {
-      // values.forEach((value) => {
-      //   defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
-      // })
-      // reset(defaultValues)
-      // setDefaultValues(defaultValues)
-    }
-  }, [serverUrl])
+  // useEffect(() => {
+  //   // console.log("serverUrl123123", serverUrl)
+  //   if (serverUrl) {
+  //     fetchDataServer()
+  //   } else {
+  //     // values.forEach((value) => {
+  //     //   defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
+  //     // })
+  //     // reset(defaultValues)
+  //     // setDefaultValues(defaultValues)
+  //   }
+  // }, [serverUrl])
 
   // useEffect(() => {
   //   // reset(defaultValues)
@@ -230,7 +242,13 @@ export default function ShowFields(props) {
         }
       })
     }
-    console.log("correctedValues123213", correctedValues)
+    // console.log("correctedValues123213", correctedValues)
+    let updateCorrectedValues = {}
+    if ((type === "Hydroponics" || type === "Open Field" || type === "Soilless") && urlParams.page_id === 'farms') {
+      updateCorrectedValues["facility"] = correctedValues
+    } else if ((type === "contracted_products" || type === "historic_yield") && urlParams.page_id === 'farms') {
+      updateCorrectedValues["products"] = correctedValues
+    }
     const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${updateUrl.url}${urlParams.id}`, {
       method: 'PUT',
       ...!isFormData && {
@@ -238,7 +256,7 @@ export default function ShowFields(props) {
           'Content-Type': 'application/json'
         }
       },
-      body: isFormData ? formdata : JSON.stringify(correctedValues)
+      body: isFormData ? formdata : JSON.stringify(Object.values(updateCorrectedValues).length > 0 ? updateCorrectedValues : correctedValues)
     })
     let json = await response.json()
     if (json.error) {
@@ -314,7 +332,7 @@ export default function ShowFields(props) {
                   {...customField}
                   {...field}
                   disabled={!edit[type]}
-                  value={customField.value || ""}
+                  value={customField.value || ''}
                 />
               )
             }
@@ -355,6 +373,7 @@ export default function ShowFields(props) {
                 <Select
                   {...customField}
                   {...field}
+                  watch={watch}
                   disabled={!edit[type]}
                   value={customField.value || ""}
                 />
@@ -476,7 +495,6 @@ export default function ShowFields(props) {
             rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
-              console.log('customFieldvalueeeee', customField.value)
               return (
                 <>
                   <MultiInput

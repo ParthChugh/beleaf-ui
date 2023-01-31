@@ -34,7 +34,7 @@ export default function CustomMultiInput(props) {
           })}
         </tr>
         
-        {value.map((field, index) => {
+        {(value || []).map((field, index) => {
           const keys = Object.keys(field)
           return (
             <tr>

@@ -71,7 +71,7 @@ const HomePage = () => {
             icon: 'Add',
             color: '#3EB049',
             headingColor: 'white',
-            payload: newMitra
+            payload: newMitra,
           },
           {
             text: 'Add Internal Farm',
@@ -88,7 +88,7 @@ const HomePage = () => {
             icon: 'Add',
             color: '#3EB049',
             headingColor: 'white',
-            payload: newProduct
+            payload: newProduct,
           },
         ]
       case 2:

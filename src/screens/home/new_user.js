@@ -7,14 +7,15 @@ export const newUser = {
       "User": [
         {
           type: "switch",
-          name: "staff_status",
+          name: "staff_type_id",
           headerName: "Staff Status",
           width: '100%',
-          left: 'Beleaf',
-          right: 'Mitra',
-          value: "Mitra",
           required: true,
-          height: 41
+          height: 41,
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "userStaffTypes",
+          optionVariable: "staff_type",
+          value: "Private"
         },
         {
           type: "input",
@@ -28,7 +29,7 @@ export const newUser = {
         },
         {
           type: "input",
-          name: "name",
+          name: "user_name",
           headerName: "Name",
           placeholder: "John Doe",
           width: '100%',
@@ -55,7 +56,7 @@ export const newUser = {
         },
         {
           type: "dropdown",
-          name: "role",
+          name: "role_id",
           headerName: "Role",
           width: '431px',
           options: [
@@ -68,7 +69,7 @@ export const newUser = {
         },
         {
           type: "input",
-          name: "farm_name",
+          name: "farm_id",
           headerName: "Farm Name",
           placeholder: "Kutani Farms",
           width: '100%',

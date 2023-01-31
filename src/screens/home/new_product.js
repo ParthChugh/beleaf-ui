@@ -3,7 +3,7 @@ export const newProduct = {
     "Product": "Add New Product",
   },
   getServerDetails: {
-    url: 'rest/admin/new_product',
+    url: '/rest/admin/new_product',
     isFormData: true,
   },
   tabs: {

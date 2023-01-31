@@ -57,9 +57,10 @@ export default function Heading(props) {
 
   // console.log("sendRequest12321", userState.errors)
   const createElement = async (params) => {
-    const isFormData = open.payload.getServerDetails.isFormData
-    const values = params["Product"]
+    const isFormData = open?.payload?.getServerDetails?.isFormData
+    const values = params
     let formdata = null
+    let url = open.payload.getServerDetails.url
     if (isFormData) {
       formdata = new FormData();
       Object.keys(values).forEach((key) => {
@@ -67,12 +68,19 @@ export default function Heading(props) {
         console.log("value123123", value)
         formdata.append(key, value?.[0]?.file ? value[0].file : value)
       })
+    } else {
+      url = url + JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || ""
     }
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/${open.payload.getServerDetails.url}`, {
-      method: 'POST',
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${url}`, {
+      method: open.payload.getServerDetails.method ? open.payload.getServerDetails.method : 'POST',
       ...!isFormData && {
         headers: {
           'Content-Type': 'application/json'
+        }
+      },
+      ...open?.payload?.getServerDetails?.headers && {
+        headers: {
+          ...open.payload.getServerDetails.headers
         }
       },
       body: isFormData ? formdata : JSON.stringify(values)
@@ -100,12 +108,54 @@ export default function Heading(props) {
         progress: undefined,
         theme: "dark",
       });
-      setTimeout(()=> {
+      setTimeout(() => {
         window.location.reload();
       }, 2000)
-      
+
     }
     setOpen({})
+  }
+
+  const updateDetails = async (serverDetails, values, serverValues) => {
+    let correctedJson = {}
+    if(value === 0) {
+      Object.values(serverValues)[0].forEach(valuesKey => {
+        let value = values[valuesKey.name]
+        if (valuesKey.optionUrl) {
+          const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
+          value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
+        }
+        correctedJson[valuesKey.name] = value
+      })
+      
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverDetails.url}`, {
+        method: serverDetails.method || "post",
+        headers: {
+          'Content-Type': 'application/json',
+          "mitra": !!serverDetails.mitra
+        },
+        body: JSON.stringify(correctedJson)
+      })
+      const json = await response.json()
+      if(!json.error) {
+        localStorage.setItem('fieldJson', JSON.stringify(json))
+        setValue(value + 1)
+      } else {
+        toast.error(json.error.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } else {
+      setValue(value + 1)
+    }
+    
   }
 
   useEffect(() => {
@@ -124,9 +174,19 @@ export default function Heading(props) {
       // console.log("localErrors12321", localErrors)
       if (localErrors.length === 0) {
         if (value < (Object.keys(open.payload.tabs || {}).length - 1)) {
-          setValue(value + 1)
+          // setValue(value + 1)
+          try {
+            const serverDetails = open?.payload.serverDetails[Object.keys(open.payload.tabs || {})[value]]
+            updateDetails(
+              serverDetails, 
+              userState.drafts[Object.keys(open.payload.tabs || {})[value]],
+              open.payload.tabs[Object.keys(open.payload.tabs || {})[value]]
+            )
+          } catch(el) {
+            setValue(value + 1)
+          }
+          return
         }
-
         let types = {}
         Object.keys(userState.errors).forEach(el => {
           types[el] = null
@@ -136,28 +196,56 @@ export default function Heading(props) {
           payload: {},
         });
         if (!(value < (Object.keys(open.payload.tabs || {}).length - 1))) {
-          // console.log("userState1232132", userState)
-          let correctedJson = {}
-          // console.log('open ----------232131', open)
+          if(open.text.includes('Product')) {
+            let correctedJson = {}
+            const tabs = Object.values(open.payload.tabs)[0]
 
-          const tabs = Object.values(open.payload.tabs)[0]
-
-          Object.keys(tabs).forEach((key) => {
-            correctedJson[key] = {}
-            const tabValues = tabs[key];
-            const values = userState.drafts[key];
-            tabValues.map(valuesKey => {
-              let value = values[valuesKey.name]
-              if (valuesKey.optionUrl) {
-                const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
-                value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
-              }
-              correctedJson[key][valuesKey.name] = value
+            Object.keys(tabs).forEach((key) => {
+              correctedJson[key] = {}
+              const tabValues = tabs[key];
+              const values = userState.drafts[key];
+              tabValues.map(valuesKey => {
+                let value = values[valuesKey.name]
+                if (valuesKey.optionUrl) {
+                  const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
+                  value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
+                }
+                correctedJson[key][valuesKey.name] = value
+              })
             })
-          })
-          // console.log('correctedJson123123', correctedJson)
-          // setOpen({})
-          createElement(correctedJson)
+            createElement(Object.values(correctedJson)[0])
+            console.log('correctedJson123123', correctedJson)
+            // setOpen({})
+          } else {
+            let newCorrectedJson = {}
+            const getKeyInformation = open.payload.getKeyInformation
+            newCorrectedJson["products"] = {}
+            newCorrectedJson[getKeyInformation.typeInfo] = {}
+            Object.values(userState.drafts).forEach((draft) => {
+              if(Object.keys(draft).length > 1) {
+                Object.keys(draft).forEach((el) => {
+                  if(el === "location") {
+                    newCorrectedJson["lat"] = draft["location"]["latitude"]
+                    newCorrectedJson["long"] = draft["location"]["longitude"]
+                  }else {
+                    newCorrectedJson[el] = draft[el]
+                  }
+                  
+                })
+              } else if(Object.keys(draft).includes('Hydroponics') || Object.keys(draft).includes('Open Field') || Object.keys(draft).includes('Soilless')) {
+                Object.keys(draft).forEach((key) => {
+                  let keyName = ''
+                  keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === key)?.id
+                  newCorrectedJson[getKeyInformation.typeInfo][keyName] = draft[key]
+                })
+              } else if(Object.keys(draft).includes('historic_yield') || Object.keys(draft).includes('contracted_products')) {
+                Object.keys(draft).forEach((key) => {
+                  newCorrectedJson["products"][key] = draft[key]
+                })
+              }
+            })
+            createElement(newCorrectedJson)
+          }
         }
       }
     }

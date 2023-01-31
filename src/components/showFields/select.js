@@ -25,15 +25,30 @@ function getStyles(theme) {
 }
 
 export default function MultipleSelectPlaceholder(props) {
-  const { options, placeholder, onChange, value, width, height, name, optionUrl, optionVariable, optionMainVariable, headerName } = props;
+  const { options, placeholder, onChange, value, width, height, name, optionVariable, optionMainVariable, headerName, watch, detectedFields } = props;
+  let { optionUrl } = props
   const { userState, userDispatch } = useContext(UserContext);
   const [serverOptions, setServerOptions] = useState([])
   const theme = useTheme();
+  console.log('optionUrl12321', optionUrl)
+  const detectedValue = optionUrl?.split(':')[1]
   const handleChange = (event) => {
     onChange(event)
   };
   console.log("value213123", value)
   const fetchOptions = async () => {
+    optionUrl = optionUrl.split(':')[0]
+    let appendingValue = ""
+    if (detectedValue) {
+      appendingValue = watch(detectedValue)
+      // detectedFields
+      if(userState?.serverOptions?.[detectedFields.optionUrl]) {
+        const serverData = userState?.serverOptions?.[detectedFields.optionUrl]
+        const data = serverData.find(el => el[detectedValue] === appendingValue)
+        appendingValue = data[detectedFields.valueToTake]
+      }
+      optionUrl = optionUrl + appendingValue
+    }
     let json = {}
     // console.log("userState.serverOptions?.[optionUrl]", userState.serverOptions?.[optionUrl])
     if (userState.serverOptions?.[optionUrl]) {
@@ -55,7 +70,7 @@ export default function MultipleSelectPlaceholder(props) {
       if (optionMainVariable) {
         json = optionMainVariable ? json[optionMainVariable] : json
       }
-      
+
     }
 
     // console.log("json.map(el =>", json.map(el => el[optionVariable]))
@@ -65,7 +80,7 @@ export default function MultipleSelectPlaceholder(props) {
     if (optionUrl && optionVariable) {
       fetchOptions()
     }
-  }, [optionUrl, optionVariable])
+  }, [optionUrl, optionVariable, detectedValue && watch(detectedValue)])
 
   return (
     <div style={{ width: width, }}>

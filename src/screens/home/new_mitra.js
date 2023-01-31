@@ -6,19 +6,61 @@ export const newMitra = {
     "Features Governance": "Features Governance",
     "Products & Production": "Products & Production",
   },
+  getKeyInformation: {
+    url: '/rest/metadata',
+    optionMainVariable: "farmTypes",
+    optionVariable: "farm_type_name",
+    typeInfo: 'facility'
+  },
+  getServerDetails: {
+    url: "/rest/admin/farm/",
+    isFormData: false,
+    method: "PUT",
+    headers: {
+      mitra: true
+    }
+  },
+  serverDetails: {
+    "Mitra Data": {
+      url: "/rest/admin/new_farm",
+      method: "POST",
+      mitra: true
+    },
+    "Location & Facilities": {
+      url: "/rest/admin/farm/",
+      method: "PUT",
+      mitra: true
+    },
+    "Feature Governance": {
+      url: "/rest/admin/farm/",
+      method: "PUT",
+      mitra: true
+    },
+    "Historic Yields": {
+      url: "/rest/admin/farm/",
+      method: "PUT",
+      mitra: true
+    },
+    "Features Governance": {
+      url: "/rest/admin/farm/",
+      method: "PUT",
+      mitra: true
+    }
+  },
   tabs: {
     "Mitra Data": {
       "Mitra Data": [
         {
           type: "switch",
-          name: "ownership",
+          name: "ownership_type",
           headerName: "Ownership",
-          left: 'Company',
-          right: 'Employee',
           width: '100%',
-          value: "Company",
           required: true,
-          height: 41
+          height: 41,
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "farmOwnershipTypes",
+          optionVariable: "ownership_type",
+          value: "Private"
         },
         {
           type: "input",
@@ -28,7 +70,7 @@ export const newMitra = {
           width: '100%',
           required: false,
           height: '9px',
-          dependant: "Ownership.Company"
+          dependant: "ownership_type.Company"
         },
         {
           type: "input",
@@ -41,7 +83,7 @@ export const newMitra = {
         },
         {
           type: "input",
-          name: "farm_contact",
+          name: "contact_name",
           headerName: "Farm Contact",
           // value: props["Farm Contact"] || "",
           width: '330px',
@@ -82,13 +124,20 @@ export const newMitra = {
           height: '41px'
         },
         {
-          type: "input",
+          type: "dropdown",
           name: "district",
           headerName: "Select District",
           // value: props[" Select District"] || "",
+          optionUrl: '/rest/districts?province=:province',
+          optionVariable: "district",
           width: '100%',
           required: true,
-          height: '9px'
+          height: '41px',
+          detectedFields: {
+            optionUrl: '/rest/provinces',
+            optionVariable: "province",
+            valueToTake: "abv"
+          }
         },
         {
           type: "input",
@@ -114,7 +163,7 @@ export const newMitra = {
       "Hydroponics": [
         {
           type: "multi-inputs",
-          name: "greenhouse",
+          name: "Hydroponics",
           headerName: "Greenhouse",
           rows: [
             {
@@ -155,7 +204,7 @@ export const newMitra = {
       "Open Field": [
         {
           type: "multi-inputs",
-          name: "open_field",
+          name: "Open Field",
           headerName: "Open Field",
           rows: [
             {
@@ -192,7 +241,7 @@ export const newMitra = {
       "Soilless": [
         {
           type: "multi-inputs",
-          name: "soilless",
+          name: "Soilless",
           headerName: "Soilless",
           rows: [
             {
@@ -227,39 +276,39 @@ export const newMitra = {
         }
       ],
     },
-    "Feature Governance": {
-      "Feature Governance": [
-        {
-          type: "dropdown",
-          name: "farm_function",
-          headerName: "Farm Function",
-          optionUrl: '/rest/metadata',
-          optionMainVariable: "farmFunctions",
-          optionVariable: "function",
-          width: '293px',
-          // value: props["Farm Function"] || "",
-          required: true,
-          height: 41
-        },
-        {
-          type: "dropdown",
-          name: "batch_tracking_method",
-          headerName: "Batch Tracking Method",
-          optionUrl: '/rest/metadata',
-          optionMainVariable: "batchTrackingMethods",
-          optionVariable: "method_name",
-          width: '293px',
-          // value: props["Batch Tracking Method"] || "",
-          required: true,
-          height: 41
-        },
-      ]
-    },
+    // "Feature Governance": {
+    //   "Feature Governance": [
+    //     {
+    //       type: "dropdown",
+    //       name: "farm_function",
+    //       headerName: "Farm Function",
+    //       optionUrl: '/rest/metadata',
+    //       optionMainVariable: "farmFunctions",
+    //       optionVariable: "function",
+    //       width: '293px',
+    //       // value: props["Farm Function"] || "",
+    //       required: true,
+    //       height: 41
+    //     },
+    //     {
+    //       type: "dropdown",
+    //       name: "batch_tracking_method",
+    //       headerName: "Batch Tracking Method",
+    //       optionUrl: '/rest/metadata',
+    //       optionMainVariable: "batchTrackingMethods",
+    //       optionVariable: "method_name",
+    //       width: '293px',
+    //       // value: props["Batch Tracking Method"] || "",
+    //       required: true,
+    //       height: 41
+    //     },
+    //   ]
+    // },
     "Historic Yields": {
       "Historic Yields": [
         {
           type: "multi-inputs",
-          name: "products",
+          name: "historic_yield",
           headerName: "Products",
           rows: [
             {
@@ -340,7 +389,7 @@ export const newMitra = {
       "Contracted Products": [
         {
           type: "multi-inputs",
-          name: "product_price",
+          name: "contracted_products",
           headerName: "Product Price",
           rows: [
             {

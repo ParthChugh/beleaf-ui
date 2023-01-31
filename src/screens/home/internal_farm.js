@@ -4,12 +4,33 @@ export const internalFarm = {
     "Location & Facilities": "Farm Location and Facilities",
     "Features Governance": "Features Governance"
   },
+  // getKeyInformation: {
+  //   url: '/rest/metadata',
+  //   optionMainVariable: "farmTypes",
+  //   optionVariable: "farm_type_name",
+  //   typeInfo: 'facility'
+  // },
+  // getServerDetails: {
+  //   url: "/rest/admin/farm/",
+  //   isFormData: false,
+  //   method: "PUT",
+  //   headers: {
+  //     mitra: false
+  //   }
+  // },
+  // serverDetails: {
+  //   "Form Data": {
+  //     url: "/rest/admin/new_farm",
+  //     method: "POST",
+  //     mitra: false
+  //   },
+  // },
   tabs: {
     "Form Data": {
       "Form Data": [
         {
           type: "input",
-          name: "Company Name",
+          name: "company_name",
           headerName: "Company Name",
           width: '100%',
           // value: props["Company Name"] || "",
@@ -35,6 +56,7 @@ export const internalFarm = {
           type: "dropdown",
           name: "province",
           headerName: "Select Province",
+          // value: props[" Select Province"] || "",
           optionUrl: '/rest/provinces',
           optionVariable: "province",
           width: '100%',
@@ -42,13 +64,20 @@ export const internalFarm = {
           height: '41px'
         },
         {
-          type: "input",
+          type: "dropdown",
           name: "district",
           headerName: "Select District",
           // value: props[" Select District"] || "",
+          optionUrl: '/rest/districts?province=:province',
+          optionVariable: "district",
           width: '100%',
           required: true,
-          height: '9px'
+          height: '41px',
+          detectedFields: {
+            optionUrl: '/rest/provinces',
+            optionVariable: "province",
+            valueToTake: "abv"
+          }
         },
         {
           type: "input",
@@ -74,7 +103,7 @@ export const internalFarm = {
       "Hydroponics": [
         {
           type: "multi-inputs",
-          name: "greenhouse",
+          name: "Hydroponics",
           headerName: "Greenhouse",
           rows: [
             {
@@ -115,7 +144,7 @@ export const internalFarm = {
       "Open Field": [
         {
           type: "multi-inputs",
-          name: "open_field",
+          name: "Open Field",
           headerName: "Open Field",
           rows: [
             {
@@ -152,7 +181,7 @@ export const internalFarm = {
       "Soilless": [
         {
           type: "multi-inputs",
-          name: "soilless",
+          name: "Soilless",
           headerName: "Soilless",
           rows: [
             {
@@ -215,7 +244,5 @@ export const internalFarm = {
         },
       ]
     }
-
   }
-
 }
