@@ -31,11 +31,15 @@ export default {
       headerAlign: "center"
     },
     {
-      field: "type",
+      field: "farm_types",
       headerName: "FARM TYPE",
       width: 150,
       align: 'center',
-      headerAlign: "center"
+      headerAlign: "center",
+      renderCell: (params) => {
+        console.log("params123123", )
+        return (params?.row?.farm_types || [])?.map(el => el.farm_type_name)?.join(',')
+      },
     },
     {
       field: "province",

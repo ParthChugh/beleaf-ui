@@ -1,15 +1,23 @@
 export const masterData = (props) => {
   return {
+    getServerDetails: '/rest/admin/farm/',
+    getKeyInformation: {
+      url: '/rest/metadata',
+      optionMainVariable: "farmTypes",
+      optionVariable: "farm_type_name",
+      fieldType: "facility",
+      typeInfo: 'facility_info'
+    },
     fields: {
       "Basic Data": [
         {
           type: "dropdown",
           name: "ownership",
           headerName: "Ownership",
-          options: [
-            'Company',
-            'Employee'
-          ],
+          serverVaraible: "ownership",
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "farmOwnershipTypes",
+          optionVariable: "ownership_type",
           width: '259px',
           value: props["Ownership"] || "",
           required: true,
@@ -35,8 +43,8 @@ export const masterData = (props) => {
         },
         {
           type: "input",
-          name: "farm_contact",
-          headerName: "Farm Contact",
+          name: "farm_name",
+          headerName: "Farm Contact Name",
           value: props["Farm Contact"] || "",
           width: '330px',
           required: true,
@@ -51,20 +59,20 @@ export const masterData = (props) => {
           required: true,
           height: '9px'
         },
-        {
-          type: "date",
-          name: "creation_date",
-          headerName: "Creation Date",
-          value: props["Creation Date"] || "",
-          width: '167px',
-          required: true,
-          height: '9px'
-        },
+        // {
+        //   type: "date",
+        //   name: "creation_date",
+        //   headerName: "Creation Date",
+        //   value: props["Creation Date"] || "",
+        //   width: '167px',
+        //   required: true,
+        //   height: '9px'
+        // },
       ],
       "Location & Facilities": [
         {
           type: "dropdown",
-          name: "province",
+          name: "farm_loc_province",
           headerName: "Province",
           optionUrl: '/rest/provinces',
           optionVariable: "province",
@@ -75,7 +83,7 @@ export const masterData = (props) => {
         },
         {
           type: "input",
-          name: "district",
+          name: "farm_loc_district",
           headerName: "District",
           value: props["District"] || "",
           width: '245px',
@@ -84,7 +92,7 @@ export const masterData = (props) => {
         },
         {
           type: "input",
-          name: "farm_address",
+          name: "farm_loc_address",
           headerName: "Farm Address",
           value: props["Farm Address"] || "",
           width: '518px',
@@ -94,7 +102,7 @@ export const masterData = (props) => {
         },
         {
           type: "location",
-          name: "location",
+          name: "lat_long",
           headerName: "Lat/Long",
           value: props["Lat/Long"] || "",
           width: '371px',
@@ -106,77 +114,81 @@ export const masterData = (props) => {
       "Hydroponics": [
         {
           type: "multi-inputs",
-          name: "greenhouse",
-          headerName: "Greenhouse",
+          name: "Hydroponics",
+          headerName: "Hydroponics",
           rows: [
             {
-              name: "greenhouse_name",
-              headerName: "Greenhouse Name",
-              width: "228px",
-              height: 9
-            },
-            {
-              name: "floor_area",
-              headerName: "Floor Area",
-              width: "144px",
-              height: 9
-            },
-            {
-              name: "holes",
-              headerName: "Number of Holes",
-              width: "132px",
-              height: 9
-            },
-            {
-              name: "dosing",
-              headerName: "Dosing",
-              width: "167px",
-              height: 9
-            }
-          ],
-          value: [
-            {
-              "greenhouse_name": "",
-              "floor_area": "",
-              "holes": "",
-              "dosing": ""
-            }
-          ],
-        }
-      ],
-      "Open Field": [
-        {
-          type: "multi-inputs",
-          name: "open_field",
-          headerName: "Open Field",
-          rows: [
-            {
-              name: "farmable_land_area",
+              name: "farmable_area",
               headerName: "Farmable Land Area",
               width: "228px"
             },
             {
-              name: "farmed_land_area",
+              name: "farmed_area",
               headerName: "Farmed Land Area",
               width: "144px"
             },
             {
               name: "irrigation",
               headerName: "Irrigation",
-              width: "132px"
+              width: "132px",
+              serverVaraible: "irrigation",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmIrrigationTypes",
+              optionVariable: "type_name",
             },
             {
-              name: "land_area_irrigated",
+              name: "irrigated_area",
               headerName: "Land Area Irrigated",
               width: "167px"
             }
           ],
           value: [
             {
-              "farmable_land_area": "",
-              "farmed_land_area": "",
+              "farmable_area": "",
+              "farmed_area": "",
               "irrigation": "",
-              "land_area_irrigated": ""
+              "irrigated_area": ""
+            }
+          ]
+        }
+      ],
+      "Open Field": [
+        {
+          type: "multi-inputs",
+          name: "Open Field",
+          headerName: "Open Field",
+          rows: [
+            {
+              name: "farmable_area",
+              headerName: "Farmable Land Area",
+              width: "228px"
+            },
+            {
+              name: "farmed_area",
+              headerName: "Farmed Land Area",
+              width: "144px"
+            },
+            {
+              name: "irrigation",
+              headerName: "Irrigation",
+              width: "132px",
+              serverVaraible: "irrigation",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmIrrigationTypes",
+              optionVariable: "type_name",
+            },
+            {
+              name: "irrigated_area",
+              headerName: "Land Area Irrigated",
+              width: "167px"
+            }
+          ],
+          value: [
+            {
+              "farmable_area": "",
+              "farmed_area": "",
+              "irrigation": "",
+              "irrigated_area": ""
             }
           ]
         }
@@ -184,7 +196,7 @@ export const masterData = (props) => {
       "Soilless": [
         {
           type: "multi-inputs",
-          name: "soilless",
+          name: "Soilless",
           headerName: "Soilless",
           rows: [
             {
@@ -198,12 +210,20 @@ export const masterData = (props) => {
               width: "144px"
             },
             {
-              name: "holes",
+              name: "greenhouse_holes",
               headerName: "Number of Holes",
               width: "132px"
             },
             {
+              type: "dropdown",
               name: "dosing",
+              headerName: "Dosing",
+              serverVaraible: "dosing",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmDosingTypes",
+              optionVariable: "type_name",
+              // value: props["Dosing"] || "",
+              required: true,
               headerName: "Dosing",
               width: "167px"
             }
@@ -212,7 +232,7 @@ export const masterData = (props) => {
             {
               "greenhouse_name": "",
               "floor_area": "",
-              "holes": "",
+              "greenhouse_holes": "",
               "dosing": ""
             }
           ],
@@ -223,6 +243,7 @@ export const masterData = (props) => {
           type: "dropdown",
           name: "farm_function",
           headerName: "Farm Function",
+          serverVaraible: "farm_function",
           optionUrl: '/rest/metadata',
           optionMainVariable: "farmFunctions",
           optionVariable: "function",
@@ -236,6 +257,7 @@ export const masterData = (props) => {
           name: "batch_tracking_method",
           headerName: "Batch Tracking Method",
           optionUrl: '/rest/metadata',
+          serverVaraible: "batch_tracking_method",
           optionMainVariable: "batchTrackingMethods",
           optionVariable: "method_name",
           width: '293px',

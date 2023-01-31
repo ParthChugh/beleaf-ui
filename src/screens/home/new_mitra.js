@@ -290,10 +290,10 @@ export const newMitra = {
               width: "96.11px",
               height: 41,
               type: "dropdown",
-              options: [
-                "Kg",
-                "Ton"
-              ],
+              serverVaraible: "uom",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "uom",
+              optionVariable: "uom",
             },
             {
               name: "frequency",
@@ -367,10 +367,10 @@ export const newMitra = {
               name: "uom",
               headerName: "UOM",
               type: "dropdown",
-              options: [
-                "Kg",
-                "Ton"
-              ],
+              serverVaraible: "uom",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "uom",
+              optionVariable: "uom",
               width: "96.11px"
             }
           ],

@@ -77,6 +77,7 @@ export default function ShowFields(props) {
       },
     })
     json = await response.json()
+    console.log('json12312321', json)
     // userDispatch({
     //   type: 'EDIT_TABLE',
     //   payload: { [`${serverUrl}${urlParams.id}`]: JSON.stringify(json) },
@@ -99,8 +100,19 @@ export default function ShowFields(props) {
       let defaultValues = {}
       values.forEach((value) => {
         if (value.type === 'multi-inputs') {
-          const serverValues = Object.values(json?.data)
-          const type = (serverValues.find(el => el.farm_type_name === value.name)).cultivation_info
+          let serverValues = []
+          if(getKeyInformation.fieldType) {
+            serverValues = Object.values(json?.data[getKeyInformation.fieldType])
+          } else {
+            serverValues = Object.values(json?.data)
+          }
+          let type = []
+          if(getKeyInformation.typeInfo) {
+            type = (serverValues.find(el => el.farm_type_name === value.name))[getKeyInformation.typeInfo]
+          } else {
+            type = json?.data[getKeyInformation.fieldType][value.name]
+          }
+          
           defaultValues[value.name] = []
           type.forEach((serverValue) => {
             let tempValues = {}
@@ -192,14 +204,14 @@ export default function ShowFields(props) {
 
   const updateServerDetails = async (params) => {
     const isFormData = updateUrl.isFormData
-  
+
     let formdata = null
     let correctedValues = {}
     if (isFormData) {
       formdata = new FormData();
       Object.keys(params).forEach((key) => {
         const value = params[key];
-        if(JSON.stringify(value) !== JSON.stringify(tempDefaultValues[key])) {
+        if (JSON.stringify(value) !== JSON.stringify(tempDefaultValues[key])) {
           formdata.append(key, value?.[0]?.file ? value[0].file : value)
         }
       })
@@ -208,26 +220,26 @@ export default function ShowFields(props) {
         if (value.type === 'multi-inputs') {
           const serverValues = params[type]
           let keyName = ''
-          if(getKeyInformation) {
+          if (getKeyInformation) {
             keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type).id
           }
           correctedValues[keyName || value.name] = []
           serverValues.forEach((serverValue) => {
             let tempValues = {}
             value.rows.forEach((row) => {
-              if(serverValue[row.name] === "true" || serverValue[row.name] === "false") {
+              if (serverValue[row.name] === "true" || serverValue[row.name] === "false") {
                 tempValues[row.name] = serverValue[row.name] === "true"
-              }else {
+              } else {
                 tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
               }
-              
+
             })
             correctedValues[keyName || value.name].push(tempValues)
           })
         } else {
           const serverValues = params[type]
           let keyName = ''
-          if(getKeyInformation) {
+          if (getKeyInformation) {
             keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type).id
           }
           correctedValues[keyName || value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
@@ -417,7 +429,10 @@ export default function ShowFields(props) {
             rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
-              // console.log('customField12321', customField)
+              let value = ''
+              if (typeof customField.value === 'string' && customField.value !== '') {
+                value = { latitude: customField.value.split(',')[0], longitude: customField.value.split(',')[1] }
+              }
               return (
                 <>
                   <Box
@@ -449,15 +464,15 @@ export default function ShowFields(props) {
                     <TextField
                       {...field}
                       disabled={!edit[type]}
-                      value={Object.values(customField.value || {}).join(',')}
+                      value={Object.values(value || customField.value || {}).join(',')}
                       inputProps={{
                         style: {
                           height: field.height,
                         },
                       }}
                     />
-                    {customField?.value?.latitude && customField?.value?.longitude && (
-                      <MapContainer latitude={customField.value.latitude} longitude={customField.value.longitude} />
+                    {(value?.latitude || customField?.value?.latitude) && (value?.longitude || customField?.value?.longitude) && (
+                      <MapContainer latitude={value?.latitude || customField.value.latitude} longitude={value?.longitude || customField.value.longitude} />
                     )}
                   </Box>
 
@@ -475,6 +490,7 @@ export default function ShowFields(props) {
             rules={{ required: true }}
             render={(props) => {
               const { field: customField } = props;
+              console.log('customFieldvalueeeee', customField.value)
               return (
                 <>
                   <MultiInput

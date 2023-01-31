@@ -1,10 +1,14 @@
 export const products = (props) => {
   return {
+    getServerDetails: '/rest/admin/farm/',
+    getKeyInformation: {
+      fieldType: "products"
+    },
     fields: {
       "Historic Yields": [
         {
           type: "multi-inputs",
-          name: "Products",
+          name: "historic_yield",
           rows: [
             {
               name: "product",
@@ -34,10 +38,10 @@ export const products = (props) => {
               width: "96.11px",
               height: 41,
               type: "dropdown",
-              options: [
-                "Kg",
-                "Ton"
-              ],
+              serverVaraible: "uom",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "uom",
+              optionVariable: "uom",
             },
             {
               name: "frequency",
@@ -79,7 +83,7 @@ export const products = (props) => {
       "Contracted Products": [
         {
           type: "multi-inputs",
-          name: "product_price",
+          name: "contracted_products",
           headerName: "Product Price",
           rows: [
             {
@@ -88,7 +92,7 @@ export const products = (props) => {
               width: "185.46px",
             },
             {
-              name: "method",
+              name: "farm_type",
               headerName: "Method",
               type: "dropdown",
               optionUrl: '/rest/metadata',
@@ -97,12 +101,12 @@ export const products = (props) => {
               width: "185.46px",
             },
             {
-              name: "price",
+              name: "agreed_price",
               headerName: "PRICE",
               width: "185.46px",
             },
             {
-              name: "yield",
+              name: "agreed_min_yield",
               headerName: "Min. Yield",
               width: "151px"
             },
@@ -110,19 +114,19 @@ export const products = (props) => {
               name: "uom",
               headerName: "UOM",
               type: "dropdown",
-              options: [
-                "Kg",
-                "Ton"
-              ],
+              serverVaraible: "uom",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "uom",
+              optionVariable: "uom",
               width: "96.11px"
             }
           ],
           value: props["Contracted Products"] || [
             {
               product: '',
-              method: '',
-              price: '',
-              "yield": "",
+              farm_type: '',
+              agreed_price: '',
+              "agreed_min_yield": "",
               "uom": ''
             }
           ],

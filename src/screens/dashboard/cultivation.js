@@ -8,7 +8,8 @@ export const cultivation = (props) => {
     getKeyInformation: {
       url: '/rest/metadata',
       optionMainVariable: "farmTypes",
-      optionVariable: "farm_type_name"
+      optionVariable: "farm_type_name",
+      typeInfo: 'cultivation_info'
     },
     fields: {
       "Hydroponics": [

@@ -2,21 +2,17 @@ import Link from '@mui/material/Link'
 
 export default {
   visibleFields: ['USER ID', 'NAME', 'CONTACT NO.', 'ROLE', 'FARM'],
+  getServerDetails: '/rest/admin/users',
   columns: [
     {
       field: "id",
       headerName: "USER ID",
       width: 200,
       align: 'center',
-      headerAlign: "center",
-      renderCell: (params) => (
-        <Link className='tabs_cell__link' href={`/dashboard/products/${params.id}`}>
-          {params.id}
-        </Link>
-      ),
+      headerAlign: "center"
     },
     {
-      field: "name",
+      field: "user_name",
       headerName: "NAME",
       width: 200,
       align: 'center',
@@ -34,14 +30,20 @@ export default {
       headerName: "ROLE",
       width: 150,
       align: 'center',
-      headerAlign: "center"
+      headerAlign: "center",
+      renderCell: (params) => {
+        return params.row.role.role
+      },
     },
     {
       field: "farm",
       headerName: "FARM",
       width: 150,
       align: 'center',
-      headerAlign: "center"
+      headerAlign: "center",
+      renderCell: (params) => {
+        return params.row.farm.farm_name
+      },
     },
   ],
   rows: [

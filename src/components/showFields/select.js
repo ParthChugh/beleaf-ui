@@ -32,7 +32,7 @@ export default function MultipleSelectPlaceholder(props) {
   const handleChange = (event) => {
     onChange(event)
   };
-
+  console.log("value213123", value)
   const fetchOptions = async () => {
     let json = {}
     // console.log("userState.serverOptions?.[optionUrl]", userState.serverOptions?.[optionUrl])
