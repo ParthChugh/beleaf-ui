@@ -10,6 +10,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import { UserContext } from '../../contexts/user';
+import Link from '@mui/material/Link'
 
 const Header = (props) => {
   const { leftAccessory } = props
@@ -39,14 +40,14 @@ const Header = (props) => {
 
           <li style={{ display: 'flex', alignItems: 'center' }}>
             {leftAccessory}
-            <a className="header__link" href="/">
+            <Link className="header__link" href="/">
 
               <img
                 src={require('../../assets/beleaf_Logo.png')}
                 loading="lazy"
                 className='header__logo'
               />
-            </a>
+            </Link>
           </li>
 
 
@@ -106,7 +107,11 @@ const Header = (props) => {
               </Menu>
             </li>
             :
-            <li><a className="header__link" href="/login">Login</a></li>
+            <li>
+              <Link className="header__link" href="/login">
+                Login
+              </Link>
+            </li>
           }
         </ul>
       </nav>

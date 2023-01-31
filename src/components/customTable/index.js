@@ -25,7 +25,8 @@ function CustomPagination({ totalItems, setPage }) {
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
   return (
     <Box className="custom_table__container">
-      <Typography>Showing {page * 15 + 1} - {totalItems < (page + 1) * 15 ? totalItems : (page + 1) * 15} of {totalItems}</Typography>
+      {totalItems ?
+        <Typography>Showing {page * 15 + 1} - {totalItems < (page + 1) * 15 ? totalItems : (page + 1) * 15} of {totalItems}</Typography> : <div />}
       <Pagination
         // color="primary"
         count={pageCount}
