@@ -75,6 +75,7 @@ export default function QuickFilteringCustomizedGrid(props) {
     if (json.data) {
       json = json.data
     }
+    console.log("json123123", json)
     userDispatch({
       type: 'UPDATE_TABLE_DATA',
       payload: { [`${props.getServerDetails}-${page}`]: json },

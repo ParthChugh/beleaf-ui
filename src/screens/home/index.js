@@ -27,6 +27,7 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={farms.visibleFields}
+            getServerDetails={farms.getServerDetails}
             data={{ columns: farms.columns, rows: farms.rows }}
           />
         )
@@ -45,6 +46,7 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={appUsers.visibleFields}
+            getServerDetails={appUsers.getServerDetails}
             data={{ columns: appUsers.columns, rows: appUsers.rows }}
           />
         )
@@ -53,6 +55,7 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={appUsers.visibleFields}
+            getServerDetails={appUsers.getServerDetails}
             data={{ columns: appUsers.columns, rows: appUsers.rows }}
           />
         )

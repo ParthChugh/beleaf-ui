@@ -2,6 +2,7 @@ import Link from '@mui/material/Link'
 
 export default {
   visibleFields: ['FARM ID', 'FARM NAME', 'FARM CONTACT', 'FARM TYPE', 'PROVINCE', 'DISTRICT', 'RELATION', 'FUNCTION'],
+  getServerDetails: '/rest/admin/farms',
   columns: [
     {
       field: "id",
@@ -16,14 +17,14 @@ export default {
       ),
     },
     {
-      field: "name",
+      field: "farm_name",
       headerName: "FARM NAME",
       width: 150,
       align: 'center',
       headerAlign: "center"
     },
     {
-      field: "contact",
+      field: "contact_name",
       headerName: "FARM CONTACT",
       width: 200,
       align: 'center',
@@ -58,11 +59,15 @@ export default {
       headerAlign: "center"
     },
     {
-      field: "function",
+      field: "farm_function",
       headerName: "FUNCTION",
       width: 150,
       align: 'center',
-      headerAlign: "center"
+      headerAlign: "center",
+      renderCell: (params) => {
+        console.log("params123123", params)
+        return params?.row?.farm_function?.function
+      },
     },
   ],
   rows: [
