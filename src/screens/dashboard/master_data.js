@@ -119,42 +119,46 @@ export const masterData = (props) => {
         {
           type: "multi-inputs",
           name: "Hydroponics",
-          headerName: "Hydroponics",
+          headerName: "Greenhouse",
           rows: [
             {
-              name: "farmable_area",
-              headerName: "Farmable Land Area",
-              width: "228px"
+              name: "greenhouse_name",
+              headerName: "Greenhouse Name",
+              width: "228px",
+              height: 9
             },
             {
-              name: "farmed_area",
-              headerName: "Farmed Land Area",
-              width: "144px"
+              name: "floor_area",
+              headerName: "Floor Area",
+              width: "144px",
+              height: 9
             },
             {
-              name: "irrigation",
-              headerName: "Irrigation",
+              name: "greenhouse_holes",
+              headerName: "Number of Holes",
               width: "132px",
-              type: "dropdown",
-              serverVaraible: "irrigation",
-              optionUrl: '/rest/metadata',
-              optionMainVariable: "farmIrrigationTypes",
-              optionVariable: "type_name",
+              height: 9
             },
             {
-              name: "irrigated_area",
-              headerName: "Land Area Irrigated",
-              width: "167px"
+              name: "dosing_type_id",
+              type: "dropdown",
+              headerName: "Dosing",
+              width: "167px",
+              height: 41,
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmDosingTypes",
+              optionVariable: "type_name",
+              serverVaraible: "dosing",
             }
           ],
           value: [
             {
-              "farmable_area": "",
-              "farmed_area": "",
-              "irrigation": "",
-              "irrigated_area": ""
+              "greenhouse_name": "",
+              "floor_area": "",
+              "greenhouse_holes": "",
+              "dosing_type_id": ""
             }
-          ]
+          ],
         }
       ],
       "Open Field": [
@@ -174,7 +178,7 @@ export const masterData = (props) => {
               width: "144px"
             },
             {
-              name: "irrigation",
+              name: "irrigation_type_id",
               headerName: "Irrigation",
               type: "dropdown",
               width: "132px",
@@ -193,7 +197,7 @@ export const masterData = (props) => {
             {
               "farmable_area": "",
               "farmed_area": "",
-              "irrigation": "",
+              "irrigation_type_id": "",
               "irrigated_area": ""
             }
           ]
@@ -221,17 +225,15 @@ export const masterData = (props) => {
               width: "132px"
             },
             {
+              name: "dosing_type_id",
               type: "dropdown",
-              name: "dosing",
               headerName: "Dosing",
-              serverVaraible: "dosing",
+              width: "167px",
+              height: 41,
               optionUrl: '/rest/metadata',
               optionMainVariable: "farmDosingTypes",
               optionVariable: "type_name",
-              // value: props["Dosing"] || "",
-              required: true,
-              headerName: "Dosing",
-              width: "167px"
+              serverVaraible: "dosing",
             }
           ],
           value: [
@@ -239,7 +241,7 @@ export const masterData = (props) => {
               "greenhouse_name": "",
               "floor_area": "",
               "greenhouse_holes": "",
-              "dosing": ""
+              "dosing_type_id": ""
             }
           ],
         }

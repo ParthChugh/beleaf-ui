@@ -179,24 +179,28 @@ export const newMitra = {
               height: 9
             },
             {
-              name: "holes",
+              name: "greenhouse_holes",
               headerName: "Number of Holes",
               width: "132px",
               height: 9
             },
             {
-              name: "dosing",
+              name: "dosing_type_id",
+              type: "dropdown",
               headerName: "Dosing",
               width: "167px",
-              height: 9
+              height: 41,
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmDosingTypes",
+              optionVariable: "type_name",
             }
           ],
           value: [
             {
               "greenhouse_name": "",
               "floor_area": "",
-              "holes": "",
-              "dosing": ""
+              "greenhouse_holes": "",
+              "dosing_type_id": ""
             }
           ],
         }

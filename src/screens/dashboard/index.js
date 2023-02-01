@@ -108,7 +108,7 @@ const DashboardPage = () => {
                   key={`dashboard_subheading__${index}`}
                   type={type}
                   values={values}
-                  updateUrl={productsTemp.updateServerDetails}
+                  updateUrl={productsTemp?.updateServerDetails}
                   serverUrl={productsTemp.getServerDetails}
                   getKeyInformation={productsTemp.getKeyInformation}
                   onSubmitCustomField={(params) => {

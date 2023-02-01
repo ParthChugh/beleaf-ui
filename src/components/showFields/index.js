@@ -74,7 +74,8 @@ export default function ShowFields(props) {
         if (value.type === 'multi-inputs') {
           let serverValues = []
           if (getKeyInformation.fieldType) {
-            serverValues = Object.values(json?.data[getKeyInformation.fieldType])
+            serverValues = Object.values(json?.data?.[getKeyInformation.fieldType] || {})
+            
           } else {
             serverValues = Object.values(json?.data)
           }
@@ -82,7 +83,7 @@ export default function ShowFields(props) {
           if (getKeyInformation.typeInfo) {
             type = (serverValues.find(el => el.farm_type_name === value.name))?.[getKeyInformation.typeInfo] || value.value
           } else {
-            type = json?.data[getKeyInformation.fieldType][value.name]
+            type = json?.data?.[getKeyInformation.fieldType]?.[value.name] || value.value
           }
 
           defaultValues[value.name] = []
@@ -193,7 +194,7 @@ export default function ShowFields(props) {
   }
 
   const updateServerDetails = async (params) => {
-    const isFormData = updateUrl.isFormData
+    const isFormData = updateUrl?.isFormData
 
     let formdata = null
     let correctedValues = {}

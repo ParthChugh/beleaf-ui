@@ -119,7 +119,7 @@ export const internalFarm = {
               height: 9
             },
             {
-              name: "holes",
+              name: "greenhouse_holes",
               headerName: "Number of Holes",
               width: "132px",
               height: 9
@@ -135,7 +135,7 @@ export const internalFarm = {
             {
               "greenhouse_name": "",
               "floor_area": "",
-              "holes": "",
+              "greenhouse_holes": "",
               "dosing": ""
             }
           ],

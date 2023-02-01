@@ -12,9 +12,9 @@ export default {
       align: 'center',
       headerAlign: "center",
       renderCell: (params) => {
-        // console.log('params123213', params)
+        console.log('params123213', params)
         return (
-          <img src={params.value} width={28} height={28} style={{borderRadius: 5}} />
+          <img src={params.row.product_image} width={28} height={28} style={{borderRadius: 5}} />
         )
 
       },
