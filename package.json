@@ -55,5 +55,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://52.220.215.96"
+  "proxy": "http://52.220.215.96",
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  }
 }
