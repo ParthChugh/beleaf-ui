@@ -4,8 +4,12 @@ export const products = (props) => {
     getKeyInformation: {
       fieldType: "products"
     },
+    updateServerDetails: {
+      url: '/rest/admin/farm/',
+      isFormData: false,
+    },
     fields: {
-      "Historic Yields": [
+      "historic_yield": [
         {
           type: "multi-inputs",
           name: "historic_yield",
@@ -86,7 +90,7 @@ export const products = (props) => {
           ]
         }
       ],
-      "Contracted Products": [
+      "contracted_products": [
         {
           type: "multi-inputs",
           name: "contracted_products",

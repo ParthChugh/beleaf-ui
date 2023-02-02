@@ -184,9 +184,49 @@ export default function ShowFields(props) {
         payload: { [type]: "" },
       });
       // }
+      let correctedValues = {}
+      values.forEach((value) => {
+        if (value.type === 'multi-inputs') {
+          const serverValues = params[type]
+          let keyName = ''
+          if (getKeyInformation) {
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
+          }
+          correctedValues[keyName || value.name] = []
+          serverValues.forEach((serverValue) => {
+            let tempValues = {}
+            value.rows.forEach((row) => {
+              if (serverValue[row.name] === "true" || serverValue[row.name] === "false") {
+                tempValues[row.name] = serverValue[row.name] === "true"
+              } else {
+                tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
+              }
+
+            })
+            correctedValues[keyName || value.name].push(tempValues)
+          })
+        } else {
+          const serverValues = params
+          let keyName = ''
+          if (getKeyInformation) {
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
+          }
+          if(value.type === 'location'){
+            const lat_long = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
+            correctedValues["lat"] = lat_long.split(',')[0]
+            correctedValues["long"] = lat_long.split(',')[1]
+          } else if (value.optionUrl) {
+            const serverValues = userState.serverOptions[value.optionUrl][value.optionMainVariable]
+            correctedValues[keyName || value.requestKeyName || value.name] = serverValues.find(el => el[value.optionVariable] === params[value.name])?.id
+          } else {
+            correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
+          }
+          
+        }
+      })
       userDispatch({
         type: 'UPDATE_DATA',
-        payload: { [type]: params },
+        payload: { [type]: correctedValues },
       });
       onSubmitCustomField && onSubmitCustomField(params)
     } catch (el) {
@@ -239,7 +279,17 @@ export default function ShowFields(props) {
           if (getKeyInformation) {
             keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
           }
-          correctedValues[keyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
+          if(value.type === 'location'){
+            const lat_long = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
+            correctedValues["lat"] = lat_long.split(',')[0]
+            correctedValues["long"] = lat_long.split(',')[1]
+          } else if (value.optionUrl) {
+            const serverValues = userState.serverOptions[value.optionUrl][value.optionMainVariable]
+            correctedValues[keyName || value.requestKeyName || value.name] = serverValues.find(el => el[value.optionVariable] === params[value.name])?.id
+          } else {
+            correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
+          }
+          
         }
       })
     }
@@ -455,7 +505,7 @@ export default function ShowFields(props) {
                           // console.log('Your current position is:');
                           // console.log(`Latitude : ${crd.latitude}`);
                           // console.log(`Longitude: ${crd.longitude}`);
-                          customField.onChange({ latitude: crd.latitude, longitude: crd.longitude })
+                          customField.onChange(`${crd.latitude},${crd.longitude}`)
                           // console.log(`More or less ${crd.accuracy} meters.`);
                         }
 

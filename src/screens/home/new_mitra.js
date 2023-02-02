@@ -121,7 +121,7 @@ export const newMitra = {
           optionVariable: "province",
           width: '100%',
           required: true,
-          height: '41px'
+          height: '41px',
         },
         {
           type: "dropdown",
@@ -309,7 +309,7 @@ export const newMitra = {
     //   ]
     // },
     "Historic Yields": {
-      "Historic Yields": [
+      "historic_yield": [
         {
           type: "multi-inputs",
           name: "historic_yield",
@@ -390,7 +390,7 @@ export const newMitra = {
           ]
         }
       ],
-      "Contracted Products": [
+      "contracted_products": [
         {
           type: "multi-inputs",
           name: "contracted_products",

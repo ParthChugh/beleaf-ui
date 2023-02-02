@@ -119,14 +119,14 @@ export default function Heading(props) {
   const updateDetails = async (serverDetails, values, serverValues) => {
     let correctedJson = {}
     if(value === 0) {
-      Object.values(serverValues)[0].forEach(valuesKey => {
-        let value = values[valuesKey.name]
-        if (valuesKey.optionUrl) {
-          const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
-          value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
-        }
-        correctedJson[valuesKey.name] = value
-      })
+      // Object.values(serverValues)[0].forEach(valuesKey => {
+      //   let value = values[valuesKey.name]
+      //   if (valuesKey.optionUrl) {
+      //     const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
+      //     value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
+      //   }
+      //   correctedJson[valuesKey.name] = value
+      // })
       
       const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverDetails.url}`, {
         method: serverDetails.method || "post",
@@ -134,7 +134,7 @@ export default function Heading(props) {
           'Content-Type': 'application/json',
           "mitra": !!serverDetails.mitra
         },
-        body: JSON.stringify(correctedJson)
+        body: JSON.stringify(values)
       })
       const json = await response.json()
       if(!json.error) {
@@ -170,7 +170,6 @@ export default function Heading(props) {
           localErrors.push(el)
         }
       })
-      setSendRequest('')
       // console.log("localErrors12321", localErrors)
       if (localErrors.length === 0) {
         if (value < (Object.keys(open.payload.tabs || {}).length - 1)) {
@@ -185,6 +184,7 @@ export default function Heading(props) {
           } catch(el) {
             setValue(value + 1)
           }
+          setSendRequest('')
           return
         }
         let types = {}
@@ -195,7 +195,8 @@ export default function Heading(props) {
           type: 'REMOVE_ERROR',
           payload: {},
         });
-        if (!(value < (Object.keys(open.payload.tabs || {}).length - 1))) {
+        if (value === (Object.keys(open.payload.tabs || {}).length - 1) && Object.keys(userState.drafts).includes(Object.keys(open.payload.tabs || {})[value])) {
+          setSendRequest('')
           if(open.text.includes('Product')) {
             let correctedJson = {}
             const tabs = Object.values(open.payload.tabs)[0]
@@ -225,12 +226,16 @@ export default function Heading(props) {
               if(Object.keys(draft).length > 1) {
                 Object.keys(draft).forEach((el) => {
                   if(el === "location") {
-                    newCorrectedJson["lat"] = draft["location"]["latitude"]
-                    newCorrectedJson["long"] = draft["location"]["longitude"]
+                    if(typeof draft["location"] === 'string') {
+                      newCorrectedJson["lat"] = draft["location"].split(',')[0]
+                      newCorrectedJson["long"] = draft["location"].split(',')[1]
+                    } else {
+                      newCorrectedJson["lat"] = draft["location"]["latitude"]
+                      newCorrectedJson["long"] = draft["location"]["longitude"]
+                    } 
                   }else {
                     newCorrectedJson[el] = draft[el]
                   }
-                  
                 })
               } else if(Object.keys(draft).includes('Hydroponics') || Object.keys(draft).includes('Open Field') || Object.keys(draft).includes('Soilless')) {
                 Object.keys(draft).forEach((key) => {
@@ -246,10 +251,14 @@ export default function Heading(props) {
             })
             createElement(newCorrectedJson)
           }
+        } else {
+          setSendRequest('')
         }
+      } else {
+        setSendRequest('')
       }
     }
-  }, [JSON.stringify(userState.errors), sendRequest])
+  }, [JSON.stringify(userState.errors), sendRequest, userState.drafts])
 
   const getSubData = (payload) => {
     if (Object.values(payload)[value].length === 0) {
