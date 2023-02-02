@@ -61,7 +61,7 @@ export const internalFarm = {
           optionVariable: "province",
           width: '100%',
           required: true,
-          height: '41px'
+          height: '41px',
         },
         {
           type: "dropdown",
@@ -125,10 +125,14 @@ export const internalFarm = {
               height: 9
             },
             {
-              name: "dosing",
+              name: "dosing_type_id",
+              type: "dropdown",
               headerName: "Dosing",
               width: "167px",
-              height: 9
+              height: 41,
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmDosingTypes",
+              optionVariable: "type_name",
             }
           ],
           value: [
@@ -136,7 +140,7 @@ export const internalFarm = {
               "greenhouse_name": "",
               "floor_area": "",
               "greenhouse_holes": "",
-              "dosing": ""
+              "dosing_type_id": ""
             }
           ],
         }
@@ -148,32 +152,37 @@ export const internalFarm = {
           headerName: "Open Field",
           rows: [
             {
-              name: "farmable_land_area",
+              name: "farmable_area",
               headerName: "Farmable Land Area",
               width: "228px"
             },
             {
-              name: "farmed_land_area",
+              name: "farmed_area",
               headerName: "Farmed Land Area",
               width: "144px"
             },
             {
-              name: "irrigation",
+              name: "irrigation_type_id",
               headerName: "Irrigation",
-              width: "132px"
+              type: "dropdown",
+              width: "132px",
+              serverVaraible: "irrigation",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmIrrigationTypes",
+              optionVariable: "type_name",
             },
             {
-              name: "land_area_irrigated",
+              name: "irrigated_area",
               headerName: "Land Area Irrigated",
               width: "167px"
             }
           ],
           value: [
             {
-              "farmable_land_area": "",
-              "farmed_land_area": "",
-              "irrigation": "",
-              "land_area_irrigated": ""
+              "farmable_area": "",
+              "farmed_area": "",
+              "irrigation_type_id": "",
+              "irrigated_area": ""
             }
           ]
         }
@@ -195,22 +204,27 @@ export const internalFarm = {
               width: "144px"
             },
             {
-              name: "holes",
+              name: "greenhouse_holes",
               headerName: "Number of Holes",
               width: "132px"
             },
             {
-              name: "dosing",
+              name: "dosing_type_id",
+              type: "dropdown",
               headerName: "Dosing",
-              width: "167px"
+              width: "167px",
+              height: 41,
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmDosingTypes",
+              optionVariable: "type_name",
             }
           ],
           value: [
             {
               "greenhouse_name": "",
               "floor_area": "",
-              "holes": "",
-              "dosing": ""
+              "greenhouse_holes": "",
+              "dosing_type_id": ""
             }
           ],
         }

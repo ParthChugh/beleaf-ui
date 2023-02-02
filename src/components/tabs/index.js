@@ -26,7 +26,6 @@ export default function BasicTabs(props) {
     changeRoute,
     onSubmit,
   } = props;
-  console.log(value, "=> value");
   return (
     <Box sx={{ ml: 3, mr: 3 }}>
       <Tabs

@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import MapContainer from './map';
+import CustomTable from '../../components/customTable'
 import { useParams } from 'react-router-dom'
 import { UserContext } from '../../contexts/user';
 
@@ -75,7 +76,7 @@ export default function ShowFields(props) {
           let serverValues = []
           if (getKeyInformation.fieldType) {
             serverValues = Object.values(json?.data?.[getKeyInformation.fieldType] || {})
-            
+
           } else {
             serverValues = Object.values(json?.data)
           }
@@ -211,17 +212,21 @@ export default function ShowFields(props) {
           if (getKeyInformation) {
             keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
           }
-          if(value.type === 'location'){
+          if (value.type === 'location') {
             const lat_long = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
             correctedValues["lat"] = lat_long.split(',')[0]
             correctedValues["long"] = lat_long.split(',')[1]
           } else if (value.optionUrl) {
-            const serverValues = userState.serverOptions[value.optionUrl][value.optionMainVariable]
-            correctedValues[keyName || value.requestKeyName || value.name] = serverValues.find(el => el[value.optionVariable] === params[value.name])?.id
+            let serverValues = userState.serverOptions?.[value.optionUrl]?.[value.optionMainVariable]
+            if (!serverValues) {
+              serverValues = userState.serverOptions[value.optionUrl.split('?')[0]]
+            }
+            const newFieldValue = serverValues.find(el => el[value.requestKeyName || value.optionVariable] === params[value.name])
+            correctedValues[keyName || value.requestKeyName || value.name] = newFieldValue?.id || newFieldValue?.[value.requestKeyName || value.name]
           } else {
             correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
           }
-          
+
         }
       })
       userDispatch({
@@ -279,17 +284,21 @@ export default function ShowFields(props) {
           if (getKeyInformation) {
             keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
           }
-          if(value.type === 'location'){
+          if (value.type === 'location') {
             const lat_long = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
             correctedValues["lat"] = lat_long.split(',')[0]
             correctedValues["long"] = lat_long.split(',')[1]
           } else if (value.optionUrl) {
-            const serverValues = userState.serverOptions[value.optionUrl][value.optionMainVariable]
-            correctedValues[keyName || value.requestKeyName || value.name] = serverValues.find(el => el[value.optionVariable] === params[value.name])?.id
+            let serverValues = userState.serverOptions?.[value.optionUrl]?.[value.optionMainVariable]
+            if (!serverValues) {
+              serverValues = userState.serverOptions[value.optionUrl.split('?')[0]]
+            }
+            const newFieldValue = serverValues.find(el => el[value.requestKeyName || value.optionVariable] === params[value.name])
+            correctedValues[keyName || value.requestKeyName || value.name] = newFieldValue?.id || newFieldValue?.[value.requestKeyName || value.name]
           } else {
             correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
           }
-          
+
         }
       })
     }
@@ -367,7 +376,6 @@ export default function ShowFields(props) {
       return <div />
     }
 
-    // if(dependant.length > 0 && )
     switch (field.type) {
       case "switch":
         return (
@@ -559,6 +567,19 @@ export default function ShowFields(props) {
             }
             }
           />
+        )
+      case "table":
+        console.log('qwdqwdqwdqwd', field)
+        return (
+          <Box sx={{width: '100%'}}>
+            <CustomTable
+              totalItems={15}
+              visibleFields={field.visibleFields}
+              getServerDetails={field.getServerDetails}
+              data={{ columns: field.columns, rows: field.rows || [] }}
+            />
+          </Box>
+
         )
       default:
         return <div>default</div>

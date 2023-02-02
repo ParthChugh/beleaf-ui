@@ -75,7 +75,6 @@ export default function QuickFilteringCustomizedGrid(props) {
     if (json.data) {
       json = json.data
     }
-    console.log("json123123", json)
     userDispatch({
       type: 'UPDATE_TABLE_DATA',
       payload: { [`${props.getServerDetails}-${page}`]: json },
@@ -86,6 +85,8 @@ export default function QuickFilteringCustomizedGrid(props) {
       fetchServerDetails()
     }
   }, [props.getServerDetails, page])
+  console.log('rows12321', rows)
+  console.log('columns12321', columns)
   return (
     <Box sx={{
       height: 500,

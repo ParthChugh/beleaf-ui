@@ -1,63 +1,67 @@
 export function appUsers(props) {
   return {
-    getServerDetails: {},
+    getServerDetails: '',
     fields: {
       "App Users": [
         {
-          type: "multi-inputs",
-          name: "User",
-          headerName: "User",
-          rows: [
+          type: "table",
+          name: "App Users",
+          headerName: "App Users",
+          visibleFields: ['USER ID', 'NAME', 'CONTACT NO.', 'ROLE', 'FARM', 'Status'],
+          getServerDetails: '/rest/admin/users',
+          columns: [
             {
-              name: "user_id",
-              headerName: "User ID",
-              type: "link",
-              href: "/:id",
-              width: "185.46px",
-              height: 9,
-              disabled: true
+              field: "id",
+              headerName: "USER ID",
+              width: 200,
+              align: 'center',
+              headerAlign: "center"
             },
             {
-              name: "name",
-              headerName: "Name",
-              width: "185.46px",
-              type: "text",
-              height: 9
+              field: "user_name",
+              headerName: "NAME",
+              width: 200,
+              align: 'center',
+              headerAlign: "center"
             },
             {
-              name: "contact_number",
-              headerName: "Contact No.",
-              width: "98px",
-              type: "text",
-              height: 9
+              field: "contact_number",
+              headerName: "CONTACT NO.",
+              width: 200,
+              align: 'center',
+              headerAlign: "center"
             },
             {
-              name: "role",
-              headerName: "Role",
-              width: "96.11px",
-              type: "text",
-              height: 9
+              field: "role",
+              headerName: "ROLE",
+              width: 150,
+              align: 'center',
+              headerAlign: "center",
+              renderCell: (params) => {
+                return params.row.role.role
+              },
             },
             {
-              name: "app_status",
-              headerName: "App Status",
-              type: "dropdown",
-              optionUrl: '/rest/metadata',
-              optionMainVariable: "userAppStatus",
-              optionVariable: "status",
-              width: "132.74px",
-              height: 41
+              field: "farm",
+              headerName: "FARM",
+              width: 150,
+              align: 'center',
+              headerAlign: "center",
+              renderCell: (params) => {
+                return params.row.farm.farm_name
+              },
+            },
+            {
+              field: "app_status",
+              headerName: "Status",
+              width: 150,
+              align: 'center',
+              headerAlign: "center",
+              renderCell: (params) => {
+                return params.row.app_status.status
+              },
             },
           ],
-          value: props["App Users"] || [
-            {
-              "user_id": "LJBABGR001",
-              name: "Neal Matthews",
-              "contact_number": "087882233909",
-              role: "Owner",
-              "app_status": "Active"
-            }
-          ]
         }
       ]
     }

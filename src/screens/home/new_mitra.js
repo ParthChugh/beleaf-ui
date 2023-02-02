@@ -212,32 +212,37 @@ export const newMitra = {
           headerName: "Open Field",
           rows: [
             {
-              name: "farmable_land_area",
+              name: "farmable_area",
               headerName: "Farmable Land Area",
               width: "228px"
             },
             {
-              name: "farmed_land_area",
+              name: "farmed_area",
               headerName: "Farmed Land Area",
               width: "144px"
             },
             {
-              name: "irrigation",
+              name: "irrigation_type_id",
               headerName: "Irrigation",
-              width: "132px"
+              type: "dropdown",
+              width: "132px",
+              serverVaraible: "irrigation",
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmIrrigationTypes",
+              optionVariable: "type_name",
             },
             {
-              name: "land_area_irrigated",
+              name: "irrigated_area",
               headerName: "Land Area Irrigated",
               width: "167px"
             }
           ],
           value: [
             {
-              "farmable_land_area": "",
-              "farmed_land_area": "",
-              "irrigation": "",
-              "land_area_irrigated": ""
+              "farmable_area": "",
+              "farmed_area": "",
+              "irrigation_type_id": "",
+              "irrigated_area": ""
             }
           ]
         }
@@ -259,22 +264,27 @@ export const newMitra = {
               width: "144px"
             },
             {
-              name: "holes",
+              name: "greenhouse_holes",
               headerName: "Number of Holes",
               width: "132px"
             },
             {
-              name: "dosing",
+              name: "dosing_type_id",
+              type: "dropdown",
               headerName: "Dosing",
-              width: "167px"
+              width: "167px",
+              height: 41,
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "farmDosingTypes",
+              optionVariable: "type_name",
             }
           ],
           value: [
             {
               "greenhouse_name": "",
               "floor_area": "",
-              "holes": "",
-              "dosing": ""
+              "greenhouse_holes": "",
+              "dosing_type_id": ""
             }
           ],
         }
@@ -316,13 +326,13 @@ export const newMitra = {
           headerName: "Products",
           rows: [
             {
-              name: "product",
+              name: "product_id",
               headerName: "Product",
               width: "185.46px",
               height: 9
             },
             {
-              name: "method",
+              name: "farm_type_id",
               headerName: "Method",
               type: "dropdown",
               optionUrl: '/rest/metadata',
@@ -338,7 +348,7 @@ export const newMitra = {
               height: 9
             },
             {
-              name: "uom",
+              name: "uom_id",
               headerName: "UOM",
               width: "96.11px",
               height: 41,
@@ -349,7 +359,7 @@ export const newMitra = {
               optionVariable: "uom",
             },
             {
-              name: "harvest_frequency",
+              name: "harvest_frequency_id",
               headerName: "Frequency",
               width: "132.74px",
               type: "dropdown",
@@ -366,7 +376,7 @@ export const newMitra = {
               height: 9
             },
             {
-              name: "farm_area_unit",
+              name: "area_unit_id",
               headerName: "UNIT",
               width: "117px",
               type: "dropdown",
@@ -379,13 +389,13 @@ export const newMitra = {
           ],
           value: [
             {
-              product: "",
-              method: "",
+              product_id: "",
+              farm_type_id: "",
               quantity: "",
-              uom: "",
-              frequency: "",
+              uom_id: "",
+              harvest_frequency_id: "",
               area: "",
-              farm_area_unit: ""
+              area_unit_id: ""
             }
           ]
         }
@@ -397,12 +407,12 @@ export const newMitra = {
           headerName: "Product Price",
           rows: [
             {
-              name: "product",
+              name: "product_id",
               headerName: "Product",
               width: "185.46px",
             },
             {
-              name: "method",
+              name: "farm_type_id",
               headerName: "Method",
               type: "dropdown",
               optionUrl: '/rest/metadata',
@@ -411,17 +421,17 @@ export const newMitra = {
               width: "185.46px",
             },
             {
-              name: "price",
+              name: "agreed_price",
               headerName: "PRICE",
               width: "185.46px",
             },
             {
-              name: "yield",
+              name: "agreed_min_yield",
               headerName: "Min. Yield",
               width: "151px"
             },
             {
-              name: "uom",
+              name: "uom_id",
               headerName: "UOM",
               type: "dropdown",
               serverVaraible: "uom",
@@ -433,11 +443,11 @@ export const newMitra = {
           ],
           value: [
             {
-              product: '',
-              method: '',
-              price: '',
-              "yield": "",
-              "uom": ''
+              product_id: '',
+              farm_type_id: '',
+              agreed_price: '',
+              "agreed_min_yield": "",
+              "uom_id": ''
             }
           ],
         }

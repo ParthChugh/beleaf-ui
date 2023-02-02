@@ -1823,7 +1823,7 @@
 
 "@mui/x-data-grid-generator@^5.17.20":
   version "5.17.20"
-  resolved "https://registry.npmjs.org/@mui/x-data-grid-generator/-/x-data-grid-generator-5.17.20.tgz"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid-generator/-/x-data-grid-generator-5.17.20.tgz#08929a948bfa211ba6404a389b2b0b952b32166f"
   integrity sha512-+nBLyi4LQenq3ciqfmLYH1rqS07jwqPb8/TpQZG5uxBhNicbWrIUFuRVP2xSbc5yun12Eg3A4KpgJ9RzP3fbjQ==
   dependencies:
     "@babel/runtime" "^7.18.9"

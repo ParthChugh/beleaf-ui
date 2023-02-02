@@ -44,7 +44,7 @@ export default function MultipleSelectPlaceholder(props) {
       // detectedFields
       if(userState?.serverOptions?.[detectedFields.optionUrl]) {
         const serverData = userState?.serverOptions?.[detectedFields.optionUrl]
-        const data = serverData.find(el => el[detectedValue] === appendingValue)
+        const data = serverData.find(el => el[detectedFields.optionVariable] === appendingValue)
         appendingValue = data[detectedFields.valueToTake]
       }
       optionUrl = optionUrl + appendingValue
@@ -65,7 +65,7 @@ export default function MultipleSelectPlaceholder(props) {
       }
       userDispatch({
         type: 'UPDATE_SERVER_OPTIONS',
-        payload: { [optionUrl]: json },
+        payload: { [optionUrl.split('?')[0]]: json },
       });
       if (optionMainVariable) {
         json = optionMainVariable ? json[optionMainVariable] : json
@@ -74,13 +74,16 @@ export default function MultipleSelectPlaceholder(props) {
     }
 
     // console.log("json.map(el =>", json.map(el => el[optionVariable]))
-    setServerOptions(json.map(el => el[optionVariable]))
+    setServerOptions(json.map(el => el[props.requestKeyName || optionVariable]))
   }
   useEffect(() => {
     if (optionUrl && optionVariable) {
+      if(optionVariable === "farm_loc_district") {
+        debugger;
+      }
       fetchOptions()
     }
-  }, [optionUrl, optionVariable, detectedValue && watch(detectedValue)])
+  }, [optionUrl, optionVariable,userState?.serverOptions?.[detectedFields?.optionUrl], detectedValue && watch(detectedValue)])
 
   return (
     <div style={{ width: width, }}>

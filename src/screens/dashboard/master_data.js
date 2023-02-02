@@ -87,14 +87,22 @@ export const masterData = (props) => {
           requestKeyName: 'province'
         },
         {
-          type: "input",
-          name: "farm_loc_district",
-          headerName: "District",
-          value: props["District"] || "",
+          
+          type: "dropdown",
+          name: "district",
+          headerName: "Select District",
+          // value: props[" Select District"] || "",
+          optionUrl: '/rest/districts?province=:farm_loc_province',
+          optionVariable: "farm_loc_district",
           width: '245px',
           required: true,
-          height: '9px',
-          requestKeyName: 'district'
+          height: '41px',
+          requestKeyName: 'district',
+          detectedFields: {
+            optionUrl: '/rest/provinces',
+            optionVariable: "province",
+            valueToTake: "abv"
+          }
         },
         {
           type: "input",

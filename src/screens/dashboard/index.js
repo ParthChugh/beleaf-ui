@@ -56,25 +56,27 @@ const DashboardPage = () => {
   }
   const fetchServerValues = async () => {
     const serverUrl = getServerUrl()
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverUrl}${params.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-    const json = await response.json()
-    console.log('json12312321', json)
-    userDispatch({
-      type: 'EDIT_TABLE',
-      payload: { [`${serverUrl}${params.id}`]: json },
-    });
+    if(Object.values(serverUrl || {}).length > 0) {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverUrl}${params.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      const json = await response.json()
+      console.log('json12312321', json)
+      userDispatch({
+        type: 'EDIT_TABLE',
+        payload: { [`${serverUrl}${params.id}`]: json },
+      });
+    }
   }
   useEffect(() => {
     fetchServerValues()
   }, [value])
   // const isUserLoggedIn = checkIfUserLoggedIn(userState.user.accessToken)
   const getSubData = (value) => {
-    if (!userState.editTable?.[`${getServerUrl()}${params.id}`]) {
+    if (!userState.editTable?.[`${getServerUrl()}${params.id}`] && getServerUrl() !== "") {
       return <div />
     }
     switch (params.page_id) {
@@ -122,6 +124,7 @@ const DashboardPage = () => {
             const appUsersTemp = appUsers({})
             return Object.keys(appUsersTemp.fields).map((type, index) => {
               const values = appUsersTemp.fields[type]
+              
               return (
                 <ShowFields
                   key={`dashboard_subheading__${index}`}

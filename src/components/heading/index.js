@@ -248,7 +248,9 @@ export default function Heading(props) {
                   newCorrectedJson["products"][key] = draft[key]
                 })
               }
+              
             })
+            delete newCorrectedJson['farm_name']
             createElement(newCorrectedJson)
           }
         } else {
