@@ -70,7 +70,12 @@ export default function QuickFilteringCustomizedGrid(props) {
   const rows = userState.tableData?.[`${props.getServerDetails}-${page}`] || {}
   const totalItems = rows?.totalItems || userState.tableData?.[`${props.getServerDetails}-${0}`]?.totalItems
   const fetchServerDetails = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${props.getServerDetails}?page=${page}&size=15`, { method: 'GET' })
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${props.getServerDetails}?page=${page}&size=40`, { 
+      method: 'GET',
+      headers: {
+        "ngrok-skip-browser-warning": true
+      }
+     })
     let json = await response.json()
     if (json.data) {
       json = json.data

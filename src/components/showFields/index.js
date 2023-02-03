@@ -313,7 +313,8 @@ export default function ShowFields(props) {
       method: 'PUT',
       ...!isFormData && {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": true
         }
       },
       body: isFormData ? formdata : JSON.stringify(Object.values(updateCorrectedValues).length > 0 ? updateCorrectedValues : correctedValues)

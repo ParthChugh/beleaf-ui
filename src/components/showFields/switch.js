@@ -35,15 +35,15 @@ export default function SwitchContainer(props) {
   if (value === right) {
     defaultCase = 'right'
   }
-  const newOption1 = (((optionUrl && optionVariable) && serverOptions ) || [])?.[0]
-  const newOption2 = (((optionUrl && optionVariable) && serverOptions ) || [])?.[1]
+  const newOption1 = (((optionUrl && optionVariable) && serverOptions) || [])?.[0]
+  const newOption2 = (((optionUrl && optionVariable) && serverOptions) || [])?.[1]
   console.log('12312321value', value)
   useEffect(() => {
     fetchOptions()
   }, [])
 
   const [alignment, setAlignment] = React.useState('');
-  
+
   const fetchOptions = async () => {
     let json = {}
     // console.log("userState.serverOptions?.[optionUrl]", userState.serverOptions?.[optionUrl])
@@ -53,7 +53,13 @@ export default function SwitchContainer(props) {
         json = userState.serverOptions?.[optionUrl]?.[optionMainVariable]
       }
     } else {
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${optionUrl}`, { method: 'GET' })
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${ optionUrl } `, { 
+          method: 'GET', 
+        headers: {
+          "ngrok-skip-browser-warning": true
+        }
+      
+     })
 
       json = await response.json()
       if (json.data) {

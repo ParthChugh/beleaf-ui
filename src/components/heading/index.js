@@ -75,12 +75,13 @@ export default function Heading(props) {
       method: open.payload.getServerDetails.method ? open.payload.getServerDetails.method : 'POST',
       ...!isFormData && {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": true
         }
       },
       ...open?.payload?.getServerDetails?.headers && {
         headers: {
-          ...open.payload.getServerDetails.headers
+          ...open.payload.getServerDetails.headers,
         }
       },
       body: isFormData ? formdata : JSON.stringify(values)
@@ -132,7 +133,8 @@ export default function Heading(props) {
         method: serverDetails.method || "post",
         headers: {
           'Content-Type': 'application/json',
-          "mitra": !!serverDetails.mitra
+          "mitra": !!serverDetails.mitra,
+          "ngrok-skip-browser-warning": true
         },
         body: JSON.stringify(values)
       })

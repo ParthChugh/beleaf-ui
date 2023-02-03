@@ -38,7 +38,8 @@ const LoginPage = () => {
     const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/rest/admin/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "ngrok-skip-browser-warning": true
       },
       body: JSON.stringify(formData)
     })

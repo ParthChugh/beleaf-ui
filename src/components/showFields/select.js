@@ -42,7 +42,7 @@ export default function MultipleSelectPlaceholder(props) {
     if (detectedValue) {
       appendingValue = watch(detectedValue)
       // detectedFields
-      if(userState?.serverOptions?.[detectedFields.optionUrl]) {
+      if (userState?.serverOptions?.[detectedFields.optionUrl]) {
         const serverData = userState?.serverOptions?.[detectedFields.optionUrl]
         const data = serverData.find(el => el[detectedFields.optionVariable] === appendingValue)
         appendingValue = data[detectedFields.valueToTake]
@@ -57,7 +57,12 @@ export default function MultipleSelectPlaceholder(props) {
         json = userState.serverOptions?.[optionUrl]?.[optionMainVariable]
       }
     } else {
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${optionUrl}`, { method: 'GET' })
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${optionUrl}`, {
+        method: 'GET',
+        headers: {
+          "ngrok-skip-browser-warning": true
+        }
+      })
 
       json = await response.json()
       if (json.data) {
@@ -74,7 +79,7 @@ export default function MultipleSelectPlaceholder(props) {
     }
 
     // console.log("json.map(el =>", json.map(el => el[optionVariable]))
-    
+
 
     setServerOptions(json.map(el => el[props.requestKeyName || optionVariable]))
   }
@@ -82,7 +87,7 @@ export default function MultipleSelectPlaceholder(props) {
     if (optionUrl && optionVariable) {
       fetchOptions()
     }
-  }, [optionUrl, optionVariable,userState?.serverOptions?.[detectedFields?.optionUrl], detectedValue && watch(detectedValue)])
+  }, [optionUrl, optionVariable, userState?.serverOptions?.[detectedFields?.optionUrl], detectedValue && watch(detectedValue)])
 
   return (
     <div style={{ width: width, }}>
