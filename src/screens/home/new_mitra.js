@@ -48,248 +48,248 @@ export const newMitra = {
     }
   },
   tabs: {
-    "Mitra Data": {
-      "Mitra Data": [
-        {
-          type: "switch",
-          name: "ownership_type",
-          headerName: "Ownership",
-          width: '100%',
-          required: true,
-          height: 41,
-          optionUrl: '/rest/metadata',
-          optionMainVariable: "farmOwnershipTypes",
-          optionVariable: "ownership_type",
-          value: "Private"
-        },
-        {
-          type: "input",
-          name: "company_name",
-          headerName: "Company Name",
-          // value: props["Company Name"] || "",
-          width: '100%',
-          required: false,
-          height: '9px',
-          dependant: "ownership_type.Company"
-        },
-        {
-          type: "input",
-          name: "farm_name",
-          headerName: "Farm Name",
-          // value: props["Farm Name"] || "",
-          width: '100%',
-          required: true,
-          height: '9px'
-        },
-        {
-          type: "input",
-          name: "contact_name",
-          headerName: "Farm Contact",
-          // value: props["Farm Contact"] || "",
-          width: '330px',
-          required: true,
-          height: '9px'
-        },
-        {
-          type: "input",
-          name: "contact_number",
-          headerName: "Contact Number",
-          // value: props["Contact Number"] || "",
-          width: '431px',
-          required: true,
-          height: '9px'
-        },
-        // {
-        //   type: "date",
-        //   name: "Creation Date",
-        //   // value: props["Creation Date"] || "",
-        //   width: '431px',
-        //   required: true,
-        //   height: '9px'
-        // },
-      ]
-    },
+    // "Mitra Data": {
+    //   "Mitra Data": [
+    //     {
+    //       type: "switch",
+    //       name: "ownership_type",
+    //       headerName: "Ownership",
+    //       width: '100%',
+    //       required: true,
+    //       height: 41,
+    //       optionUrl: '/rest/metadata',
+    //       optionMainVariable: "farmOwnershipTypes",
+    //       optionVariable: "ownership_type",
+    //       value: "Private"
+    //     },
+    //     {
+    //       type: "input",
+    //       name: "company_name",
+    //       headerName: "Company Name",
+    //       // value: props["Company Name"] || "",
+    //       width: '100%',
+    //       required: false,
+    //       height: '9px',
+    //       dependant: "ownership_type.Company"
+    //     },
+    //     {
+    //       type: "input",
+    //       name: "farm_name",
+    //       headerName: "Farm Name",
+    //       // value: props["Farm Name"] || "",
+    //       width: '100%',
+    //       required: true,
+    //       height: '9px'
+    //     },
+    //     {
+    //       type: "input",
+    //       name: "contact_name",
+    //       headerName: "Farm Contact",
+    //       // value: props["Farm Contact"] || "",
+    //       width: '330px',
+    //       required: true,
+    //       height: '9px'
+    //     },
+    //     {
+    //       type: "input",
+    //       name: "contact_number",
+    //       headerName: "Contact Number",
+    //       // value: props["Contact Number"] || "",
+    //       width: '431px',
+    //       required: true,
+    //       height: '9px'
+    //     },
+    //     // {
+    //     //   type: "date",
+    //     //   name: "Creation Date",
+    //     //   // value: props["Creation Date"] || "",
+    //     //   width: '431px',
+    //     //   required: true,
+    //     //   height: '9px'
+    //     // },
+    //   ]
+    // },
 
-    "Location & Facilities": {
-      "Location & Facilities": [
-        {
-          type: "dropdown",
-          name: "province",
-          headerName: "Select Province",
-          // value: props[" Select Province"] || "",
-          optionUrl: '/rest/provinces',
-          optionVariable: "province",
-          width: '100%',
-          required: true,
-          height: '41px',
-        },
-        {
-          type: "dropdown",
-          name: "district",
-          headerName: "Select District",
-          // value: props[" Select District"] || "",
-          optionUrl: '/rest/districts?province=:province',
-          optionVariable: "district",
-          width: '100%',
-          required: true,
-          height: '41px',
-          detectedFields: {
-            optionUrl: '/rest/provinces',
-            optionVariable: "province",
-            valueToTake: "abv"
-          }
-        },
-        {
-          type: "input",
-          name: "address",
-          headerName: "Farm Address",
-          // value: props["Farm Address"] || "",
-          width: '518px',
-          required: true,
-          // multiline: 2,
-          height: '9px'
-        },
-        {
-          type: "location",
-          name: "location",
-          headerName: "Latitude/Longitude",
-          // value: props["Latitude/Longitude"] || "",
-          width: '371px',
-          required: true,
-          showMap: true,
-          height: '9px'
-        },
-      ],
-      "Hydroponics": [
-        {
-          type: "multi-inputs",
-          name: "Hydroponics",
-          headerName: "Greenhouse",
-          rows: [
-            {
-              name: "greenhouse_name",
-              headerName: "Greenhouse Name",
-              width: "228px",
-              height: 9
-            },
-            {
-              name: "floor_area",
-              headerName: "Floor Area",
-              width: "144px",
-              height: 9
-            },
-            {
-              name: "greenhouse_holes",
-              headerName: "Number of Holes",
-              width: "132px",
-              height: 9
-            },
-            {
-              name: "dosing_type_id",
-              type: "dropdown",
-              headerName: "Dosing",
-              width: "167px",
-              height: 41,
-              optionUrl: '/rest/metadata',
-              optionMainVariable: "farmDosingTypes",
-              optionVariable: "type_name",
-            }
-          ],
-          value: [
-            {
-              "greenhouse_name": "",
-              "floor_area": "",
-              "greenhouse_holes": "",
-              "dosing_type_id": ""
-            }
-          ],
-        }
-      ],
-      "Open Field": [
-        {
-          type: "multi-inputs",
-          name: "Open Field",
-          headerName: "Open Field",
-          rows: [
-            {
-              name: "farmable_area",
-              headerName: "Farmable Land Area",
-              width: "228px"
-            },
-            {
-              name: "farmed_area",
-              headerName: "Farmed Land Area",
-              width: "144px"
-            },
-            {
-              name: "irrigation_type_id",
-              headerName: "Irrigation",
-              type: "dropdown",
-              width: "132px",
-              serverVaraible: "irrigation",
-              optionUrl: '/rest/metadata',
-              optionMainVariable: "farmIrrigationTypes",
-              optionVariable: "type_name",
-            },
-            {
-              name: "irrigated_area",
-              headerName: "Land Area Irrigated",
-              width: "167px"
-            }
-          ],
-          value: [
-            {
-              "farmable_area": "",
-              "farmed_area": "",
-              "irrigation_type_id": "",
-              "irrigated_area": ""
-            }
-          ]
-        }
-      ],
-      "Soilless": [
-        {
-          type: "multi-inputs",
-          name: "Soilless",
-          headerName: "Soilless",
-          rows: [
-            {
-              name: "greenhouse_name",
-              headerName: "Greenhouse Name",
-              width: "228px"
-            },
-            {
-              name: "floor_area",
-              headerName: "Floor Area",
-              width: "144px"
-            },
-            {
-              name: "greenhouse_holes",
-              headerName: "Number of Holes",
-              width: "132px"
-            },
-            {
-              name: "dosing_type_id",
-              type: "dropdown",
-              headerName: "Dosing",
-              width: "167px",
-              height: 41,
-              optionUrl: '/rest/metadata',
-              optionMainVariable: "farmDosingTypes",
-              optionVariable: "type_name",
-            }
-          ],
-          value: [
-            {
-              "greenhouse_name": "",
-              "floor_area": "",
-              "greenhouse_holes": "",
-              "dosing_type_id": ""
-            }
-          ],
-        }
-      ],
-    },
+    // "Location & Facilities": {
+    //   "Location & Facilities": [
+    //     {
+    //       type: "dropdown",
+    //       name: "province",
+    //       headerName: "Select Province",
+    //       // value: props[" Select Province"] || "",
+    //       optionUrl: '/rest/provinces',
+    //       optionVariable: "province",
+    //       width: '100%',
+    //       required: true,
+    //       height: '41px',
+    //     },
+    //     {
+    //       type: "dropdown",
+    //       name: "district",
+    //       headerName: "Select District",
+    //       // value: props[" Select District"] || "",
+    //       optionUrl: '/rest/districts?province=:province',
+    //       optionVariable: "district",
+    //       width: '100%',
+    //       required: true,
+    //       height: '41px',
+    //       detectedFields: {
+    //         optionUrl: '/rest/provinces',
+    //         optionVariable: "province",
+    //         valueToTake: "abv"
+    //       }
+    //     },
+    //     {
+    //       type: "input",
+    //       name: "address",
+    //       headerName: "Farm Address",
+    //       // value: props["Farm Address"] || "",
+    //       width: '518px',
+    //       required: true,
+    //       // multiline: 2,
+    //       height: '9px'
+    //     },
+    //     {
+    //       type: "location",
+    //       name: "location",
+    //       headerName: "Latitude/Longitude",
+    //       // value: props["Latitude/Longitude"] || "",
+    //       width: '371px',
+    //       required: true,
+    //       showMap: true,
+    //       height: '9px'
+    //     },
+    //   ],
+    //   "Hydroponics": [
+    //     {
+    //       type: "multi-inputs",
+    //       name: "Hydroponics",
+    //       headerName: "Greenhouse",
+    //       rows: [
+    //         {
+    //           name: "greenhouse_name",
+    //           headerName: "Greenhouse Name",
+    //           width: "228px",
+    //           height: 9
+    //         },
+    //         {
+    //           name: "floor_area",
+    //           headerName: "Floor Area",
+    //           width: "144px",
+    //           height: 9
+    //         },
+    //         {
+    //           name: "greenhouse_holes",
+    //           headerName: "Number of Holes",
+    //           width: "132px",
+    //           height: 9
+    //         },
+    //         {
+    //           name: "dosing_type_id",
+    //           type: "dropdown",
+    //           headerName: "Dosing",
+    //           width: "167px",
+    //           height: 41,
+    //           optionUrl: '/rest/metadata',
+    //           optionMainVariable: "farmDosingTypes",
+    //           optionVariable: "type_name",
+    //         }
+    //       ],
+    //       value: [
+    //         {
+    //           "greenhouse_name": "",
+    //           "floor_area": "",
+    //           "greenhouse_holes": "",
+    //           "dosing_type_id": ""
+    //         }
+    //       ],
+    //     }
+    //   ],
+    //   "Open Field": [
+    //     {
+    //       type: "multi-inputs",
+    //       name: "Open Field",
+    //       headerName: "Open Field",
+    //       rows: [
+    //         {
+    //           name: "farmable_area",
+    //           headerName: "Farmable Land Area",
+    //           width: "228px"
+    //         },
+    //         {
+    //           name: "farmed_area",
+    //           headerName: "Farmed Land Area",
+    //           width: "144px"
+    //         },
+    //         {
+    //           name: "irrigation_type_id",
+    //           headerName: "Irrigation",
+    //           type: "dropdown",
+    //           width: "132px",
+    //           serverVaraible: "irrigation",
+    //           optionUrl: '/rest/metadata',
+    //           optionMainVariable: "farmIrrigationTypes",
+    //           optionVariable: "type_name",
+    //         },
+    //         {
+    //           name: "irrigated_area",
+    //           headerName: "Land Area Irrigated",
+    //           width: "167px"
+    //         }
+    //       ],
+    //       value: [
+    //         {
+    //           "farmable_area": "",
+    //           "farmed_area": "",
+    //           "irrigation_type_id": "",
+    //           "irrigated_area": ""
+    //         }
+    //       ]
+    //     }
+    //   ],
+    //   "Soilless": [
+    //     {
+    //       type: "multi-inputs",
+    //       name: "Soilless",
+    //       headerName: "Soilless",
+    //       rows: [
+    //         {
+    //           name: "greenhouse_name",
+    //           headerName: "Greenhouse Name",
+    //           width: "228px"
+    //         },
+    //         {
+    //           name: "floor_area",
+    //           headerName: "Floor Area",
+    //           width: "144px"
+    //         },
+    //         {
+    //           name: "greenhouse_holes",
+    //           headerName: "Number of Holes",
+    //           width: "132px"
+    //         },
+    //         {
+    //           name: "dosing_type_id",
+    //           type: "dropdown",
+    //           headerName: "Dosing",
+    //           width: "167px",
+    //           height: 41,
+    //           optionUrl: '/rest/metadata',
+    //           optionMainVariable: "farmDosingTypes",
+    //           optionVariable: "type_name",
+    //         }
+    //       ],
+    //       value: [
+    //         {
+    //           "greenhouse_name": "",
+    //           "floor_area": "",
+    //           "greenhouse_holes": "",
+    //           "dosing_type_id": ""
+    //         }
+    //       ],
+    //     }
+    //   ],
+    // },
     // "Feature Governance": {
     //   "Feature Governance": [
     //     {
@@ -327,9 +327,15 @@ export const newMitra = {
           rows: [
             {
               name: "product_id",
-              headerName: "Product",
               width: "185.46px",
-              height: 9
+              headerName: "Product",
+              type: "dropdown",
+              optionUrl: '/rest/admin/products',
+              optionMainVariable: "data",
+              optionVariable: "product_name",
+              serverVaraible: "product",
+              width: "185.46px",
+              height: 41,
             },
             {
               name: "farm_type_id",
@@ -408,8 +414,15 @@ export const newMitra = {
           rows: [
             {
               name: "product_id",
-              headerName: "Product",
               width: "185.46px",
+              headerName: "Product",
+              type: "dropdown",
+              optionUrl: '/rest/admin/products',
+              optionMainVariable: "data",
+              optionVariable: "product_name",
+              serverVaraible: "product",
+              width: "185.46px",
+              height: 41,
             },
             {
               name: "farm_type_id",

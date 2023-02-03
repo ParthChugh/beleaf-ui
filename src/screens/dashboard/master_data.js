@@ -89,7 +89,7 @@ export const masterData = (props) => {
         {
           
           type: "dropdown",
-          name: "district",
+          name: "farm_loc_district",
           headerName: "Select District",
           // value: props[" Select District"] || "",
           optionUrl: '/rest/districts?province=:farm_loc_province',

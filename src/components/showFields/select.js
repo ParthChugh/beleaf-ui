@@ -74,13 +74,12 @@ export default function MultipleSelectPlaceholder(props) {
     }
 
     // console.log("json.map(el =>", json.map(el => el[optionVariable]))
+    
+
     setServerOptions(json.map(el => el[props.requestKeyName || optionVariable]))
   }
   useEffect(() => {
     if (optionUrl && optionVariable) {
-      if(optionVariable === "farm_loc_district") {
-        debugger;
-      }
       fetchOptions()
     }
   }, [optionUrl, optionVariable,userState?.serverOptions?.[detectedFields?.optionUrl], detectedValue && watch(detectedValue)])

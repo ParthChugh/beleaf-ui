@@ -65,7 +65,7 @@ export const internalFarm = {
         },
         {
           type: "dropdown",
-          name: "district",
+          name: "farm_loc_district",
           headerName: "Select District",
           // value: props[" Select District"] || "",
           optionUrl: '/rest/districts?province=:province',

@@ -37,7 +37,6 @@ export default {
       align: 'center',
       headerAlign: "center",
       renderCell: (params) => {
-        console.log("params123123", )
         return (params?.row?.farm_types || [])?.map(el => el.farm_type_name)?.join(',')
       },
     },
