@@ -221,7 +221,7 @@ export default function ShowFields(props) {
             if (!serverValues) {
               serverValues = userState.serverOptions[value.optionUrl.split('?')[0]]
             }
-            const newFieldValue = serverValues.find(el => el[value.requestKeyName || value.optionVariable] === params[value.name])
+            const newFieldValue = (serverValues?.data || serverValues).find(el => el[value.requestKeyName || value.optionVariable] === params[value.name])
             correctedValues[keyName || value.requestKeyName || value.name] = newFieldValue?.id || newFieldValue?.[value.requestKeyName || value.name]
           } else {
             correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
@@ -235,6 +235,7 @@ export default function ShowFields(props) {
       });
       onSubmitCustomField && onSubmitCustomField(params)
     } catch (el) {
+      console.log('catch12312321', el)
     }
   }
 

@@ -2,6 +2,10 @@ export const newUser = {
   title: {
     "Product": "Add New User",
   },
+  getServerDetails: {
+    url: '/rest/admin/user',
+    isFormData: false,
+  },
   tabs: {
     "User": {
       "User": [
@@ -17,16 +21,16 @@ export const newUser = {
           optionVariable: "staff_type",
           value: "Private"
         },
-        {
-          type: "input",
-          name: "production_code",
-          headerName: "Production Code",
-          // value: props["Company Name"] || "",
-          placeholder: "XX-XXX-XX-XX",
-          width: '100%',
-          required: true,
-          height: '9px',
-        },
+        // {
+        //   type: "input",
+        //   name: "production_code",
+        //   headerName: "Production Code",
+        //   // value: props["Company Name"] || "",
+        //   placeholder: "XX-XXX-XX-XX",
+        //   width: '100%',
+        //   required: true,
+        //   height: '9px',
+        // },
         {
           type: "input",
           name: "user_name",
@@ -59,22 +63,26 @@ export const newUser = {
           name: "role_id",
           headerName: "Role",
           width: '431px',
-          options: [
-            'Owner',
-            'Farm Manager',
-            'Worker'
-          ],
+          optionUrl: '/rest/metadata',
+          optionMainVariable: "userRoles",
+          optionVariable: "role",
           required: true,
           height: 41
         },
         {
           type: "input",
-          name: "farm_id",
           headerName: "Farm Name",
           placeholder: "Kutani Farms",
           width: '100%',
-          height: "9px",
-          required: true
+          required: true,
+          name: "farm_id",
+          type: "dropdown",
+          optionUrl: '/rest/admin/farms?size=100',
+          optionMainVariable: "data",
+          optionVariable: "farm_name",
+          serverVaraible: "product",
+          width: "185.46px",
+          height: 41,
         },
       ]
     },

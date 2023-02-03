@@ -16,6 +16,7 @@ export const newMitra = {
     url: "/rest/admin/farm/",
     isFormData: false,
     method: "PUT",
+    saveInLocal: true,
     headers: {
       mitra: true,
       'Content-Type': 'application/json'

@@ -69,7 +69,9 @@ export default function Heading(props) {
         formdata.append(key, value?.[0]?.file ? value[0].file : value)
       })
     } else {
-      url = url + JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || ""
+      if(open.payload?.serverDetails?.saveInLocal) {
+        url = url + JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || ""
+      }
     }
     const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${url}`, {
       method: open.payload.getServerDetails.method ? open.payload.getServerDetails.method : 'POST',
@@ -140,7 +142,11 @@ export default function Heading(props) {
       })
       const json = await response.json()
       if(!json.error) {
-        localStorage.setItem('fieldJson', JSON.stringify(json))
+        if(serverDetails.saveInLocal) {
+          localStorage.setItem('fieldJson', JSON.stringify(json))
+        } else {
+          localStorage.removeItem('fieldJson')
+        }
         setValue(value + 1)
       } else {
         toast.error(json.error.message, {
@@ -199,7 +205,7 @@ export default function Heading(props) {
         });
         if (value === (Object.keys(open.payload.tabs || {}).length - 1) && Object.keys(userState.drafts).includes(Object.keys(open.payload.tabs || {})[value])) {
           setSendRequest('')
-          if(open.text.includes('Product')) {
+          if(open.text.includes('Product')|| open.text.includes('User')) {
             let correctedJson = {}
             const tabs = Object.values(open.payload.tabs)[0]
 
@@ -219,42 +225,7 @@ export default function Heading(props) {
             createElement(Object.values(correctedJson)[0])
             console.log('correctedJson123123', correctedJson)
             // setOpen({})
-          } else {
-            let newCorrectedJson = {}
-            const getKeyInformation = open.payload.getKeyInformation
-            newCorrectedJson["products"] = {}
-            newCorrectedJson[getKeyInformation.typeInfo] = {}
-            Object.values(userState.drafts).forEach((draft) => {
-              if(Object.keys(draft).length > 1) {
-                Object.keys(draft).forEach((el) => {
-                  if(el === "location") {
-                    if(typeof draft["location"] === 'string') {
-                      newCorrectedJson["lat"] = draft["location"].split(',')[0]
-                      newCorrectedJson["long"] = draft["location"].split(',')[1]
-                    } else {
-                      newCorrectedJson["lat"] = draft["location"]["latitude"]
-                      newCorrectedJson["long"] = draft["location"]["longitude"]
-                    } 
-                  }else {
-                    newCorrectedJson[el] = draft[el]
-                  }
-                })
-              } else if(Object.keys(draft).includes('Hydroponics') || Object.keys(draft).includes('Open Field') || Object.keys(draft).includes('Soilless')) {
-                Object.keys(draft).forEach((key) => {
-                  let keyName = ''
-                  keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === key)?.id
-                  newCorrectedJson[getKeyInformation.typeInfo][keyName] = draft[key]
-                })
-              } else if(Object.keys(draft).includes('historic_yield') || Object.keys(draft).includes('contracted_products')) {
-                Object.keys(draft).forEach((key) => {
-                  newCorrectedJson["products"][key] = draft[key]
-                })
-              }
-              
-            })
-            delete newCorrectedJson['farm_name']
-            createElement(newCorrectedJson)
-          }
+          } 
         } else {
           setSendRequest('')
         }

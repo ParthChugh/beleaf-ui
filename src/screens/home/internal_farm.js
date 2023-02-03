@@ -14,6 +14,7 @@ export const internalFarm = {
     url: "/rest/admin/farm/",
     isFormData: false,
     method: "PUT",
+    saveInLocal: true,
     headers: {
       mitra: false,
       'Content-Type': 'application/json'

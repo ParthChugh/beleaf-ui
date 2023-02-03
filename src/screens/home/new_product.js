@@ -4,7 +4,7 @@ export const newProduct = {
   },
   getServerDetails: {
     url: '/rest/admin/new_product',
-    isFormData: true,
+    isFormData: true
   },
   tabs: {
     "Product": {
