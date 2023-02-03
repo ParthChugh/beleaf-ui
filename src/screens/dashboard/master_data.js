@@ -16,11 +16,11 @@ export const masterData = (props) => {
       "Basic Data": [
         {
           type: "dropdown",
-          name: "ownership",
+          name: "ownership_type",
           headerName: "Ownership",
-          serverVaraible: "ownership",
           optionUrl: '/rest/metadata',
           optionMainVariable: "farmOwnershipTypes",
+          serverVaraible: "ownership",
           optionVariable: "ownership_type",
           width: '259px',
           value: props["Ownership"] || "",
