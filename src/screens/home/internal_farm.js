@@ -4,27 +4,28 @@ export const internalFarm = {
     "Location & Facilities": "Farm Location and Facilities",
     "Features Governance": "Features Governance"
   },
-  // getKeyInformation: {
-  //   url: '/rest/metadata',
-  //   optionMainVariable: "farmTypes",
-  //   optionVariable: "farm_type_name",
-  //   typeInfo: 'facility'
-  // },
-  // getServerDetails: {
-  //   url: "/rest/admin/farm/",
-  //   isFormData: false,
-  //   method: "PUT",
-  //   headers: {
-  //     mitra: false
-  //   }
-  // },
-  // serverDetails: {
-  //   "Form Data": {
-  //     url: "/rest/admin/new_farm",
-  //     method: "POST",
-  //     mitra: false
-  //   },
-  // },
+  getKeyInformation: {
+    url: '/rest/metadata',
+    optionMainVariable: "farmTypes",
+    optionVariable: "farm_type_name",
+    typeInfo: 'facility'
+  },
+  getServerDetails: {
+    url: "/rest/admin/farm/",
+    isFormData: false,
+    method: "PUT",
+    headers: {
+      mitra: false,
+      'Content-Type': 'application/json'
+    }
+  },
+  serverDetails: {
+    "Form Data": {
+      url: "/rest/admin/new_farm",
+      method: "POST",
+      mitra: false
+    },
+  },
   tabs: {
     "Form Data": {
       "Form Data": [

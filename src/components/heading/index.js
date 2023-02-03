@@ -209,10 +209,10 @@ export default function Heading(props) {
               const values = userState.drafts[key];
               tabValues.map(valuesKey => {
                 let value = values[valuesKey.name]
-                if (valuesKey.optionUrl) {
-                  const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
-                  value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
-                }
+                // if (valuesKey.optionUrl) {
+                //   const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
+                //   value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
+                // }
                 correctedJson[key][valuesKey.name] = value
               })
             })
