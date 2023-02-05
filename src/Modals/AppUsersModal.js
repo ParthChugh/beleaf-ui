@@ -4,17 +4,17 @@ import plusImage from "../assets/plus.png";
 import { MenuItem, FormControl } from "@mui/material";
 import Select from "@mui/material/Select";
 
-export const AppUsersModal = ({ visible = false }) => {
+export const AppUsersModal = ({ visible = true }) => {
   const [newUser, setNewUser] = useState(false);
   const [role, setRole] = useState("Owner");
   const [name, setName] = useState("");
   const [contactNo, setContactNo] = useState("");
   const COLUMS = [
-    { id: 11, name: "USER ID", accessor: "userId" },
-    { id: 12, name: "NAME", accessor: "name" },
-    { id: 13, name: "CONTACT NO.", accessor: "contactNo" },
-    { id: 14, name: "ROLE", accessor: "role" },
-    { id: 15, name: "APP STATUS", accessor: "appStatus" },
+    { id: 11, name: "USER ID" },
+    { id: 12, name: "NAME" },
+    { id: 13, name: "CONTACT NO." },
+    { id: 14, name: "ROLE" },
+    { id: 15, name: "APP STATUS" },
   ];
   const [ROWS, setROWS] = useState([
     {
@@ -78,37 +78,45 @@ export const AppUsersModal = ({ visible = false }) => {
                         </thead>
                         <tbody>
                           {ROWS.map((row) => {
+                            const KEYS = Object.keys(row);
+                            //console.log(Object.keys(row), "=> KEYS");
                             return (
                               <tr
                                 key={row.id}
                                 className="border-gray-200 border-b-[1px]"
                               >
-                                {COLUMS.map((col) => {
-                                  if (col.accessor === "userId") {
+                                {KEYS.map((col, i) => {
+                                  if (col === "id") {
+                                    return;
+                                  }
+                                  if (col === "userId") {
                                     return (
-                                      <td className="text-sm p-3 text-[#0090FF] underline cursor-pointer">
-                                        {row[col.accessor]}
+                                      <td
+                                        key={i}
+                                        className="text-sm p-3 text-[#0090FF] underline cursor-pointer"
+                                      >
+                                        {row[col]}
                                       </td>
                                     );
                                   }
-                                  if (col.accessor === "appStatus") {
+                                  if (col === "appStatus") {
                                     return (
-                                      <td className="p-3">
+                                      <td key={i} className="p-3">
                                         <div className="flex bg-[#0090FF] rounded-2xl py-1 justify-center items-center">
                                           <img
                                             src={hookImage}
                                             className="w-[10px] h-[10px] mr-2"
                                           />
                                           <p className="text-white text-sm">
-                                            {row[col.accessor]}
+                                            {row[col]}
                                           </p>
                                         </div>
                                       </td>
                                     );
                                   } else {
                                     return (
-                                      <td className="text-sm p-2">
-                                        {row[col.accessor]}
+                                      <td key={i} className="text-sm p-2">
+                                        {row[col]}
                                       </td>
                                     );
                                   }
@@ -120,10 +128,10 @@ export const AppUsersModal = ({ visible = false }) => {
                       </table>
                       {newUser ? (
                         <div className="flex justify-between p-2 text-sm mt-2 mb-2 items-center">
-                          {COLUMS.map((item) => {
-                            if (item.accessor === "name") {
+                          {Object.keys(ROWS[0]).map((item, i) => {
+                            if (item === "name") {
                               return (
-                                <div key={item.id}>
+                                <div key={i}>
                                   <input
                                     style={{ border: "1px solid #E5E8E8" }}
                                     placeholder="name"
@@ -133,7 +141,7 @@ export const AppUsersModal = ({ visible = false }) => {
                                   />
                                 </div>
                               );
-                            } else if (item.accessor === "role") {
+                            } else if (item === "role") {
                               return (
                                 <FormControl
                                   sx={{ m: 1, minWidth: 120 }}
@@ -158,9 +166,9 @@ export const AppUsersModal = ({ visible = false }) => {
                                   </Select>
                                 </FormControl>
                               );
-                            } else if (item.accessor === "contactNo") {
+                            } else if (item === "contactNo") {
                               return (
-                                <div key={item.id}>
+                                <div key={i}>
                                   <input
                                     style={{ border: "1px solid #E5E8E8" }}
                                     placeholder="contactNo"
@@ -170,7 +178,7 @@ export const AppUsersModal = ({ visible = false }) => {
                                   />
                                 </div>
                               );
-                            } else return <div key={item.id}></div>;
+                            } else return <div key={i}></div>;
                           })}
                         </div>
                       ) : null}
