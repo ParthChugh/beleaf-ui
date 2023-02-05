@@ -12,6 +12,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { toast } from 'react-toastify';
 import { Typography } from '@mui/material';
+import AppUsersModal from '../../screens/dashboard/appUsersModal';
 import { makeStyles } from '@mui/styles';
 import MapContainer from './map';
 import CustomTable from '../../components/customTable'
@@ -54,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 export default function ShowFields(props) {
   const { type, values, onSubmitCustomField, serverUrl, updateUrl, getKeyInformation } = props
   const [edit, setEdit] = useState(props.edit || {})
+  const [appUserVisible, setAppUserVisible] = useState(false)
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
   const classes = useStyles();
@@ -592,6 +594,7 @@ export default function ShowFields(props) {
   return (
     <div>
       <div className='dashboard_tabs__container'>
+        <AppUsersModal visible={appUserVisible} />
         <Tabs
           classes={{
             root: classes.customTabRoot,
@@ -608,11 +611,16 @@ export default function ShowFields(props) {
               cursor: 'pointer'
             }}
             onClick={(event) => {
-              if (!edit[type]) {
-                setEdit({ ...edit, [type]: true })
+              if(urlParams.page_id === 'farms' && type === "App Users") {
+                setAppUserVisible(true)
               } else {
-                handleSubmit(onSubmit)(event)
+                if (!edit[type]) {
+                  setEdit({ ...edit, [type]: true })
+                } else {
+                  handleSubmit(onSubmit)(event)
+                }
               }
+              
             }}
           >
             {edit[type] ? "Save" : "Edit"}
