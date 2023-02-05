@@ -1,33 +1,32 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
-import { UserContext } from '../../contexts/user';
-import './LoginPage.css';
-import { toast } from 'react-toastify';
+import React, { useState, useContext, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { UserContext } from "../../contexts/user";
+import "./LoginPage.css";
+import { toast } from "react-toastify";
 import { redirect, useNavigate } from "react-router-dom";
-
+import { AppUsersModal } from "../../Modals/AppUsersModal";
 
 const LoginPage = () => {
-  const [_, setCookie] = useCookies(['user']);
+  const [_, setCookie] = useCookies(["user"]);
   const { userState, userDispatch } = useContext(UserContext);
   const notify = () => toast("Wow so easy !");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
   const handleChange = (event) => {
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
-  }
+  };
 
   useEffect(() => {
     if (Object.values(userState.user).length > 0) {
-      redirect('/')
+      redirect("/");
     }
-
-  }, [userState.user])
+  }, [userState.user]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,14 +34,17 @@ const LoginPage = () => {
     // alert('Logging in...');
     // console.log('username12321', formData)
     // http://localhost:88/rest/admin/login
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/rest/admin/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    let json = await response.json()
+    const response = await fetch(
+      `${process.env.REACT_APP_API_ENDPOINT}/rest/admin/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+    let json = await response.json();
     if (json.error) {
       toast.error(json.error, {
         position: "top-right",
@@ -66,36 +68,51 @@ const LoginPage = () => {
         progress: undefined,
         theme: "dark",
       });
-      setCookie('accessToken', json.data.token)
+      setCookie("accessToken", json.data.token);
       userDispatch({
-        type: 'UPDATE_USER_RESPONSE',
-        payload: { accessToken: json.data.token, name: "Jacob Holmes", role: "Manager" },
+        type: "UPDATE_USER_RESPONSE",
+        payload: {
+          accessToken: json.data.token,
+          name: "Jacob Holmes",
+          role: "Manager",
+        },
       });
-      navigate('/')
+      navigate("/");
     }
     // console.log('response.json()', json); // parses JSON response into native JavaScript objects
-
-    
-  }
+  };
 
   return (
     <div className="login-container">
+      <AppUsersModal />
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Username:
-          <input type="username" name="username" value={formData.username} onChange={handleChange} />
+          <input
+            type="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
           Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
         </label>
         <br />
-        <button type="submit" className="login-button">Login</button>
+        <button type="submit" className="login-button">
+          Login
+        </button>
       </form>
     </div>
   );
-}
+};
 
 export default LoginPage;
