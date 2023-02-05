@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import hookImage from "../../assets/hook.png";
 import plusImage from "../../assets/plus.png";
 import { MenuItem, FormControl } from "@mui/material";
 import Select from "@mui/material/Select";
 
-export default function AppUsersModal({ visible = true }) {
+export default function AppUsersModal({ visible = true, values }) {
+  console.log('values12312312', values)
   const [newUser, setNewUser] = useState(false);
   const [role, setRole] = useState("Owner");
   const [name, setName] = useState("");
@@ -13,27 +14,24 @@ export default function AppUsersModal({ visible = true }) {
     { id: 11, name: "USER ID" },
     { id: 12, name: "NAME" },
     { id: 13, name: "CONTACT NO." },
-    { id: 14, name: "ROLE" },
+    { id: 14, name: "ROLE", },
     { id: 15, name: "APP STATUS" },
   ];
-  const [ROWS, setROWS] = useState([
-    {
-      id: 16,
-      userId: "LJBABGR001",
-      name: "Neal Matthews",
-      contactNo: "087882233909",
-      role: "Owner",
-      appStatus: "active",
-    },
-    {
-      id: 17,
-      userId: "LJBABGR002",
-      name: "Robert Matthews",
-      contactNo: "087882233100",
-      role: "Owner",
-      appStatus: "active",
-    },
-  ]);
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    if (values.length > 0) {
+      setRows(values.map(el => {
+        return {
+          id: 16,
+          userId: el.id,
+          name: el.user_name,
+          contactNo: el.contact_number,
+          role: el.role.role,
+          appStatus: el.app_status.status,
+        }
+      }))
+    }
+  }, [values])
 
   const handleChange = (event) => {
     setRole(event.target.value);
@@ -77,7 +75,7 @@ export default function AppUsersModal({ visible = true }) {
                           </tr>
                         </thead>
                         <tbody>
-                          {ROWS.map((row) => {
+                          {rows.map((row) => {
                             const KEYS = Object.keys(row);
                             //console.log(Object.keys(row), "=> KEYS");
                             return (
@@ -128,7 +126,7 @@ export default function AppUsersModal({ visible = true }) {
                       </table>
                       {newUser ? (
                         <div className="flex justify-between p-2 text-sm mt-2 mb-2 items-center">
-                          {Object.keys(ROWS[0]).map((item, i) => {
+                          {Object.keys(rows[0]).map((item, i) => {
                             if (item === "name") {
                               return (
                                 <div key={i}>

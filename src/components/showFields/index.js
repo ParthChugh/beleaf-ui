@@ -594,7 +594,7 @@ export default function ShowFields(props) {
   return (
     <div>
       <div className='dashboard_tabs__container'>
-        <AppUsersModal visible={appUserVisible} />
+        <AppUsersModal visible={appUserVisible}  values={userState?.tableData?.['/rest/admin/users-0']?.data || []}/>
         <Tabs
           classes={{
             root: classes.customTabRoot,
