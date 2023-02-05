@@ -1,5 +1,4 @@
 export const newMitra = {
-
   title: {
     "Mitra Data": "Add New Internal Farm",
     "Location & Facilities": "Farm Location and Facilities",
@@ -7,45 +6,45 @@ export const newMitra = {
     "Products & Production": "Products & Production",
   },
   getKeyInformation: {
-    url: '/rest/metadata',
+    url: "/rest/metadata",
     optionMainVariable: "farmTypes",
     optionVariable: "farm_type_name",
-    typeInfo: 'facility'
+    typeInfo: "facility",
   },
   getServerDetails: {
     url: "/rest/admin/farm/",
     isFormData: false,
     method: "PUT",
     headers: {
-      mitra: true
-    }
+      mitra: true,
+    },
   },
   serverDetails: {
     "Mitra Data": {
       url: "/rest/admin/new_farm",
       method: "POST",
-      mitra: true
+      mitra: true,
     },
     "Location & Facilities": {
       url: "/rest/admin/farm/",
       method: "PUT",
-      mitra: true
+      mitra: true,
     },
     "Feature Governance": {
       url: "/rest/admin/farm/",
       method: "PUT",
-      mitra: true
+      mitra: true,
     },
     "Historic Yields": {
       url: "/rest/admin/farm/",
       method: "PUT",
-      mitra: true
+      mitra: true,
     },
     "Features Governance": {
       url: "/rest/admin/farm/",
       method: "PUT",
-      mitra: true
-    }
+      mitra: true,
+    },
   },
   tabs: {
     "Mitra Data": {
@@ -54,50 +53,50 @@ export const newMitra = {
           type: "switch",
           name: "ownership_type",
           headerName: "Ownership",
-          width: '100%',
+          width: "100%",
           required: true,
           height: 41,
-          optionUrl: '/rest/metadata',
+          optionUrl: "/rest/metadata",
           optionMainVariable: "farmOwnershipTypes",
           optionVariable: "ownership_type",
-          value: "Private"
+          value: "Private",
         },
         {
           type: "input",
           name: "company_name",
           headerName: "Company Name",
           // value: props["Company Name"] || "",
-          width: '100%',
+          width: "100%",
           required: false,
-          height: '9px',
-          dependant: "ownership_type.Company"
+          height: "9px",
+          dependant: "ownership_type.Company",
         },
         {
           type: "input",
           name: "farm_name",
           headerName: "Farm Name",
           // value: props["Farm Name"] || "",
-          width: '100%',
+          width: "100%",
           required: true,
-          height: '9px'
+          height: "9px",
         },
         {
           type: "input",
           name: "contact_name",
           headerName: "Farm Contact",
           // value: props["Farm Contact"] || "",
-          width: '330px',
+          width: "330px",
           required: true,
-          height: '9px'
+          height: "9px",
         },
         {
           type: "input",
           name: "contact_number",
           headerName: "Contact Number",
           // value: props["Contact Number"] || "",
-          width: '431px',
+          width: "431px",
           required: true,
-          height: '9px'
+          height: "9px",
         },
         // {
         //   type: "date",
@@ -107,9 +106,8 @@ export const newMitra = {
         //   required: true,
         //   height: '9px'
         // },
-      ]
+      ],
     },
-
     "Location & Facilities": {
       "Location & Facilities": [
         {
@@ -117,50 +115,50 @@ export const newMitra = {
           name: "province",
           headerName: "Select Province",
           // value: props[" Select Province"] || "",
-          optionUrl: '/rest/provinces',
+          optionUrl: "/rest/provinces",
           optionVariable: "province",
-          width: '100%',
+          width: "100%",
           required: true,
-          height: '41px'
+          height: "41px",
         },
         {
           type: "dropdown",
           name: "district",
           headerName: "Select District",
           // value: props[" Select District"] || "",
-          optionUrl: '/rest/districts?province=:province',
+          optionUrl: "/rest/districts?province=:province",
           optionVariable: "district",
-          width: '100%',
+          width: "100%",
           required: true,
-          height: '41px',
+          height: "41px",
           detectedFields: {
-            optionUrl: '/rest/provinces',
+            optionUrl: "/rest/provinces",
             optionVariable: "province",
-            valueToTake: "abv"
-          }
+            valueToTake: "abv",
+          },
         },
         {
           type: "input",
           name: "address",
           headerName: "Farm Address",
           // value: props["Farm Address"] || "",
-          width: '518px',
+          width: "518px",
           required: true,
           // multiline: 2,
-          height: '9px'
+          height: "9px",
         },
         {
           type: "location",
           name: "location",
           headerName: "Latitude/Longitude",
           // value: props["Latitude/Longitude"] || "",
-          width: '371px',
+          width: "371px",
           required: true,
           showMap: true,
-          height: '9px'
+          height: "9px",
         },
       ],
-      "Hydroponics": [
+      Hydroponics: [
         {
           type: "multi-inputs",
           name: "Hydroponics",
@@ -170,19 +168,19 @@ export const newMitra = {
               name: "greenhouse_name",
               headerName: "Greenhouse Name",
               width: "228px",
-              height: 9
+              height: 9,
             },
             {
               name: "floor_area",
               headerName: "Floor Area",
               width: "144px",
-              height: 9
+              height: 9,
             },
             {
               name: "greenhouse_holes",
               headerName: "Number of Holes",
               width: "132px",
-              height: 9
+              height: 9,
             },
             {
               name: "dosing_type_id",
@@ -190,20 +188,20 @@ export const newMitra = {
               headerName: "Dosing",
               width: "167px",
               height: 41,
-              optionUrl: '/rest/metadata',
+              optionUrl: "/rest/metadata",
               optionMainVariable: "farmDosingTypes",
               optionVariable: "type_name",
-            }
+            },
           ],
           value: [
             {
-              "greenhouse_name": "",
-              "floor_area": "",
-              "greenhouse_holes": "",
-              "dosing_type_id": ""
-            }
+              greenhouse_name: "",
+              floor_area: "",
+              greenhouse_holes: "",
+              dosing_type_id: "",
+            },
           ],
-        }
+        },
       ],
       "Open Field": [
         {
@@ -214,35 +212,35 @@ export const newMitra = {
             {
               name: "farmable_land_area",
               headerName: "Farmable Land Area",
-              width: "228px"
+              width: "228px",
             },
             {
               name: "farmed_land_area",
               headerName: "Farmed Land Area",
-              width: "144px"
+              width: "144px",
             },
             {
               name: "irrigation",
               headerName: "Irrigation",
-              width: "132px"
+              width: "132px",
             },
             {
               name: "land_area_irrigated",
               headerName: "Land Area Irrigated",
-              width: "167px"
-            }
+              width: "167px",
+            },
           ],
           value: [
             {
-              "farmable_land_area": "",
-              "farmed_land_area": "",
-              "irrigation": "",
-              "land_area_irrigated": ""
-            }
-          ]
-        }
+              farmable_land_area: "",
+              farmed_land_area: "",
+              irrigation: "",
+              land_area_irrigated: "",
+            },
+          ],
+        },
       ],
-      "Soilless": [
+      Soilless: [
         {
           type: "multi-inputs",
           name: "Soilless",
@@ -251,33 +249,33 @@ export const newMitra = {
             {
               name: "greenhouse_name",
               headerName: "Greenhouse Name",
-              width: "228px"
+              width: "228px",
             },
             {
               name: "floor_area",
               headerName: "Floor Area",
-              width: "144px"
+              width: "144px",
             },
             {
               name: "holes",
               headerName: "Number of Holes",
-              width: "132px"
+              width: "132px",
             },
             {
               name: "dosing",
               headerName: "Dosing",
-              width: "167px"
-            }
+              width: "167px",
+            },
           ],
           value: [
             {
-              "greenhouse_name": "",
-              "floor_area": "",
-              "holes": "",
-              "dosing": ""
-            }
+              greenhouse_name: "",
+              floor_area: "",
+              holes: "",
+              dosing: "",
+            },
           ],
-        }
+        },
       ],
     },
     // "Feature Governance": {
@@ -309,7 +307,7 @@ export const newMitra = {
     //   ]
     // },
     "Historic Yields": {
-      "Historic Yields": [
+      historic_yield: [
         {
           type: "multi-inputs",
           name: "historic_yield",
@@ -319,23 +317,23 @@ export const newMitra = {
               name: "product",
               headerName: "Product",
               width: "185.46px",
-              height: 9
+              height: 9,
             },
             {
               name: "method",
               headerName: "Method",
               type: "dropdown",
-              optionUrl: '/rest/metadata',
+              optionUrl: "/rest/metadata",
               optionMainVariable: "farmTypes",
               optionVariable: "farm_type_name",
               width: "185.46px",
-              height: 41
+              height: 41,
             },
             {
               name: "quantity_produced",
               headerName: "Quantity",
               width: "98px",
-              height: 9
+              height: 9,
             },
             {
               name: "uom",
@@ -344,7 +342,7 @@ export const newMitra = {
               height: 41,
               type: "dropdown",
               serverVaraible: "uom",
-              optionUrl: '/rest/metadata',
+              optionUrl: "/rest/metadata",
               optionMainVariable: "productQtyUnits",
               optionVariable: "uom",
             },
@@ -354,16 +352,16 @@ export const newMitra = {
               width: "132.74px",
               type: "dropdown",
               serverVaraible: "harvest_frequency",
-              optionUrl: '/rest/metadata',
+              optionUrl: "/rest/metadata",
               optionMainVariable: "productHarvestFrequency",
               optionVariable: "frequency",
-              height: 41
+              height: 41,
             },
             {
               name: "farmed_area",
               headerName: "Area",
               width: "117px",
-              height: 9
+              height: 9,
             },
             {
               name: "farm_area_unit",
@@ -372,9 +370,9 @@ export const newMitra = {
               type: "dropdown",
               height: 41,
               serverVaraible: "farm_area_unit",
-              optionUrl: '/rest/metadata',
+              optionUrl: "/rest/metadata",
               optionMainVariable: "farmAreaUnits",
-              optionVariable: "unit_name"
+              optionVariable: "unit_name",
             },
           ],
           value: [
@@ -385,12 +383,12 @@ export const newMitra = {
               uom: "",
               frequency: "",
               area: "",
-              farm_area_unit: ""
-            }
-          ]
-        }
+              farm_area_unit: "",
+            },
+          ],
+        },
       ],
-      "Contracted Products": [
+      contracted_products: [
         {
           type: "multi-inputs",
           name: "contracted_products",
@@ -405,7 +403,7 @@ export const newMitra = {
               name: "method",
               headerName: "Method",
               type: "dropdown",
-              optionUrl: '/rest/metadata',
+              optionUrl: "/rest/metadata",
               optionMainVariable: "farmTypes",
               optionVariable: "farm_type_name",
               width: "185.46px",
@@ -418,29 +416,29 @@ export const newMitra = {
             {
               name: "yield",
               headerName: "Min. Yield",
-              width: "151px"
+              width: "151px",
             },
             {
               name: "uom",
               headerName: "UOM",
               type: "dropdown",
               serverVaraible: "uom",
-              optionUrl: '/rest/metadata',
+              optionUrl: "/rest/metadata",
               optionMainVariable: "productQtyUnits",
               optionVariable: "uom",
-              width: "96.11px"
-            }
+              width: "96.11px",
+            },
           ],
           value: [
             {
-              product: '',
-              method: '',
-              price: '',
-              "yield": "",
-              "uom": ''
-            }
+              product: "",
+              method: "",
+              price: "",
+              yield: "",
+              uom: "",
+            },
           ],
-        }
+        },
       ],
     },
     "Features Governance": {
@@ -449,28 +447,27 @@ export const newMitra = {
           type: "dropdown",
           name: "farm_function",
           headerName: "Farm Function",
-          optionUrl: '/rest/metadata',
+          optionUrl: "/rest/metadata",
           optionMainVariable: "farmFunctions",
           optionVariable: "function",
-          width: '100%',
+          width: "100%",
           // value: props["Farm Function"] || "",
           required: true,
-          height: 41
+          height: 41,
         },
         {
           type: "dropdown",
           name: "batch_tracking_method",
           headerName: "Batch Tracking Method",
-          optionUrl: '/rest/metadata',
+          optionUrl: "/rest/metadata",
           optionMainVariable: "batchTrackingMethods",
           optionVariable: "method_name",
-          width: '100%',
+          width: "100%",
           // value: props["Batch Tracking Method"] || "",
           required: true,
-          height: 41
+          height: 41,
         },
-      ]
-    }
-  }
-
-}
+      ],
+    },
+  },
+};

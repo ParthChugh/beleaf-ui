@@ -83,7 +83,8 @@ export const masterData = (props) => {
           value: props["Province"] || "",
           width: '245px',
           required: true,
-          height: '41px'
+          height: '41px',
+          requestKeyName: 'province'
         },
         {
           type: "input",
@@ -92,7 +93,8 @@ export const masterData = (props) => {
           value: props["District"] || "",
           width: '245px',
           required: true,
-          height: '9px'
+          height: '9px',
+          requestKeyName: 'district'
         },
         {
           type: "input",
@@ -102,7 +104,8 @@ export const masterData = (props) => {
           width: '518px',
           required: true,
           // multiline: 2,
-          height: '9px'
+          height: '9px',
+          requestKeyName: 'address'
         },
         {
           type: "location",

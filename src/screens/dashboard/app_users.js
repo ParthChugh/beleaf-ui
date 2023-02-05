@@ -1,6 +1,6 @@
 export function appUsers(props) {
   return {
-    getServerDetails: '/rest/admin/user/',
+    getServerDetails: {},
     fields: {
       "App Users": [
         {
