@@ -1,28 +1,28 @@
-import React, { useEffect, useState, useContext } from 'react'
-import Select from './select';
+import React, { useEffect, useState, useContext } from "react";
+import Select from "./select";
 import { useForm, Controller } from "react-hook-form";
-import Box from '@mui/material/Box';
-import './ShowFields.css'
-import TextField from './textField';
-import DatePicker from './date';
-import MultiInput from './multiInput';
-import AttachImage from './attachImage'
-import Switch from './switch'
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { toast } from 'react-toastify';
-import { Typography } from '@mui/material';
-import AppUsersModal from '../../screens/dashboard/appUsersModal';
-import { makeStyles } from '@mui/styles';
-import MapContainer from './map';
-import CustomTable from '../../components/customTable'
-import { useParams } from 'react-router-dom'
-import { UserContext } from '../../contexts/user';
+import Box from "@mui/material/Box";
+import "./ShowFields.css";
+import TextField from "./textField";
+import DatePicker from "./date";
+import MultiInput from "./multiInput";
+import AttachImage from "./attachImage";
+import Switch from "./switch";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { toast } from "react-toastify";
+import { Typography } from "@mui/material";
+import AppUsersModal from "../../screens/dashboard/appUsersModal";
+import { makeStyles } from "@mui/styles";
+import MapContainer from "./map";
+import CustomTable from "../../components/customTable";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../../contexts/user";
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 function TabPanel(props) {
@@ -44,87 +44,109 @@ function TabPanel(props) {
     </div>
   );
 }
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   customTabRoot: {
-    color: 'black'
+    color: "black",
   },
   customTabIndicator: {
     backgroundColor: "#3EB049",
-  }
+  },
 }));
 export default function ShowFields(props) {
-  const { type, values, onSubmitCustomField, serverUrl, updateUrl, getKeyInformation } = props
-  const [edit, setEdit] = useState(props.edit || {})
-  const [appUserVisible, setAppUserVisible] = useState(false)
+  const {
+    type,
+    values,
+    onSubmitCustomField,
+    serverUrl,
+    updateUrl,
+    getKeyInformation,
+  } = props;
+  const [edit, setEdit] = useState(props.edit || {});
+  const [appUserVisible, setAppUserVisible] = useState(false);
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
   const classes = useStyles();
 
   const fetchDataServer = () => {
-    let defaultValues = {}
-    let json = userState.editTable?.[`${serverUrl}${urlParams.id}`]
+    let defaultValues = {};
+    let json = userState.editTable?.[`${serverUrl}${urlParams.id}`];
     if (json?.data?.data?.[0]) {
-      const serverValues = json?.data?.data?.[0]
+      const serverValues = json?.data?.data?.[0];
       if (serverValues) {
         values.forEach((value) => {
-          defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
-        })
+          defaultValues[value.name] = value?.serverVaraible
+            ? serverValues?.[value?.serverVaraible]?.[value.optionVariable]
+            : serverValues[value.name];
+        });
         // reset(defaultValues)
         // setDefaultValues(defaultValues)
       }
     } else if (Object.values(json?.data || {}).length > 0) {
       values.forEach((value) => {
-        if (value.type === 'multi-inputs') {
-          let serverValues = []
+        if (value.type === "multi-inputs") {
+          let serverValues = [];
           if (getKeyInformation.fieldType) {
-            serverValues = Object.values(json?.data?.[getKeyInformation.fieldType] || {})
-
+            serverValues = Object.values(
+              json?.data?.[getKeyInformation.fieldType] || {}
+            );
           } else {
-            serverValues = Object.values(json?.data)
+            serverValues = Object.values(json?.data);
           }
-          let type = []
+          let type = [];
           if (getKeyInformation.typeInfo) {
-            type = (serverValues.find(el => el.farm_type_name === value.name))?.[getKeyInformation.typeInfo] || value.value
+            type =
+              serverValues.find((el) => el.farm_type_name === value.name)?.[
+                getKeyInformation.typeInfo
+              ] || value.value;
           } else {
-            type = json?.data?.[getKeyInformation.fieldType]?.[value.name] || value.value
+            type =
+              json?.data?.[getKeyInformation.fieldType]?.[value.name] ||
+              value.value;
           }
 
-          defaultValues[value.name] = []
+          defaultValues[value.name] = [];
           type.forEach((serverValue) => {
-            let tempValues = {}
+            let tempValues = {};
             value.rows.forEach((row) => {
-              tempValues[row.name] = (row?.serverVaraible ? serverValue?.[row?.serverVaraible]?.[row.optionVariable] : serverValue[row.name]) || ""
-            })
-            defaultValues[value.name].push(tempValues)
-          })
+              tempValues[row.name] =
+                (row?.serverVaraible
+                  ? serverValue?.[row?.serverVaraible]?.[row.optionVariable]
+                  : serverValue[row.name]) || "";
+            });
+            defaultValues[value.name].push(tempValues);
+          });
         } else {
-          const serverValues = json?.data
-          defaultValues[value.name] = value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues[value.name]
+          const serverValues = json?.data;
+          defaultValues[value.name] = value?.serverVaraible
+            ? serverValues?.[value?.serverVaraible]?.[value.optionVariable]
+            : serverValues[value.name];
         }
-      })
+      });
     } else {
       values.forEach((value) => {
-        if (value.type === 'multi-inputs') {
-          defaultValues[value.name] = []
-          let tempValues = {}
+        if (value.type === "multi-inputs") {
+          defaultValues[value.name] = [];
+          let tempValues = {};
           value.rows.forEach((row) => {
-            tempValues[row.name] = userState.drafts?.[type]?.[value.name] || value.value[row.name] || ""
-          })
-          defaultValues[value.name].push(tempValues)
+            tempValues[row.name] =
+              userState.drafts?.[type]?.[value.name] ||
+              value.value[row.name] ||
+              "";
+          });
+          defaultValues[value.name].push(tempValues);
         } else {
-          defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
+          defaultValues[value.name] =
+            userState.drafts?.[type]?.[value.name] || value.value;
         }
-      })
+      });
     }
-    console.log("defaultValues12321,123123", defaultValues)
-    return defaultValues
-  }
+    console.log("defaultValues12321,123123", defaultValues);
+    return defaultValues;
+  };
   const { control, handleSubmit, formState, reset, watch } = useForm({
-    defaultValues: (fetchDataServer())
+    defaultValues: fetchDataServer(),
   });
-  console.log("defaultValues12321", fetchDataServer())
-
-
+  console.log("defaultValues12321", fetchDataServer());
 
   // useEffect(() => {
   //   // console.log("serverUrl123123", serverUrl)
@@ -146,183 +168,259 @@ export default function ShowFields(props) {
 
   useEffect(() => {
     if (props.sendRequest) {
-      handleSubmit(onSendReq)()
+      handleSubmit(onSendReq)();
     }
-  }, [props.sendRequest])
+  }, [props.sendRequest]);
 
   useEffect(() => {
     if (Object.values(formState.errors).length > 0) {
       userDispatch({
-        type: 'UPDATE_ERROR',
+        type: "UPDATE_ERROR",
         payload: { [type]: formState.errors },
       });
     }
-  }, [JSON.stringify(formState.errors || {})])
+  }, [JSON.stringify(formState.errors || {})]);
 
   // console.log('userState12321', userState)
   const onSendReq = (params) => {
     try {
-      let localErrors = []
-      const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
-        return Object.values(el)
-      }))
+      let localErrors = [];
+      const flatterdArray = [].concat(
+        ...Object.values(Object.values(params)[0]).map((el) => {
+          return Object.values(el);
+        })
+      );
       flatterdArray.forEach((el) => {
         if (el === "") {
-          localErrors.push(el)
+          localErrors.push(el);
         }
-      })
+      });
       if (localErrors.length > 0) {
         userDispatch({
-          type: 'UPDATE_ERROR',
+          type: "UPDATE_ERROR",
           payload: { [type]: `Please add the details in ${type}` },
         });
         // props.setSendRequest && props.setSendRequest(false)
-        alert(`Please add details in ${type}`)
+        alert(`Please add details in ${type}`);
         return;
       }
       // props.setSendRequest && props.setSendRequest(false)
       // if (userState.errors[type]) {
       userDispatch({
-        type: 'UPDATE_ERROR',
+        type: "UPDATE_ERROR",
         payload: { [type]: "" },
       });
       // }
-      let correctedValues = {}
+      let correctedValues = {};
       values.forEach((value) => {
-        if (value.type === 'multi-inputs') {
-          const serverValues = params[type]
-          let keyName = ''
+        if (value.type === "multi-inputs") {
+          const serverValues = params[type];
+          let keyName = "";
           if (getKeyInformation) {
-            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[
+              getKeyInformation.optionMainVariable
+            ].find((el) => el[getKeyInformation.optionVariable] === type)?.id;
           }
-          correctedValues[keyName || value.name] = []
+          correctedValues[keyName || value.name] = [];
           serverValues.forEach((serverValue) => {
-            let tempValues = {}
+            let tempValues = {};
             value.rows.forEach((row) => {
-              if (serverValue[row.name] === "true" || serverValue[row.name] === "false") {
-                tempValues[row.name] = serverValue[row.name] === "true"
+              if (
+                serverValue[row.name] === "true" ||
+                serverValue[row.name] === "false"
+              ) {
+                tempValues[row.name] = serverValue[row.name] === "true";
               } else {
-                tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
+                tempValues[row.name] = row?.optionVariable
+                  ? userState.serverOptions?.[row.optionUrl]?.[
+                      row.optionMainVariable
+                    ].find(
+                      (el) => el[row.optionVariable] === serverValue[row.name]
+                    ).id
+                  : serverValue[row.name];
               }
-
-            })
-            correctedValues[keyName || value.name].push(tempValues)
-          })
+            });
+            correctedValues[keyName || value.name].push(tempValues);
+          });
         } else {
-          const serverValues = params
-          let keyName = ''
+          const serverValues = params;
+          let keyName = "";
           if (getKeyInformation) {
-            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[
+              getKeyInformation.optionMainVariable
+            ].find((el) => el[getKeyInformation.optionVariable] === type)?.id;
           }
-          if (value.type === 'location') {
-            const lat_long = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
-            correctedValues["lat"] = lat_long.split(',')[0]
-            correctedValues["long"] = lat_long.split(',')[1]
+          if (value.type === "location") {
+            const lat_long = value?.serverVaraible
+              ? serverValues?.[value?.serverVaraible]?.[value.optionVariable]
+              : serverValues?.[value?.name];
+            correctedValues["lat"] = lat_long.split(",")[0];
+            correctedValues["long"] = lat_long.split(",")[1];
           } else if (value.optionUrl) {
-            let serverValues = userState.serverOptions?.[value.optionUrl]?.[value.optionMainVariable]
+            let serverValues =
+              userState.serverOptions?.[value.optionUrl]?.[
+                value.optionMainVariable
+              ];
             if (!serverValues) {
-              serverValues = userState.serverOptions[value.optionUrl.split('?')[0]]
+              serverValues =
+                userState.serverOptions[value.optionUrl.split("?")[0]];
             }
-            const newFieldValue = (serverValues?.data || serverValues).find(el => el[value.requestKeyName || value.optionVariable] === params[value.name])
-            correctedValues[keyName || value.requestKeyName || value.name] = newFieldValue?.id || newFieldValue?.[value.requestKeyName || value.name]
+            const newFieldValue = (serverValues?.data || serverValues).find(
+              (el) =>
+                el[value.requestKeyName || value.optionVariable] ===
+                params[value.name]
+            );
+            correctedValues[keyName || value.requestKeyName || value.name] =
+              newFieldValue?.id ||
+              newFieldValue?.[value.requestKeyName || value.name];
           } else {
-            correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
+            correctedValues[keyName || value.requestKeyName || value.name] =
+              value?.serverVaraible
+                ? serverValues?.[value?.serverVaraible]?.[value.optionVariable]
+                : serverValues?.[value?.name];
           }
-
         }
-      })
+      });
       userDispatch({
-        type: 'UPDATE_DATA',
+        type: "UPDATE_DATA",
         payload: { [type]: correctedValues },
       });
-      onSubmitCustomField && onSubmitCustomField(params)
+      onSubmitCustomField && onSubmitCustomField(params);
     } catch (el) {
-      console.log('catch12312321', el)
+      console.log("catch12312321", el);
     }
-  }
+  };
 
   const updateServerDetails = async (params) => {
-    const isFormData = updateUrl?.isFormData
+    const isFormData = updateUrl?.isFormData;
 
-    let formdata = null
-    let correctedValues = {}
+    let formdata = null;
+    let correctedValues = {};
     if (isFormData) {
       formdata = new FormData();
-      const tempDefaultValues = fetchDataServer()
-      values.map(valuesKey => {
-        const key = valuesKey.name
+      const tempDefaultValues = fetchDataServer();
+      values.map((valuesKey) => {
+        const key = valuesKey.name;
         let value = params[key];
         if (JSON.stringify(value) !== JSON.stringify(tempDefaultValues[key])) {
           if (valuesKey.optionUrl) {
-            const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
-            value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
+            const serverValues =
+              userState.serverOptions[valuesKey.optionUrl][
+                valuesKey.optionMainVariable
+              ];
+            value = serverValues.find(
+              (el) => el[valuesKey.optionVariable] === value
+            )?.id;
           }
-          formdata.append(key, value?.[0]?.file ? value[0].file : value)
+          formdata.append(key, value?.[0]?.file ? value[0].file : value);
         }
-      })
+      });
     } else {
       values.forEach((value) => {
-        if (value.type === 'multi-inputs') {
-          const serverValues = params[type]
-          let keyName = ''
+        if (value.type === "multi-inputs") {
+          const serverValues = params[type];
+          let keyName = "";
           if (getKeyInformation) {
-            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[
+              getKeyInformation.optionMainVariable
+            ].find((el) => el[getKeyInformation.optionVariable] === type)?.id;
           }
-          correctedValues[keyName || value.name] = []
+          correctedValues[keyName || value.name] = [];
           serverValues.forEach((serverValue) => {
-            let tempValues = {}
+            let tempValues = {};
             value.rows.forEach((row) => {
-              if (serverValue[row.name] === "true" || serverValue[row.name] === "false") {
-                tempValues[row.name] = serverValue[row.name] === "true"
+              if (
+                serverValue[row.name] === "true" ||
+                serverValue[row.name] === "false"
+              ) {
+                tempValues[row.name] = serverValue[row.name] === "true";
               } else {
-                tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
+                tempValues[row.name] = row?.optionVariable
+                  ? userState.serverOptions?.[row.optionUrl]?.[
+                      row.optionMainVariable
+                    ].find(
+                      (el) => el[row.optionVariable] === serverValue[row.name]
+                    ).id
+                  : serverValue[row.name];
               }
-
-            })
-            correctedValues[keyName || value.name].push(tempValues)
-          })
+            });
+            correctedValues[keyName || value.name].push(tempValues);
+          });
         } else {
-          const serverValues = params
-          let keyName = ''
+          const serverValues = params;
+          let keyName = "";
           if (getKeyInformation) {
-            keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === type)?.id
+            keyName = userState.serverOptions?.[getKeyInformation.url]?.[
+              getKeyInformation.optionMainVariable
+            ].find((el) => el[getKeyInformation.optionVariable] === type)?.id;
           }
-          if (value.type === 'location') {
-            const lat_long = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
-            correctedValues["lat"] = lat_long.split(',')[0]
-            correctedValues["long"] = lat_long.split(',')[1]
+          if (value.type === "location") {
+            const lat_long = value?.serverVaraible
+              ? serverValues?.[value?.serverVaraible]?.[value.optionVariable]
+              : serverValues?.[value?.name];
+            correctedValues["lat"] = lat_long.split(",")[0];
+            correctedValues["long"] = lat_long.split(",")[1];
           } else if (value.optionUrl) {
-            let serverValues = userState.serverOptions?.[value.optionUrl]?.[value.optionMainVariable]
+            let serverValues =
+              userState.serverOptions?.[value.optionUrl]?.[
+                value.optionMainVariable
+              ];
             if (!serverValues) {
-              serverValues = userState.serverOptions[value.optionUrl.split('?')[0]]
+              serverValues =
+                userState.serverOptions[value.optionUrl.split("?")[0]];
             }
-            const newFieldValue = serverValues.find(el => el[value.requestKeyName || value.optionVariable] === params[value.name])
-            correctedValues[keyName || value.requestKeyName || value.name] = newFieldValue?.id || newFieldValue?.[value.requestKeyName || value.name]
+            const newFieldValue = serverValues.find(
+              (el) =>
+                el[value.requestKeyName || value.optionVariable] ===
+                params[value.name]
+            );
+            correctedValues[keyName || value.requestKeyName || value.name] =
+              newFieldValue?.id ||
+              newFieldValue?.[value.requestKeyName || value.name];
           } else {
-            correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
+            correctedValues[keyName || value.requestKeyName || value.name] =
+              value?.serverVaraible
+                ? serverValues?.[value?.serverVaraible]?.[value.optionVariable]
+                : serverValues?.[value?.name];
           }
-
         }
-      })
+      });
     }
     // console.log("correctedValues123213", correctedValues)
-    let updateCorrectedValues = {}
-    if ((type === "Hydroponics" || type === "Open Field" || type === "Soilless") && urlParams.page_id === 'farms') {
-      updateCorrectedValues["facility"] = correctedValues
-    } else if ((type === "contracted_products" || type === "historic_yield") && urlParams.page_id === 'farms') {
-      updateCorrectedValues["products"] = correctedValues
+    let updateCorrectedValues = {};
+    if (
+      (type === "Hydroponics" ||
+        type === "Open Field" ||
+        type === "Soilless") &&
+      urlParams.page_id === "farms"
+    ) {
+      updateCorrectedValues["facility"] = correctedValues;
+    } else if (
+      (type === "contracted_products" || type === "historic_yield") &&
+      urlParams.page_id === "farms"
+    ) {
+      updateCorrectedValues["products"] = correctedValues;
     }
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${updateUrl.url}${urlParams.id}`, {
-      method: 'PUT',
-      ...!isFormData && {
-        headers: {
-          'Content-Type': 'application/json',
-          "ngrok-skip-browser-warning": true
-        }
-      },
-      body: isFormData ? formdata : JSON.stringify(Object.values(updateCorrectedValues).length > 0 ? updateCorrectedValues : correctedValues)
-    })
-    let json = await response.json()
+    const response = await fetch(
+      `${process.env.REACT_APP_API_ENDPOINT}${updateUrl.url}${urlParams.id}`,
+      {
+        method: "PUT",
+        ...(!isFormData && {
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": true,
+          },
+        }),
+        body: isFormData
+          ? formdata
+          : JSON.stringify(
+              Object.values(updateCorrectedValues).length > 0
+                ? updateCorrectedValues
+                : correctedValues
+            ),
+      }
+    );
+    let json = await response.json();
     if (json.error) {
       toast.error(json.error, {
         position: "top-right",
@@ -346,38 +444,39 @@ export default function ShowFields(props) {
         theme: "dark",
       });
     }
-    setEdit({ ...edit, [type]: false })
-  }
-  console.log('ereroeee', formState)
+    setEdit({ ...edit, [type]: false });
+  };
+  console.log("ereroeee", formState);
   const onSubmit = (params, form) => {
-    console.log('params123123', params)
+    console.log("params123123", params);
     try {
-      let localErrors = []
-      const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
-        return Object.values(el)
-      }))
+      let localErrors = [];
+      const flatterdArray = [].concat(
+        ...Object.values(Object.values(params)[0]).map((el) => {
+          return Object.values(el);
+        })
+      );
       flatterdArray.forEach((el) => {
         if (el === "") {
-          localErrors.push(el)
+          localErrors.push(el);
         }
-      })
+      });
       if (localErrors.length > 0) {
-        alert(`Please add the details in ${type}`)
+        alert(`Please add the details in ${type}`);
         return;
       }
-      updateServerDetails(params)
-
+      updateServerDetails(params);
     } catch (el) {
-      console.log('el213123', el)
+      console.log("el213123", el);
       // setEdit({ ...edit, [type]: false })
     }
-  }
+  };
 
   const createField = (field, index) => {
-    const name = field.name
-    const dependant = (field.dependant || "")?.split('.')
+    const name = field.name;
+    const dependant = (field.dependant || "")?.split(".");
     if (dependant.length > 0 && watch(dependant[0]) !== dependant[1]) {
-      return <div />
+      return <div />;
     }
 
     switch (field.type) {
@@ -395,13 +494,12 @@ export default function ShowFields(props) {
                   {...customField}
                   {...field}
                   disabled={!edit[type]}
-                  value={customField.value || ''}
+                  value={customField.value || ""}
                 />
-              )
-            }
-            }
+              );
+            }}
           />
-        )
+        );
       case "attach-image":
         return (
           <Controller
@@ -418,11 +516,10 @@ export default function ShowFields(props) {
                   disabled={!edit[type]}
                   value={customField.value || ""}
                 />
-              )
-            }
-            }
+              );
+            }}
           />
-        )
+        );
       case "dropdown":
         return (
           <Controller
@@ -440,11 +537,10 @@ export default function ShowFields(props) {
                   disabled={!edit[type]}
                   value={customField.value || ""}
                 />
-              )
-            }
-            }
+              );
+            }}
           />
-        )
+        );
       case "input":
         return (
           <Controller
@@ -462,11 +558,10 @@ export default function ShowFields(props) {
                     value={customField.value || ""}
                   />
                 </>
-              )
-            }
-            }
+              );
+            }}
           />
-        )
+        );
       case "date":
         return (
           <Controller
@@ -484,11 +579,10 @@ export default function ShowFields(props) {
                     value={customField.value || ""}
                   />
                 </>
-              )
-            }
-            }
+              );
+            }}
           />
-        )
+        );
       case "location":
         return (
           <Controller
@@ -497,9 +591,15 @@ export default function ShowFields(props) {
             rules={{ required: field.required }}
             render={(props) => {
               const { field: customField } = props;
-              let value = ''
-              if (typeof customField.value === 'string' && customField.value !== '') {
-                value = { latitude: customField.value.split(',')[0], longitude: customField.value.split(',')[1] }
+              let value = "";
+              if (
+                typeof customField.value === "string" &&
+                customField.value !== ""
+              ) {
+                value = {
+                  latitude: customField.value.split(",")[0],
+                  longitude: customField.value.split(",")[1],
+                };
               }
               return (
                 <>
@@ -510,46 +610,59 @@ export default function ShowFields(props) {
                         const options = {
                           enableHighAccuracy: true,
                           timeout: 5000,
-                          maximumAge: 0
+                          maximumAge: 0,
                         };
                         function success(pos) {
                           const crd = pos.coords;
                           // console.log('Your current position is:');
                           // console.log(`Latitude : ${crd.latitude}`);
                           // console.log(`Longitude: ${crd.longitude}`);
-                          customField.onChange(`${crd.latitude},${crd.longitude}`)
+                          customField.onChange(
+                            `${crd.latitude},${crd.longitude}`
+                          );
                           // console.log(`More or less ${crd.accuracy} meters.`);
                         }
 
                         function error(err) {
                           console.warn(`ERROR(${err.code}): ${err.message}`);
                         }
-                        navigator.geolocation.getCurrentPosition(success, error, options);
+                        navigator.geolocation.getCurrentPosition(
+                          success,
+                          error,
+                          options
+                        );
                       }
-
-                    }}>
-
+                    }}
+                  >
                     <TextField
                       {...field}
                       disabled={!edit[type]}
-                      value={Object.values(value || customField.value || {}).join(',')}
+                      value={Object.values(
+                        value || customField.value || {}
+                      ).join(",")}
                       inputProps={{
                         style: {
                           height: field.height,
                         },
                       }}
                     />
-                    {(value?.latitude || customField?.value?.latitude) && (value?.longitude || customField?.value?.longitude) && (
-                      <MapContainer latitude={value?.latitude || customField.value.latitude} longitude={value?.longitude || customField.value.longitude} />
-                    )}
+                    {(value?.latitude || customField?.value?.latitude) &&
+                      (value?.longitude || customField?.value?.longitude) && (
+                        <MapContainer
+                          latitude={
+                            value?.latitude || customField.value.latitude
+                          }
+                          longitude={
+                            value?.longitude || customField.value.longitude
+                          }
+                        />
+                      )}
                   </Box>
-
                 </>
-              )
-            }
-            }
+              );
+            }}
           />
-        )
+        );
       case "multi-inputs":
         return (
           <Controller
@@ -567,15 +680,14 @@ export default function ShowFields(props) {
                     value={customField.value || ""}
                   />
                 </>
-              )
-            }
-            }
+              );
+            }}
           />
-        )
+        );
       case "table":
-        console.log('qwdqwdqwdqwd', field)
+        console.log("qwdqwdqwdqwd", field);
         return (
-          <Box sx={{width: '100%'}}>
+          <Box sx={{ width: "100%" }}>
             <CustomTable
               totalItems={15}
               visibleFields={field.visibleFields}
@@ -583,60 +695,69 @@ export default function ShowFields(props) {
               data={{ columns: field.columns, rows: field.rows || [] }}
             />
           </Box>
-
-        )
+        );
       default:
-        return <div>default</div>
+        return <div>default</div>;
     }
-
-  }
+  };
 
   return (
     <div>
-      <div className='dashboard_tabs__container'>
-        <AppUsersModal visible={appUserVisible}  values={userState?.tableData?.['/rest/admin/users-0']?.data || []}/>
+      <div className="dashboard_tabs__container">
+        <AppUsersModal
+          visible={appUserVisible}
+          closeModal={() => setAppUserVisible(false)}
+          values={userState?.tableData?.["/rest/admin/users-0"]?.data || []}
+        />
         <Tabs
           classes={{
             root: classes.customTabRoot,
-            indicator: classes.customTabIndicator
+            indicator: classes.customTabIndicator,
           }}
-          value={0} onChange={() => { }} aria-label="basic tabs example">
-          <Tab label={<span style={{ color: 'black', fontFamily: 'Poppins' }}>{type}</span>} {...a11yProps(0)} />
+          value={0}
+          onChange={() => {}}
+          aria-label="basic tabs example"
+        >
+          <Tab
+            label={
+              <span style={{ color: "black", fontFamily: "Poppins" }}>
+                {type}
+              </span>
+            }
+            {...a11yProps(0)}
+          />
         </Tabs>
-        {!(props.edit || {})[type] &&
+        {!(props.edit || {})[type] && (
           <Typography
-            className={`${edit[type] ? "dashboard_tabs__save" : "dashboard_tabs__edit"}`}
+            className={`${
+              edit[type] ? "dashboard_tabs__save" : "dashboard_tabs__edit"
+            }`}
             sx={{
-              fontSize: '10px',
-              cursor: 'pointer'
+              fontSize: "10px",
+              cursor: "pointer",
             }}
             onClick={(event) => {
-              if(urlParams.page_id === 'farms' && type === "App Users") {
-                setAppUserVisible(true)
+              if (urlParams.page_id === "farms" && type === "App Users") {
+                setAppUserVisible(true);
               } else {
                 if (!edit[type]) {
-                  setEdit({ ...edit, [type]: true })
+                  setEdit({ ...edit, [type]: true });
                 } else {
-                  handleSubmit(onSubmit)(event)
+                  handleSubmit(onSubmit)(event);
                 }
               }
-              
             }}
           >
             {edit[type] ? "Save" : "Edit"}
           </Typography>
-        }
-
-
+        )}
       </div>
 
       <TabPanel value={0} index={0}>
-        <div className='show_fields__container'>
-          {values.map((field, index) => (
-            createField(field, index)
-          ))}
+        <div className="show_fields__container">
+          {values.map((field, index) => createField(field, index))}
         </div>
       </TabPanel>
     </div>
-  )
+  );
 }

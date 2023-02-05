@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import hookImage from "../../assets/hook.png";
 import plusImage from "../../assets/plus.png";
 import { MenuItem, FormControl } from "@mui/material";
 import Select from "@mui/material/Select";
 
-export default function AppUsersModal({ visible = true, values }) {
-  console.log('values12312312', values)
+export default function AppUsersModal({ visible = true, values, closeModal }) {
+  console.log("values12312312", values);
+  const wrapperRef = useRef(null);
   const [newUser, setNewUser] = useState(false);
   const [role, setRole] = useState("Owner");
   const [name, setName] = useState("");
@@ -14,24 +15,39 @@ export default function AppUsersModal({ visible = true, values }) {
     { id: 11, name: "USER ID" },
     { id: 12, name: "NAME" },
     { id: 13, name: "CONTACT NO." },
-    { id: 14, name: "ROLE", },
+    { id: 14, name: "ROLE" },
     { id: 15, name: "APP STATUS" },
   ];
   const [rows, setRows] = useState([]);
   useEffect(() => {
     if (values.length > 0) {
-      setRows(values.map(el => {
-        return {
-          id: 16,
-          userId: el.id,
-          name: el.user_name,
-          contactNo: el.contact_number,
-          role: el.role.role,
-          appStatus: el.app_status.status,
-        }
-      }))
+      setRows(
+        values.map((el) => {
+          return {
+            id: 16,
+            userId: el.id,
+            name: el.user_name,
+            contactNo: el.contact_number,
+            role: el.role.role,
+            appStatus: el.app_status.status,
+          };
+        })
+      );
     }
-  }, [values])
+  }, [values]);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        closeModal();
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [wrapperRef]);
 
   const handleChange = (event) => {
     setRole(event.target.value);
@@ -42,7 +58,10 @@ export default function AppUsersModal({ visible = true, values }) {
       {visible ? (
         <>
           <div className="flex overflow-auto fixed inset-0 z-50 outline-none focus:outline-none bg-black/20">
-            <div className="relative w-full mt-[10%] ml-[20%] mr-[20%] mb-[3%] bg-white">
+            <div
+              ref={wrapperRef}
+              className="relative w-full mt-[10%] ml-[20%] mr-[20%] mb-[3%] bg-white"
+            >
               <div className="h-full border-0 rounded-lg shadow-lg relative flex flex-col w-full outline-none focus:outline-none">
                 <div className="border-slate-200 rounded-t p-5">
                   <div className="flex justify-between border-b-black/50 border-b-[1px]">
@@ -98,9 +117,17 @@ export default function AppUsersModal({ visible = true, values }) {
                                     );
                                   }
                                   if (col === "appStatus") {
+                                    let bgColor = "bg-yellow-400";
+                                    if (row[col] === "Active") {
+                                      bgColor = "bg-green-400";
+                                    } else if (row[col] === "Downloaded") {
+                                      bgColor = "bg-blue-400";
+                                    }
                                     return (
                                       <td key={i} className="p-3">
-                                        <div className="flex bg-[#0090FF] rounded-2xl py-1 justify-center items-center">
+                                        <div
+                                          className={`flex ${bgColor} rounded-2xl py-1 justify-center items-center`}
+                                        >
                                           <img
                                             src={hookImage}
                                             className="w-[10px] h-[10px] mr-2"
@@ -131,6 +158,7 @@ export default function AppUsersModal({ visible = true, values }) {
                               return (
                                 <div key={i}>
                                   <input
+                                    className="p-2 rounded-lg h-11"
                                     style={{ border: "1px solid #E5E8E8" }}
                                     placeholder="name"
                                     onChange={(event) =>
@@ -141,33 +169,29 @@ export default function AppUsersModal({ visible = true, values }) {
                               );
                             } else if (item === "role") {
                               return (
-                                <FormControl
-                                  sx={{ m: 1, minWidth: 120 }}
-                                  size="small"
-                                >
-                                  <Select
-                                    value={role}
-                                    onChange={handleChange}
-                                    displayEmpty
-                                    inputProps={{
-                                      "aria-label": "Without label",
-                                    }}
+                                <div className="px-2 py-2 rounded-lg border border-[#E5E8E8]">
+                                  <select
+                                    name="cars"
+                                    id="cars"
+                                    className="outline-none border-none px-2"
+                                    onChange={(e) => setRole(e.target.value)}
                                   >
-                                    <MenuItem value={"Owner"}>Owner</MenuItem>
-                                    <MenuItem value={"Farm Manager"}>
+                                    <option value="Owner">Owner</option>
+                                    <option value="Farm Manager">
                                       Farm Manager
-                                    </MenuItem>
-                                    <MenuItem value={"Worker"}>Worker</MenuItem>
-                                    <MenuItem value={"Beleaf Farm Manager"}>
+                                    </option>
+                                    <option value="Worker">Worker</option>
+                                    <option value="Beleaf Farm Manager">
                                       Beleaf Farm Manager
-                                    </MenuItem>
-                                  </Select>
-                                </FormControl>
+                                    </option>
+                                  </select>
+                                </div>
                               );
                             } else if (item === "contactNo") {
                               return (
                                 <div key={i}>
                                   <input
+                                    className="p-2 rounded-lg h-11"
                                     style={{ border: "1px solid #E5E8E8" }}
                                     placeholder="contactNo"
                                     onChange={(event) =>
@@ -176,7 +200,22 @@ export default function AppUsersModal({ visible = true, values }) {
                                   />
                                 </div>
                               );
-                            } else return <div key={i}></div>;
+                            } else if (item === "appStatus")
+                              return (
+                                <div key={i}>
+                                  <td key={i} className="p-3">
+                                    <div className="flex bg-yellow-400 rounded-2xl py-1 justify-center items-center px-4">
+                                      <img
+                                        src={hookImage}
+                                        className="w-[10px] h-[10px] mr-2"
+                                      />
+                                      <p className="text-white text-sm">
+                                        Not Dowmloaded
+                                      </p>
+                                    </div>
+                                  </td>
+                                </div>
+                              );
                           })}
                         </div>
                       ) : null}
@@ -200,4 +239,4 @@ export default function AppUsersModal({ visible = true, values }) {
       ) : null}
     </>
   );
-};
+}
