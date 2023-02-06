@@ -19,6 +19,8 @@ const HomePage = () => {
   const { userState } = useContext(UserContext);
   const isUserLoggedIn = checkIfUserLoggedIn(userState.user.accessToken)
   let [searchParams, setSearchParams] = useSearchParams();
+  let [search, setSearch] = useState('');
+  console.log('search12321', search)
   const [value, setValue] = useState(parseInt(searchParams.get('tab') || 0));
   const getSubData = (value) => {
     switch (value) {
@@ -27,6 +29,9 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={farms.visibleFields}
+            setSearch={setSearch}
+            search={search}
+            searchText={farms.searchField}
             getServerDetails={farms.getServerDetails}
             data={{ columns: farms.columns, rows: farms.rows }}
           />
@@ -37,6 +42,9 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={products.visibleFields}
+            setSearch={setSearch}
+            search={search}
+            searchText={products.searchField}
             getServerDetails={products.getServerDetails}
             data={{ columns: products.columns, rows: products.rows }}
           />
@@ -46,6 +54,9 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={appUsers.visibleFields}
+            setSearch={setSearch}
+            search={search}
+            searchText={appUsers.searchField}
             getServerDetails={appUsers.getServerDetails}
             data={{ columns: appUsers.columns, rows: appUsers.rows }}
           />
@@ -55,6 +66,9 @@ const HomePage = () => {
           <CustomTable
             totalItems={15}
             visibleFields={appUsers.visibleFields}
+            setSearch={setSearch}
+            search={search}
+            searchText={appUsers.searchField}
             getServerDetails={appUsers.getServerDetails}
             data={{ columns: appUsers.columns, rows: appUsers.rows }}
           />
@@ -134,6 +148,8 @@ const HomePage = () => {
               { name: "Products" },
               { name: "Users" }
             ]}
+            setSearch={setSearch}
+            search={search}
             setValue={(index) => {
               setValue(index)
               setSearchParams({ tab: index });

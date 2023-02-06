@@ -2,6 +2,7 @@ import Link from '@mui/material/Link'
 
 export default {
   visibleFields: ['PRODUCTION CODE', 'PRODUCT NAME', '', 'CATEGORY', 'PRODUCT', 'VARIANT', 'MATURITY'],
+  searchField: "product",
   getServerDetails: '/rest/admin/products',
   columns: [
     {

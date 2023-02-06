@@ -2,6 +2,7 @@ import Link from '@mui/material/Link'
 
 export default {
   visibleFields: ['FARM ID', 'FARM NAME', 'FARM CONTACT', 'FARM TYPE', 'PROVINCE', 'DISTRICT', 'RELATION', 'FUNCTION'],
+  searchField: "searchText",
   getServerDetails: '/rest/admin/farms',
   columns: [
     {

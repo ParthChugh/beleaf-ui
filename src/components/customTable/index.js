@@ -58,6 +58,7 @@ function CustomPagination({ totalItems, setPage }) {
 }
 
 export default function QuickFilteringCustomizedGrid(props) {
+  const { searchText, search, setSearch } = props;
   const VISIBLE_FIELDS = props.visibleFields
   const farmDetails = props.data
   const [page, setPage] = useState(0)
@@ -67,31 +68,50 @@ export default function QuickFilteringCustomizedGrid(props) {
     () => farmDetails.columns.filter((column) => VISIBLE_FIELDS.includes(column.headerName)),
     [farmDetails.columns],
   );
-  const rows = userState.tableData?.[`${props.getServerDetails}-${page}`] || {}
-  const totalItems = rows?.totalItems || userState.tableData?.[`${props.getServerDetails}-${0}`]?.totalItems
+  let keyName = `${props.getServerDetails}-${page}`
+  let keyName0 = `${props.getServerDetails}-${0}`
+  if (searchText && search) {
+    keyName = `${props.getServerDetails}&${searchText}=${search}-${page}`
+    keyName0 = `${props.getServerDetails}&${searchText}=${search}-${0}`
+  }
+  let rows = userState.tableData?.[keyName] || {}
+  const totalItems = rows?.totalItems || userState.tableData?.[keyName0]?.totalItems
   const fetchServerDetails = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${props.getServerDetails}?page=${page}&size=40`, { 
+    let url = `${process.env.REACT_APP_API_ENDPOINT}${props.getServerDetails}?page=${page}&size=40`
+    if (searchText && search) {
+      url = url + `&${searchText}=${search}`
+    }
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         "ngrok-skip-browser-warning": true
       }
-     })
+    })
     let json = await response.json()
     if (json.data) {
       json = json.data
     }
+    let keyName = `${props.getServerDetails}-${page}`
+    if (searchText && search) {
+      keyName = `${props.getServerDetails}&${searchText}=${search}-${page}`
+    }
     userDispatch({
       type: 'UPDATE_TABLE_DATA',
-      payload: { [`${props.getServerDetails}-${page}`]: json },
+      payload: { [keyName]: json },
     });
   }
   useEffect(() => {
     if (props.getServerDetails) {
+      setSearch('')
       fetchServerDetails()
     }
   }, [props.getServerDetails, page])
-  console.log('rows12321', rows)
-  console.log('columns12321', columns)
+
+  useEffect(() => {
+    if (search) {
+      fetchServerDetails()
+    }
+  }, [search])
   return (
     <Box sx={{
       height: 500,

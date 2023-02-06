@@ -2,6 +2,7 @@ import Link from '@mui/material/Link'
 
 export default {
   visibleFields: ['USER ID', 'NAME', 'CONTACT NO.', 'ROLE', 'FARM'],
+  searchField: "user_name",
   getServerDetails: '/rest/admin/users',
   columns: [
     {

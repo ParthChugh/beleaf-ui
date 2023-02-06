@@ -601,7 +601,7 @@ export default function ShowFields(props) {
             indicator: classes.customTabIndicator
           }}
           value={0} onChange={() => { }} aria-label="basic tabs example">
-          <Tab label={<span style={{ color: 'black', fontFamily: 'Poppins' }}>{type}</span>} {...a11yProps(0)} />
+          <Tab label={<span style={{ color: 'black', fontFamily: 'Poppins' }}>{type.replaceAll('_', " ")}</span>} {...a11yProps(0)} />
         </Tabs>
         {!(props.edit || {})[type] &&
           <Typography

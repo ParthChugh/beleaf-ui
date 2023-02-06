@@ -34,7 +34,8 @@ export const masterData = (props) => {
           value: props["Company Name"] || "",
           width: '412px',
           required: false,
-          height: '9px'
+          height: '9px',
+          dependant: "ownership_type.Company"
         },
         {
           type: "input",

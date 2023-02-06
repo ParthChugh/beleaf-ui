@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Typography from "@mui/material/Typography";
@@ -25,7 +25,16 @@ export default function BasicTabs(props) {
     showRoutingButton,
     changeRoute,
     onSubmit,
+    search,
+    setSearch
   } = props;
+
+  const [searchText, setSeachText] = useState('')
+
+  useEffect(() => {
+    setSeachText('')
+  },[value])
+  
   return (
     <Box sx={{ ml: 3, mr: 3 }}>
       <Tabs
@@ -59,6 +68,10 @@ export default function BasicTabs(props) {
                   id="outlined-multiline-flexible"
                   className="header__search_bar"
                   placeholder="Search"
+                  onChange={(text) => {
+                    setSeachText(text.target.value)
+                  }}
+                  value={searchText}
                   fullWidth
                   InputProps={{
                     startAdornment: (
@@ -94,6 +107,9 @@ export default function BasicTabs(props) {
                     marginLeft: 1,
                     "&:hover": { color: "green" },
                     width: 135,
+                  }}
+                  onClick={() => {
+                    setSearch(searchText)
                   }}
                 >
                   <Typography
