@@ -27,9 +27,13 @@ export default function Heading(props) {
     });
     setValue(0)
     setOpen(button)
+    localStorage.removeItem('fieldJson')
   };
   // console.log('openn----', open)
-  const handleClose = () => setOpen({});
+  const handleClose = () => {
+    setOpen({})
+    localStorage.removeItem('fieldJson')
+  };
   const icons = (text, color) => {
     switch (text) {
       case "Add":
@@ -69,7 +73,7 @@ export default function Heading(props) {
         formdata.append(key, value?.[0]?.file ? value[0].file : value)
       })
     } else {
-      if(open.payload?.serverDetails?.saveInLocal) {
+      if(JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || "") {
         url = url + JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || ""
       }
     }
@@ -117,48 +121,44 @@ export default function Heading(props) {
 
     }
     setOpen({})
+    localStorage.removeItem('fieldJson')
   }
 
   const updateDetails = async (serverDetails, values, serverValues) => {
-    let correctedJson = {}
     if(value === 0) {
-      // Object.values(serverValues)[0].forEach(valuesKey => {
-      //   let value = values[valuesKey.name]
-      //   if (valuesKey.optionUrl) {
-      //     const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
-      //     value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
-      //   }
-      //   correctedJson[valuesKey.name] = value
-      // })
-      
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverDetails.url}`, {
-        method: serverDetails.method || "post",
-        headers: {
-          'Content-Type': 'application/json',
-          "mitra": !!serverDetails.mitra,
-          "ngrok-skip-browser-warning": true
-        },
-        body: JSON.stringify(values)
-      })
-      const json = await response.json()
-      if(!json.error) {
-        if(serverDetails.saveInLocal) {
-          localStorage.setItem('fieldJson', JSON.stringify(json))
+      const fieldId = JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || ""
+      if(!fieldId) {
+        const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverDetails.url}`, {
+          method: serverDetails.method || "post",
+          headers: {
+            'Content-Type': 'application/json',
+            "mitra": !!serverDetails.mitra,
+            "ngrok-skip-browser-warning": true
+          },
+          body: JSON.stringify(values)
+        })
+        const json = await response.json()
+        if(!json.error) {
+          if(serverDetails.saveInLocal) {
+            localStorage.setItem('fieldJson', JSON.stringify(json))
+          } else {
+            localStorage.removeItem('fieldJson')
+          }
+          setValue(value + 1)
         } else {
-          localStorage.removeItem('fieldJson')
+          toast.error(json.error.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
-        setValue(value + 1)
       } else {
-        toast.error(json.error.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+        setValue(value + 1)
       }
     } else {
       setValue(value + 1)
@@ -225,7 +225,42 @@ export default function Heading(props) {
             createElement(Object.values(correctedJson)[0])
             console.log('correctedJson123123', correctedJson)
             // setOpen({})
-          } 
+          } else {
+            let newCorrectedJson = {}
+            const getKeyInformation = open.payload.getKeyInformation
+            newCorrectedJson["products"] = {}
+            newCorrectedJson[getKeyInformation.typeInfo] = {}
+            Object.values(userState.drafts).forEach((draft) => {
+              if(Object.keys(draft).length > 1) {
+                Object.keys(draft).forEach((el) => {
+                  if(el === "location") {
+                    if(typeof draft["location"] === 'string') {
+                      newCorrectedJson["lat"] = draft["location"].split(',')[0]
+                      newCorrectedJson["long"] = draft["location"].split(',')[1]
+                    } else {
+                      newCorrectedJson["lat"] = draft["location"]["latitude"]
+                      newCorrectedJson["long"] = draft["location"]["longitude"]
+                    } 
+                  }else {
+                    newCorrectedJson[el] = draft[el]
+                  }
+                })
+              } else if(Object.keys(draft).includes('Hydroponics') || Object.keys(draft).includes('Open Field') || Object.keys(draft).includes('Soilless')) {
+                Object.keys(draft).forEach((key) => {
+                  let keyName = ''
+                  keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === key)?.id
+                  newCorrectedJson[getKeyInformation.typeInfo][keyName] = draft[key]
+                })
+              } else if(Object.keys(draft).includes('historic_yield') || Object.keys(draft).includes('contracted_products')) {
+                Object.keys(draft).forEach((key) => {
+                  newCorrectedJson["products"][key] = draft[key]
+                })
+              }
+              
+            })
+            delete newCorrectedJson['farm_name']
+            createElement(newCorrectedJson)
+          }
         } else {
           setSendRequest('')
         }
@@ -250,7 +285,7 @@ export default function Heading(props) {
           sendRequest={sendRequest}
           values={values}
           setSendRequest={setSendRequest}
-          goToNextPage={() => setValue(value + 1)}
+          
           onSubmitCustomField={(params) => {
             // console.log('qweqweqwe', params)
           }}

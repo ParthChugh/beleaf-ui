@@ -229,6 +229,7 @@ const DashboardPage = () => {
         />
         <CustomTabs
           tabs={getTabs(params.page_id)}
+          hideSearch
           setValue={(index) => {
             setValue(index)
             setSearchParams({ tab: index });

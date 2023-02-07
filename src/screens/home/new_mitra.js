@@ -26,7 +26,8 @@ export const newMitra = {
     "Mitra Data": {
       url: "/rest/admin/new_farm",
       method: "POST",
-      mitra: true
+      mitra: true,
+      saveInLocal: true,
     },
     "Location & Facilities": {
       url: "/rest/admin/farm/",

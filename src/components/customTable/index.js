@@ -58,7 +58,7 @@ function CustomPagination({ totalItems, setPage }) {
 }
 
 export default function QuickFilteringCustomizedGrid(props) {
-  const { searchText, search, setSearch } = props;
+  const { searchText, search, setSearch = () => {} } = props;
   const VISIBLE_FIELDS = props.visibleFields
   const farmDetails = props.data
   const [page, setPage] = useState(0)
