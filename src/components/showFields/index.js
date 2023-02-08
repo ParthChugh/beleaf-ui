@@ -73,6 +73,7 @@ export default function ShowFields(props) {
         // setDefaultValues(defaultValues)
       }
     } else if (Object.values(json?.data || {}).length > 0) {
+      
       values.forEach((value) => {
         if (value.type === 'multi-inputs') {
           let serverValues = []
@@ -103,20 +104,34 @@ export default function ShowFields(props) {
         }
       })
     } else {
-      values.forEach((value) => {
+      console.log('123123213123', userState.drafts)
+      values.forEach((value, index) => {
         if (value.type === 'multi-inputs') {
+
           defaultValues[value.name] = []
           let tempValues = {}
           value.rows.forEach((row) => {
-            tempValues[row.name] = userState.drafts?.[type]?.[value.name] || value.value[row.name] || ""
+            if(row.type === 'dropdown') {
+            
+              tempValues[row.name] = userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el.id === userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name])?.[row.optionVariable] || value.value[row.name] || ""
+            } else {
+              tempValues[row.name] = userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name] || value.value[row.name] || ""  
+            }
+            
           })
+          console.log('tempValues12312312', tempValues)
           defaultValues[value.name].push(tempValues)
-        } else {
-          defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
+        } else if(value.type === 'location') {
+          console.log("userState.drafts?.[`${type}`]?.[value.name]", userState.drafts?.[`${type}`])
+          defaultValues[value.name] = `${userState.drafts?.[`${type}`]?.long},${userState.drafts?.[`${type}`]?.lat}`
+        }  else {
+          defaultValues[value.name] = userState.drafts?.[`${type}`]?.[value.name] || value.value
         }
+
       })
     }
     console.log("defaultValues12321,123123", defaultValues)
+
     return defaultValues
   }
   const { control, handleSubmit, formState, reset, watch } = useForm({

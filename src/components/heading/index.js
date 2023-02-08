@@ -277,6 +277,7 @@ export default function Heading(props) {
     const data = Object.values(payload)[value]
     return Object.keys(data).map((type, index) => {
       const values = data[type]
+      console.log('values12313214', values)
       return (
         <ShowFields
           key={`dashboard_subheading__${index}`}
