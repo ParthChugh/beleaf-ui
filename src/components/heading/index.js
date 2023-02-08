@@ -69,7 +69,6 @@ export default function Heading(props) {
       formdata = new FormData();
       Object.keys(values).forEach((key) => {
         const value = values[key];
-        console.log("value123123", value)
         formdata.append(key, value?.[0]?.file ? value[0].file : value)
       })
     } else {
@@ -173,15 +172,20 @@ export default function Heading(props) {
       if (!Object.values(userState.errors).length) {
         return;
       }
-      Object.values(userState.errors).forEach((el) => {
-        if (typeof el === "object" || (typeof el === "string" && el !== '')) {
+      if(!Object.keys(userState.errors).includes(Object.keys(open.payload.tabs || {})[value])) {
+        return;
+      }
+      let keysToCheck = [Object.keys(open.payload.tabs || {})[value], ...Object.keys(open.payload.tabs[Object.keys(open.payload.tabs || {})[value]])]
+      keysToCheck.forEach((key) => {
+        const el = userState.errors[key]
+        if(typeof el === 'undefined') {
+          localErrors.push("Field Not Present")
+        } else if (typeof el === "object" || (typeof el === "string" && el !== '')) {
           localErrors.push(el)
         }
       })
-      // console.log("localErrors12321", localErrors)
       if (localErrors.length === 0) {
         if (value < (Object.keys(open.payload.tabs || {}).length - 1)) {
-          // setValue(value + 1)
           try {
             const serverDetails = open?.payload.serverDetails[Object.keys(open.payload.tabs || {})[value]]
             updateDetails(
@@ -215,16 +219,10 @@ export default function Heading(props) {
               const values = userState.drafts[key];
               tabValues.map(valuesKey => {
                 let value = values[valuesKey.name]
-                // if (valuesKey.optionUrl) {
-                //   const serverValues = userState.serverOptions[valuesKey.optionUrl][valuesKey.optionMainVariable]
-                //   value = serverValues.find(el => el[valuesKey.optionVariable] === value)?.id
-                // }
                 correctedJson[key][valuesKey.name] = value
               })
             })
             createElement(Object.values(correctedJson)[0])
-            console.log('correctedJson123123', correctedJson)
-            // setOpen({})
           } else {
             let newCorrectedJson = {}
             const getKeyInformation = open.payload.getKeyInformation

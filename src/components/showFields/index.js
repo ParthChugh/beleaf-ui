@@ -119,11 +119,9 @@ export default function ShowFields(props) {
             }
             
           })
-          console.log('tempValues12312312', tempValues)
           defaultValues[value.name].push(tempValues)
-        } else if(value.type === 'location') {
-          console.log("userState.drafts?.[`${type}`]?.[value.name]", userState.drafts?.[`${type}`])
-          defaultValues[value.name] = `${userState.drafts?.[`${type}`]?.long},${userState.drafts?.[`${type}`]?.lat}`
+        } else if(value.type === 'location' ) {
+          defaultValues[value.name] = userState.drafts?.[`${type}`]?.long ? `${userState.drafts?.[`${type}`]?.long},${userState.drafts?.[`${type}`]?.lat}` : ""
         }  else {
           defaultValues[value.name] = userState.drafts?.[`${type}`]?.[value.name] || value.value
         }
