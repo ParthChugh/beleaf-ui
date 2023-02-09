@@ -79,7 +79,6 @@ export default function ShowFields(props) {
           let serverValues = []
           if (getKeyInformation.fieldType) {
             serverValues = Object.values(json?.data?.[getKeyInformation.fieldType] || {})
-
           } else {
             serverValues = Object.values(json?.data)
           }
@@ -98,6 +97,7 @@ export default function ShowFields(props) {
             })
             tempValues["id"] = serverValue["id"]
             defaultValues[value.name].push(tempValues)
+            defaultValues[value.name] = defaultValues[value.name]
           })
         } else {
           const serverValues = json?.data
@@ -120,6 +120,7 @@ export default function ShowFields(props) {
           })
           
           defaultValues[value.name].push(tempValues)
+          defaultValues[value.name] = defaultValues[value.name]
         } else if (value.type === 'location') {
           defaultValues[value.name] = userState.drafts?.[`${type}`]?.long ? `${userState.drafts?.[`${type}`]?.long},${userState.drafts?.[`${type}`]?.lat}` : ""
         } else {
@@ -289,8 +290,8 @@ export default function ShowFields(props) {
               } else {
                 tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
               }
-
             })
+            tempValues["id"] = serverValue?.id
             correctedValues[keyName || value.name].push(tempValues)
           })
         } else {
@@ -313,7 +314,6 @@ export default function ShowFields(props) {
           } else {
             correctedValues[keyName || value.requestKeyName || value.name] = (value?.serverVaraible ? serverValues?.[value?.serverVaraible]?.[value.optionVariable] : serverValues?.[value?.name])
           }
-
         }
       })
     }
