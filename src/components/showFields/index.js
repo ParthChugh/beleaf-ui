@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import Select from './select';
 import { useForm, Controller } from "react-hook-form";
 import Box from '@mui/material/Box';
@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 export default function ShowFields(props) {
   const { type, values, onSubmitCustomField, serverUrl, updateUrl, getKeyInformation } = props
   const [edit, setEdit] = useState(props.edit || {})
+  const locationRef = useRef();
   const [appUserVisible, setAppUserVisible] = useState(false)
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
@@ -516,36 +517,38 @@ export default function ShowFields(props) {
               }
               return (
                 <>
-                  <Box
+                  <div
                     className="show_fields__box"
-                    onClick={() => {
-                      if (edit[type]) {
-                        const options = {
-                          enableHighAccuracy: true,
-                          timeout: 5000,
-                          maximumAge: 0
-                        };
-                        function success(pos) {
-                          const crd = pos.coords;
-                          // console.log('Your current position is:');
-                          // console.log(`Latitude : ${crd.latitude}`);
-                          // console.log(`Longitude: ${crd.longitude}`);
-                          customField.onChange(`${crd.latitude},${crd.longitude}`)
-                          // console.log(`More or less ${crd.accuracy} meters.`);
-                        }
-
-                        function error(err) {
-                          console.warn(`ERROR(${err.code}): ${err.message}`);
-                        }
-                        navigator.geolocation.getCurrentPosition(success, error, options);
-                      }
-
-                    }}>
+                  >
 
                     <TextField
                       {...field}
                       disabled={!edit[type]}
                       value={Object.values(value || customField.value || {}).join(',')}
+                      onFocus={() => {
+                        console.log('acacacacascas')
+                        if (edit[type]) {
+                          const options = {
+                            enableHighAccuracy: true,
+                            timeout: 100000,
+                            maximumAge: 0
+                          };
+                          function success(pos) {
+                            const crd = pos.coords;
+                            // console.log('Your current position is:');
+                            // console.log(`Latitude : ${crd.latitude}`);
+                            // console.log(`Longitude: ${crd.longitude}`);
+                            customField.onChange(`${crd.latitude},${crd.longitude}`)
+                            // console.log(`More or less ${crd.accuracy} meters.`);
+                          }
+  
+                          function error(err) {
+                            console.warn(`ERROR(${err.code}): ${err.message}`);
+                            navigator.geolocation.getCurrentPosition(success, error, options);
+                          }
+                          navigator.geolocation.getCurrentPosition(success, error, options);
+                        }
+                      }}
                       inputProps={{
                         style: {
                           height: field.height,
@@ -555,7 +558,7 @@ export default function ShowFields(props) {
                     {(value?.latitude || customField?.value?.latitude) && (value?.longitude || customField?.value?.longitude) && (
                       <MapContainer latitude={value?.latitude || customField.value.latitude} longitude={value?.longitude || customField.value.longitude} />
                     )}
-                  </Box>
+                  </div>
 
                 </>
               )

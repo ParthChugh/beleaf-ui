@@ -72,7 +72,7 @@ export default function Heading(props) {
         formdata.append(key, value?.[0]?.file ? value[0].file : value)
       })
     } else {
-      if(JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || "") {
+      if (JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || "") {
         url = url + JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || ""
       }
     }
@@ -124,9 +124,9 @@ export default function Heading(props) {
   }
 
   const updateDetails = async (serverDetails, values, serverValues) => {
-    if(value === 0) {
+    if (value === 0) {
       const fieldId = JSON.parse(localStorage.getItem('fieldJson') || "{}")?.data?.id || ""
-      if(!fieldId) {
+      if (!fieldId) {
         const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}${serverDetails.url}`, {
           method: serverDetails.method || "post",
           headers: {
@@ -137,8 +137,8 @@ export default function Heading(props) {
           body: JSON.stringify(values)
         })
         const json = await response.json()
-        if(!json.error) {
-          if(serverDetails.saveInLocal) {
+        if (!json.error) {
+          if (serverDetails.saveInLocal) {
             localStorage.setItem('fieldJson', JSON.stringify(json))
           } else {
             localStorage.removeItem('fieldJson')
@@ -162,7 +162,7 @@ export default function Heading(props) {
     } else {
       setValue(value + 1)
     }
-    
+
   }
 
   useEffect(() => {
@@ -172,13 +172,19 @@ export default function Heading(props) {
       if (!Object.values(userState.errors).length) {
         return;
       }
-      if(!Object.keys(userState.errors).includes(Object.keys(open.payload.tabs || {})[value])) {
+
+      let tab = Object.keys(open.payload.tabs || {})[value]
+      if (tab === "Historic Yields") {
+        tab = "historic_yield"
+      }
+      if (!Object.keys(userState.errors).includes(tab)) {
         return;
       }
       let keysToCheck = [Object.keys(open.payload.tabs || {})[value], ...Object.keys(open.payload.tabs[Object.keys(open.payload.tabs || {})[value]])]
+      // const tempErrors = delete userState.errors[]
       keysToCheck.forEach((key) => {
-        const el = userState.errors[key]
-        if(typeof el === 'undefined') {
+        const el = userState.errors[key === "Historic Yields" ? "historic_yield" : key]
+        if (typeof el === 'undefined') {
           localErrors.push("Field Not Present")
         } else if (typeof el === "object" || (typeof el === "string" && el !== '')) {
           localErrors.push(el)
@@ -189,11 +195,11 @@ export default function Heading(props) {
           try {
             const serverDetails = open?.payload.serverDetails[Object.keys(open.payload.tabs || {})[value]]
             updateDetails(
-              serverDetails, 
+              serverDetails,
               userState.drafts[Object.keys(open.payload.tabs || {})[value]],
               open.payload.tabs[Object.keys(open.payload.tabs || {})[value]]
             )
-          } catch(el) {
+          } catch (el) {
             setValue(value + 1)
           }
           setSendRequest('')
@@ -209,7 +215,7 @@ export default function Heading(props) {
         });
         if (value === (Object.keys(open.payload.tabs || {}).length - 1) && Object.keys(userState.drafts).includes(Object.keys(open.payload.tabs || {})[value])) {
           setSendRequest('')
-          if(open.text.includes('Product')|| open.text.includes('User')) {
+          if (open.text.includes('Product') || open.text.includes('User')) {
             let correctedJson = {}
             const tabs = Object.values(open.payload.tabs)[0]
 
@@ -229,32 +235,32 @@ export default function Heading(props) {
             newCorrectedJson["products"] = {}
             newCorrectedJson[getKeyInformation.typeInfo] = {}
             Object.values(userState.drafts).forEach((draft) => {
-              if(Object.keys(draft).length > 1) {
+              if (Object.keys(draft).length > 1) {
                 Object.keys(draft).forEach((el) => {
-                  if(el === "location") {
-                    if(typeof draft["location"] === 'string') {
+                  if (el === "location") {
+                    if (typeof draft["location"] === 'string') {
                       newCorrectedJson["lat"] = draft["location"].split(',')[0]
                       newCorrectedJson["long"] = draft["location"].split(',')[1]
                     } else {
                       newCorrectedJson["lat"] = draft["location"]["latitude"]
                       newCorrectedJson["long"] = draft["location"]["longitude"]
-                    } 
-                  }else {
+                    }
+                  } else {
                     newCorrectedJson[el] = draft[el]
                   }
                 })
-              } else if(Object.keys(draft).includes('Hydroponics') || Object.keys(draft).includes('Open Field') || Object.keys(draft).includes('Soilless')) {
+              } else if (Object.keys(draft).includes('Hydroponics') || Object.keys(draft).includes('Open Field') || Object.keys(draft).includes('Soilless')) {
                 Object.keys(draft).forEach((key) => {
                   let keyName = ''
                   keyName = userState.serverOptions?.[getKeyInformation.url]?.[getKeyInformation.optionMainVariable].find(el => el[getKeyInformation.optionVariable] === key)?.id
                   newCorrectedJson[getKeyInformation.typeInfo][keyName] = draft[key]
                 })
-              } else if(Object.keys(draft).includes('historic_yield') || Object.keys(draft).includes('contracted_products')) {
+              } else if (Object.keys(draft).includes('historic_yield') || Object.keys(draft).includes('contracted_products')) {
                 Object.keys(draft).forEach((key) => {
                   newCorrectedJson["products"][key] = draft[key]
                 })
               }
-              
+
             })
             delete newCorrectedJson['farm_name']
             createElement(newCorrectedJson)
@@ -284,7 +290,7 @@ export default function Heading(props) {
           sendRequest={sendRequest}
           values={values}
           setSendRequest={setSendRequest}
-          
+
           onSubmitCustomField={(params) => {
             // console.log('qweqweqwe', params)
           }}
