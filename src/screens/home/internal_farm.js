@@ -24,7 +24,8 @@ export const internalFarm = {
     "Form Data": {
       url: "/rest/admin/new_farm",
       method: "POST",
-      mitra: false
+      mitra: false,
+      saveInLocal: true,
     },
   },
   tabs: {
