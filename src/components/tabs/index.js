@@ -71,6 +71,12 @@ export default function BasicTabs(props) {
                   onChange={(text) => {
                     setSeachText(text.target.value)
                   }}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      setSearch(searchText)
+                    }
+                  }}
                   value={searchText}
                   fullWidth
                   InputProps={{

@@ -10,6 +10,7 @@ import Link from '@mui/material/Link'
 
 export default function CustomMultiInput(props) {
   const { onChange, value, rows, headerName } = props;
+  console.log('value12321', value)
   // console.log('props12312321', props)
   let location = useLocation();
 

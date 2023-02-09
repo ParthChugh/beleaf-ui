@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Select from './select';
 import { useForm, Controller } from "react-hook-form";
 import Box from '@mui/material/Box';
@@ -55,7 +55,6 @@ const useStyles = makeStyles(theme => ({
 export default function ShowFields(props) {
   const { type, values, onSubmitCustomField, serverUrl, updateUrl, getKeyInformation } = props
   const [edit, setEdit] = useState(props.edit || {})
-  const locationRef = useRef();
   const [appUserVisible, setAppUserVisible] = useState(false)
   const { userState, userDispatch } = useContext(UserContext);
   let urlParams = useParams();
@@ -74,7 +73,7 @@ export default function ShowFields(props) {
         // setDefaultValues(defaultValues)
       }
     } else if (Object.values(json?.data || {}).length > 0) {
-      
+
       values.forEach((value) => {
         if (value.type === 'multi-inputs') {
           let serverValues = []
@@ -97,6 +96,7 @@ export default function ShowFields(props) {
             value.rows.forEach((row) => {
               tempValues[row.name] = (row?.serverVaraible ? serverValue?.[row?.serverVaraible]?.[row.optionVariable] : serverValue[row.name]) || ""
             })
+            tempValues["id"] = serverValue["id"]
             defaultValues[value.name].push(tempValues)
           })
         } else {
@@ -112,18 +112,17 @@ export default function ShowFields(props) {
           defaultValues[value.name] = []
           let tempValues = {}
           value.rows.forEach((row) => {
-            if(row.type === 'dropdown') {
-            
+            if (row.type === 'dropdown') {
               tempValues[row.name] = userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el.id === userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name])?.[row.optionVariable] || value.value[row.name] || ""
             } else {
-              tempValues[row.name] = userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name] || value.value[row.name] || ""  
+              tempValues[row.name] = userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name] || value.value[row.name] || ""
             }
-            
           })
+          
           defaultValues[value.name].push(tempValues)
-        } else if(value.type === 'location' ) {
+        } else if (value.type === 'location') {
           defaultValues[value.name] = userState.drafts?.[`${type}`]?.long ? `${userState.drafts?.[`${type}`]?.long},${userState.drafts?.[`${type}`]?.lat}` : ""
-        }  else {
+        } else {
           defaultValues[value.name] = userState.drafts?.[`${type}`]?.[value.name] || value.value
         }
 
@@ -218,7 +217,6 @@ export default function ShowFields(props) {
               } else {
                 tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
               }
-
             })
             correctedValues[keyName || value.name].push(tempValues)
           })
@@ -362,9 +360,7 @@ export default function ShowFields(props) {
     }
     setEdit({ ...edit, [type]: false })
   }
-  console.log('ereroeee', formState)
-  const onSubmit = (params, form) => {
-    console.log('params123123', params)
+  const onSubmit = (params) => {
     try {
       let localErrors = []
       const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
@@ -393,7 +389,7 @@ export default function ShowFields(props) {
     if (dependant.length > 0 && watch(dependant[0]) !== dependant[1]) {
       return <div />
     }
-
+    console.log("field123123", field)
     switch (field.type) {
       case "switch":
         return (
@@ -541,7 +537,7 @@ export default function ShowFields(props) {
                             customField.onChange(`${crd.latitude},${crd.longitude}`)
                             // console.log(`More or less ${crd.accuracy} meters.`);
                           }
-  
+
                           function error(err) {
                             console.warn(`ERROR(${err.code}): ${err.message}`);
                             navigator.geolocation.getCurrentPosition(success, error, options);
@@ -591,7 +587,7 @@ export default function ShowFields(props) {
       case "table":
         console.log('qwdqwdqwdqwd', field)
         return (
-          <Box sx={{width: '100%'}}>
+          <Box sx={{ width: '100%' }}>
             <CustomTable
               totalItems={15}
               visibleFields={field.visibleFields}
@@ -612,7 +608,7 @@ export default function ShowFields(props) {
       <div className='dashboard_tabs__container'>
         <AppUsersModal visible={appUserVisible} closeModal={() => {
           setAppUserVisible(false)
-        }}  values={userState?.tableData?.['/rest/admin/users-0']?.data || []}/>
+        }} values={userState?.tableData?.['/rest/admin/users-0']?.data || []} />
         <Tabs
           classes={{
             root: classes.customTabRoot,
@@ -629,7 +625,7 @@ export default function ShowFields(props) {
               cursor: 'pointer'
             }}
             onClick={(event) => {
-              if(urlParams.page_id === 'farms' && type === "App Users") {
+              if (urlParams.page_id === 'farms' && type === "App Users") {
                 setAppUserVisible(true)
               } else {
                 if (!edit[type]) {
@@ -638,7 +634,7 @@ export default function ShowFields(props) {
                   handleSubmit(onSubmit)(event)
                 }
               }
-              
+
             }}
           >
             {edit[type] ? "Save" : "Edit"}
