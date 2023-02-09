@@ -55,7 +55,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://52.220.215.96",
+  "proxy": "https://api.beleafmanagement.io",
   "devDependencies": {
     "tailwindcss": "^3.2.4"
   }
