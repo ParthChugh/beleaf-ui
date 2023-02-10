@@ -118,7 +118,7 @@ export default function ShowFields(props) {
               tempValues[row.name] = userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name] || value.value[row.name] || ""
             }
           })
-          
+
           defaultValues[value.name].push(tempValues)
           defaultValues[value.name] = defaultValues[value.name]
         } else if (value.type === 'location') {
@@ -511,49 +511,57 @@ export default function ShowFields(props) {
               if (typeof customField.value === 'string' && customField.value !== '') {
                 value = { latitude: customField.value.split(',')[0], longitude: customField.value.split(',')[1] }
               }
+              const getLocation = () => {
+                if (edit[type]) {
+                  
+                  function success(pos) {
+                    const crd = pos.coords;
+                    // console.log('Your current position is:');
+                    // console.log(`Latitude : ${crd.latitude}`);
+                    // console.log(`Longitude: ${crd.longitude}`);
+                    customField.onChange(`${crd.latitude},${crd.longitude}`)
+                    // console.log(`More or less ${crd.accuracy} meters.`);
+                  }
+
+                  function error(err) {
+                    console.warn(`ERROR(${err.code}): ${err.message}`);
+                    navigator.geolocation.getCurrentPosition(success, error, {});
+                  }
+                  navigator.geolocation.getCurrentPosition(success, error, {});
+                }
+              }
               return (
                 <>
                   <div
                     className="show_fields__box"
                   >
 
-                    <TextField
-                      {...field}
-                      disabled={!edit[type]}
-                      value={Object.values(value || customField.value || {}).join(',')}
-                      onFocus={() => {
-                        console.log('acacacacascas')
-                        if (edit[type]) {
-                          const options = {
-                            enableHighAccuracy: true,
-                            timeout: 100000,
-                            maximumAge: 0
-                          };
-                          function success(pos) {
-                            const crd = pos.coords;
-                            // console.log('Your current position is:');
-                            // console.log(`Latitude : ${crd.latitude}`);
-                            // console.log(`Longitude: ${crd.longitude}`);
-                            customField.onChange(`${crd.latitude},${crd.longitude}`)
-                            // console.log(`More or less ${crd.accuracy} meters.`);
-                          }
+                    <MapContainer
+                      latitude={value?.latitude || customField.value.latitude}
+                      longitude={value?.longitude || customField.value.longitude}
+                      edit={edit}
+                      type={type}
+                      customField={customField}
+                      value={value}
+                      getLocation={getLocation}
+                      textFieldProps={
+                        {
+                          ...field,
+                          disabled: !edit[type],
+                          value: Object.values(value || customField.value || {}).join(','),
+                          onFocus: () => {
+                            console.log('acacacacascas')
+                          },
 
-                          function error(err) {
-                            console.warn(`ERROR(${err.code}): ${err.message}`);
-                            navigator.geolocation.getCurrentPosition(success, error, options);
+                          inputProps: {
+                            style: {
+                              height: field.height,
+                            },
                           }
-                          navigator.geolocation.getCurrentPosition(success, error, options);
                         }
-                      }}
-                      inputProps={{
-                        style: {
-                          height: field.height,
-                        },
-                      }}
+                      }
                     />
-                    {(value?.latitude || customField?.value?.latitude) && (value?.longitude || customField?.value?.longitude) && (
-                      <MapContainer latitude={value?.latitude || customField.value.latitude} longitude={value?.longitude || customField.value.longitude} />
-                    )}
+
                   </div>
 
                 </>
