@@ -25,7 +25,23 @@ function getStyles(theme) {
 }
 
 export default function MultipleSelectPlaceholder(props) {
-  const { options, placeholder, onChange, value, width, height, name, optionVariable, optionMainVariable, headerName, watch, detectedFields } = props;
+  const {
+    options,
+    placeholder,
+    onChange,
+    value,
+    width,
+    height,
+    name,
+    optionVariable,
+    optionMainVariable,
+    headerName,
+    watch,
+    detectedFields,
+    dependent,
+    setValue
+  } = props;
+
   let { optionUrl } = props
   const { userState, userDispatch } = useContext(UserContext);
   const [serverOptions, setServerOptions] = useState([])
@@ -35,7 +51,17 @@ export default function MultipleSelectPlaceholder(props) {
   const handleChange = (event) => {
     onChange(event)
   };
-  console.log("value213123", value)
+  useEffect(() => {
+    if (dependent && watch(dependent) && userState?.serverOptions?.[optionUrl]?.[optionMainVariable]) {
+      optionUrl = optionUrl.split(':')[0]
+      const serverData = userState?.serverOptions?.[optionUrl]?.[optionMainVariable]
+      const data = serverData.find(el => el[props.dependentVariable] === watch(dependent))
+      console.log("data?.optionVariable", data?.[dependent])
+      if (data?.[optionVariable]) {
+        setValue(name, data?.[optionVariable])
+      }
+    }
+  }, [dependent && watch(dependent), JSON.stringify(userState?.serverOptions?.[optionUrl]?.[optionMainVariable] || {})])
   const fetchOptions = async () => {
     optionUrl = optionUrl.split(':')[0]
     let appendingValue = ""

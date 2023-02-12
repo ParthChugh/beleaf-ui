@@ -19,10 +19,11 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import KeyboardDoubleArrowRight from '@mui/icons-material/KeyboardDoubleArrowRight';
 
-function CustomPagination({ totalItems, setPage }) {
+function CustomPagination({ totalItems, setPage, page }) {
   const apiRef = useGridApiContext();
-  const page = useGridSelector(apiRef, gridPageSelector);
-  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+  // const page = useGridSelector(apiRef, gridPageSelector);
+  const pageCount = parseInt(totalItems/15);
+  console.log("pageCount12312321", pageCount)
   return (
     <Box className="custom_table__container">
       {totalItems ?
@@ -50,6 +51,7 @@ function CustomPagination({ totalItems, setPage }) {
         )}
         onChange={(event, value) => {
           apiRef.current.setPage(value - 1)
+          console.log('value12321321', value)
           setPage(value - 1)
         }}
       />
@@ -75,9 +77,10 @@ export default function QuickFilteringCustomizedGrid(props) {
     keyName0 = `${props.getServerDetails}&${searchText}=${search}-${0}`
   }
   let rows = userState.tableData?.[keyName] || {}
-  const totalItems = rows?.totalItems || userState.tableData?.[keyName0]?.totalItems
+  const totalItems = rows?.totalItems || userState.tableData?.[keyName0]?.totalItems 
+  console.log('totalItems12312', totalItems)
   const fetchServerDetails = async () => {
-    let url = `${process.env.REACT_APP_API_ENDPOINT}${props.getServerDetails}?page=${page}&size=40`
+    let url = `${process.env.REACT_APP_API_ENDPOINT}${props.getServerDetails}?page=${page}&size=15`
     if (searchText && search) {
       url = url + `&${searchText}=${search}`
     }
@@ -146,7 +149,7 @@ export default function QuickFilteringCustomizedGrid(props) {
         }}
         components={{
           ColumnUnsortedIcon: () => <ArrowDropDownIcon style={{ color: '#8A9099' }} />,
-          Pagination: (props) => <CustomPagination {...props} totalItems={totalItems} setPage={setPage} />,
+          Pagination: (props) => <CustomPagination {...props} totalItems={totalItems} setPage={setPage} page={page} />,
         }}
         density='comfortable'
         disableColumnMenu

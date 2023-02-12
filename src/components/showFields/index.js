@@ -133,7 +133,7 @@ export default function ShowFields(props) {
 
     return defaultValues
   }
-  const { control, handleSubmit, formState, reset, watch } = useForm({
+  const { control, handleSubmit, formState, setValue, watch } = useForm({
     defaultValues: (fetchDataServer())
   });
   console.log("defaultValues12321", fetchDataServer())
@@ -434,6 +434,7 @@ export default function ShowFields(props) {
           />
         )
       case "dropdown":
+        console.log('field----',field)
         return (
           <Controller
             name={field.name}
@@ -447,6 +448,7 @@ export default function ShowFields(props) {
                   {...customField}
                   {...field}
                   watch={watch}
+                  setValue={setValue}
                   disabled={!edit[type]}
                   value={customField.value || ""}
                 />
@@ -537,8 +539,8 @@ export default function ShowFields(props) {
                   >
 
                     <MapContainer
-                      latitude={value?.latitude || customField.value.latitude}
-                      longitude={value?.longitude || customField.value.longitude}
+                      latitude={value && (value?.latitude || customField.value.latitude)}
+                      longitude={value && (value?.longitude || customField.value.longitude)}
                       edit={edit}
                       type={type}
                       customField={customField}
