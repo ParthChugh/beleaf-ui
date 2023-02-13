@@ -136,27 +136,6 @@ export default function ShowFields(props) {
   const { control, handleSubmit, formState, formState: { errors }, setValue, watch } = useForm({
     defaultValues: (fetchDataServer())
   });
-  console.log("defaultValues12321", errors)
-
-
-
-  // useEffect(() => {
-  //   // console.log("serverUrl123123", serverUrl)
-  //   if (serverUrl) {
-  //     fetchDataServer()
-  //   } else {
-  //     // values.forEach((value) => {
-  //     //   defaultValues[value.name] = userState.drafts?.[type]?.[value.name] || value.value
-  //     // })
-  //     // reset(defaultValues)
-  //     // setDefaultValues(defaultValues)
-  //   }
-  // }, [serverUrl])
-
-  // useEffect(() => {
-  //   // reset(defaultValues)
-  //   setDefaultValues(defaultValues)
-  // }, [JSON.stringify(defaultValues || {})])
 
   useEffect(() => {
     if (props.sendRequest) {
@@ -177,29 +156,37 @@ export default function ShowFields(props) {
   const onSendReq = (params) => {
     try {
       let localErrors = []
-      const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
-        return Object.values(el)
-      }))
-      flatterdArray.forEach((el) => {
-        if (el === "") {
-          localErrors.push(el)
+      if(!(type.includes('Hydroponics') || type.includes('Open Field') || type.includes('Soilless') || type.includes('historic_yield') || type.includes('contracted_products'))) {
+        const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
+          return Object.values(el)
+        }))
+        flatterdArray.forEach((el) => {
+          if (el === "") {
+            localErrors.push(el)
+          }
+        })
+        if (localErrors.length > 0) {
+          userDispatch({
+            type: 'UPDATE_ERROR',
+            payload: { [type]: `Please add the details in ${type}` },
+          });
+          // props.setSendRequest && props.setSendRequest(false)
+          alert(`Please add details in ${type}`)
+          return;
         }
-      })
-      if (localErrors.length > 0) {
+        // props.setSendRequest && props.setSendRequest(false)
+        // if (userState.errors[type]) {
         userDispatch({
           type: 'UPDATE_ERROR',
-          payload: { [type]: `Please add the details in ${type}` },
+          payload: { [type]: "" },
         });
-        // props.setSendRequest && props.setSendRequest(false)
-        alert(`Please add details in ${type}`)
-        return;
+      } else {
+        userDispatch({
+          type: 'UPDATE_ERROR',
+          payload: { [type]: "" },
+        });
       }
-      // props.setSendRequest && props.setSendRequest(false)
-      // if (userState.errors[type]) {
-      userDispatch({
-        type: 'UPDATE_ERROR',
-        payload: { [type]: "" },
-      });
+      
       // }
       let correctedValues = {}
       values.forEach((value) => {

@@ -167,6 +167,7 @@ export const newMitra = {
         {
           type: "multi-inputs",
           name: "Hydroponics",
+          required: false,
           headerName: "Greenhouse",
           rows: [
             {
@@ -212,6 +213,7 @@ export const newMitra = {
         {
           type: "multi-inputs",
           name: "Open Field",
+          required: false,
           headerName: "Open Field",
           rows: [
             {
@@ -254,6 +256,7 @@ export const newMitra = {
         {
           type: "multi-inputs",
           name: "Soilless",
+          required: false,
           headerName: "Soilless",
           rows: [
             {
