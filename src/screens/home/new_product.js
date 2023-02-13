@@ -68,7 +68,7 @@ export const newProduct = {
         {
           type: "attach-image",
           name: "product_picture",
-          headerName: "Image",
+          headerName: "Add Image",
           // value: props["Farm Name"] || "",
           width: '272.05px',
           height: 240,

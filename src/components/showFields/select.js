@@ -39,9 +39,10 @@ export default function MultipleSelectPlaceholder(props) {
     watch,
     detectedFields,
     dependent,
-    setValue
+    setValue,
+    error
   } = props;
-
+  console.log('props12321312', props)
   let { optionUrl } = props
   const { userState, userDispatch } = useContext(UserContext);
   const [serverOptions, setServerOptions] = useState([])
@@ -162,6 +163,7 @@ export default function MultipleSelectPlaceholder(props) {
           ))}
         </Select>
       </FormControl>
+      {error && <div>This field is required</div>}
     </div>
   );
 }

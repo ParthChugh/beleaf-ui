@@ -133,10 +133,10 @@ export default function ShowFields(props) {
 
     return defaultValues
   }
-  const { control, handleSubmit, formState, setValue, watch } = useForm({
+  const { control, handleSubmit, formState, formState: { errors }, setValue, watch } = useForm({
     defaultValues: (fetchDataServer())
   });
-  console.log("defaultValues12321", fetchDataServer())
+  console.log("defaultValues12321", errors)
 
 
 
@@ -426,6 +426,7 @@ export default function ShowFields(props) {
                   {...customField}
                   {...field}
                   disabled={!edit[type]}
+                  error={errors[field.name]}
                   value={customField.value || ""}
                 />
               )
@@ -434,7 +435,7 @@ export default function ShowFields(props) {
           />
         )
       case "dropdown":
-        console.log('field----',field)
+        console.log('field----', field)
         return (
           <Controller
             name={field.name}
@@ -451,6 +452,7 @@ export default function ShowFields(props) {
                   setValue={setValue}
                   disabled={!edit[type]}
                   value={customField.value || ""}
+                  error={errors[field.name]}
                 />
               )
             }
@@ -471,6 +473,7 @@ export default function ShowFields(props) {
                     {...customField}
                     {...field}
                     disabled={!edit[type]}
+                    error={errors[field.name]}
                     value={customField.value || ""}
                   />
                 </>
@@ -515,7 +518,7 @@ export default function ShowFields(props) {
               }
               const getLocation = () => {
                 if (edit[type]) {
-                  
+
                   function success(pos) {
                     const crd = pos.coords;
                     // console.log('Your current position is:');

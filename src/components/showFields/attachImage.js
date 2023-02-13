@@ -1,5 +1,6 @@
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
+import Typography from '@mui/material/Typography';
 import ImageUploading from 'react-images-uploading';
 import "./ImageUpload.css";
 
@@ -23,6 +24,19 @@ function ImageUpload(props) {
 
   return (
     <div className="image-upload-container">
+       <Typography sx={{
+          fontFamily: 'Poppins',
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: "14px",
+          lineHeight: "21px",
+          "&.MuiButtonBase-root:hover": {
+            bgcolor: "transparent"
+          },
+        }}
+        >
+          {props.headerName}{props.required ? "*": ""}
+        </Typography>
       <ImageUploading
         multiple={false}
         value={images}
@@ -92,6 +106,7 @@ function ImageUpload(props) {
           </div>
         )}
       </ImageUploading>
+      {props.error && <div>This field is required</div>}
     </div>
   );
 }

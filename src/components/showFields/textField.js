@@ -4,10 +4,11 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 export default function CustomTextField(props) {
-  const { onChange, value, width, height, headerName } = props;
+  const { onChange, value, width, height, headerName, error } = props;
   const handleChange = (event) => {
     onChange(event)
   };
+  console.log('error12312312321123', error)
 
   return (
     <div style={{width: width,}}>
@@ -36,6 +37,7 @@ export default function CustomTextField(props) {
           }}
           onChange={handleChange}
         />
+        {error && <div>This field is required</div>}
       </FormControl>
     </div>
   );
