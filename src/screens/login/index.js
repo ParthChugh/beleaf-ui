@@ -68,9 +68,11 @@ const LoginPage = () => {
         theme: "dark",
       });
       setCookie('accessToken', json.data.token)
+      setCookie('username', json.data.username)
+      setCookie('role', json.data.role)
       userDispatch({
         type: 'UPDATE_USER_RESPONSE',
-        payload: { accessToken: json.data.token, name: "Jacob Holmes", role: "Manager" },
+        payload: { accessToken: json.data.token, name: json.data.username, role: json.data.role },
       });
       navigate('/')
     }

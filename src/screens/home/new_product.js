@@ -124,13 +124,13 @@ export const newProduct = {
           // ],
           // value: props["Contact Number"] || "",
           width: '300px',
-          required: true,
+          required: false,
           height: '9px'
         },
         {
           type: "input",
           name: "variant_name_bahasa",
-          headerName: "Variant",
+          headerName: "Varian",
           placeholder: 'Variant Name...',
           // options: [
           //   'Green',
@@ -149,7 +149,7 @@ export const newProduct = {
           // ],
           // value: props["Contact Number"] || "",
           width: '300px',
-          required: true,
+          required: false,
           height: '9px'
         },
         {
@@ -157,7 +157,7 @@ export const newProduct = {
           placeholder: 'Select Maturity',
           headerName: "Maturity",
           width: '300px',
-          required: true,
+          required: false,
           height: '41px',
           type: "dropdown",
           name: "maturity_id",
@@ -172,7 +172,7 @@ export const newProduct = {
           placeholder: '',
           headerName: "Kematangan",
           width: '300px',
-          required: true,
+          required: false,
           height: '41px',
           type: "dropdown",
           name: "maturity_id_bahasa",

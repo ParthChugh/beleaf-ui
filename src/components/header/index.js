@@ -31,8 +31,8 @@ const Header = (props) => {
       type: "UPDATE_USER_RESPONSE",
       payload: {
         accessToken: cookies.accessToken,
-        name: "Jacob Holmes",
-        role: "Manager",
+        name: cookies.username,
+        role: cookies.role,
       },
     });
   }, [cookies.accessToken]);
