@@ -2,6 +2,7 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Select from './select';
+import SearchSelect from './searchSelect';
 import Add from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import { useLocation } from 'react-router-dom';
@@ -75,6 +76,28 @@ export default function CustomMultiInput(props) {
                             value={field[key]}
                             onChange={(event) => {
                               value[index][key] = event.target.value
+                              onChange(value)
+                            }}
+                            name=""
+                          />
+                        </Box>
+                      </td>
+                    )
+                  case 'search_dropdown':
+                    return (
+                      <td>
+                        <Box sx={{
+                          mt: 2,
+                          mb: 2,
+                        }}>
+                          <SearchSelect
+                            {...row}
+                            disabled={props.disabled}
+                            placeholder=""
+                            value={field[key]}
+                            onChange={(event) => {
+                              value[index][key] = event
+                              
                               onChange(value)
                             }}
                             name=""

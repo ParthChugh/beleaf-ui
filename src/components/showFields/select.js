@@ -50,6 +50,7 @@ export default function MultipleSelectPlaceholder(props) {
   console.log('optionUrl12321', optionUrl)
   const detectedValue = optionUrl?.split(':')[1]
   const handleChange = (event) => {
+    console.log("event123123", event)
     onChange(event)
   };
   useEffect(() => {

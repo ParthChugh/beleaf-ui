@@ -19,14 +19,14 @@ export const cultivation = (props) => {
           headerName: "Hydroponics",
           rows: [
             {
-              name: "is_active",
+              name: "active_status_id",
               headerName: "Status",
+              serverVaraible: "active_status",
               width: "116px",
               type: "dropdown",
-              options: [
-                "true",
-                "false"
-              ],
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "cultivationInfoStatus",
+              optionVariable: "status",
               height: 41
             },
             {
@@ -124,14 +124,14 @@ export const cultivation = (props) => {
           name: "Open Field",
           rows: [
             {
-              name: "is_active",
+              name: "active_status_id",
               headerName: "Status",
+              serverVaraible: "active_status",
               width: "116px",
               type: "dropdown",
-              options: [
-                "true",
-                "false"
-              ],
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "cultivationInfoStatus",
+              optionVariable: "status",
               height: 41
             },
             {
@@ -229,14 +229,14 @@ export const cultivation = (props) => {
           headerName: "Soilless",
           rows: [
             {
-              name: "is_active",
+              name: "active_status_id",
               headerName: "Status",
+              serverVaraible: "active_status",
               width: "116px",
               type: "dropdown",
-              options: [
-                "true",
-                "false"
-              ],
+              optionUrl: '/rest/metadata',
+              optionMainVariable: "cultivationInfoStatus",
+              optionVariable: "status",
               height: 41
             },
             {

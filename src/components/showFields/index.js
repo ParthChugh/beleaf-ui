@@ -112,8 +112,8 @@ export default function ShowFields(props) {
           defaultValues[value.name] = []
           let tempValues = {}
           value.rows.forEach((row) => {
-            if (row.type === 'dropdown') {
-              tempValues[row.name] = userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el.id === userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name])?.[row.optionVariable] || value.value[row.name] || ""
+            if (row.type === 'dropdown' || row.type === "search_dropdown") {
+              tempValues[row.name] = (userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable] || [])?.find(el => el.id === userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name])?.[row.optionVariable] || value.value[row.name] || ""
             } else {
               tempValues[row.name] = userState.drafts?.[`${type}`]?.[value.name]?.[index]?.[row.name] || value.value[row.name] || ""
             }
@@ -422,6 +422,31 @@ export default function ShowFields(props) {
           />
         )
       case "dropdown":
+        console.log('field----', field)
+        return (
+          <Controller
+            name={field.name}
+            control={control}
+            rules={{ required: field.required }}
+            render={(props) => {
+              const { field: customField } = props;
+              // console.log('props123123', props)
+              return (
+                <Select
+                  {...customField}
+                  {...field}
+                  watch={watch}
+                  setValue={setValue}
+                  disabled={!edit[type]}
+                  value={customField.value || ""}
+                  error={errors[field.name]}
+                />
+              )
+            }
+            }
+          />
+        )
+      case "search_dropdown":
         console.log('field----', field)
         return (
           <Controller
