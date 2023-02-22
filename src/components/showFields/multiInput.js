@@ -96,8 +96,7 @@ export default function CustomMultiInput(props) {
                             placeholder=""
                             value={field[key]}
                             onChange={(event) => {
-                              value[index][key] = event
-                              
+                              value[index][key] = event   
                               onChange(value)
                             }}
                             name=""

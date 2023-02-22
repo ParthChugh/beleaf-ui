@@ -38,7 +38,8 @@ export const cultivation = (props) => {
               optionUrl: '/rest/metadata',
               optionMainVariable: "cropTypes",
               optionVariable: "crop_type_name",
-              height: 41
+              height: 41,
+              required: "active_status_id.Active"
             },
             {
               name: "harvest_class",
@@ -49,7 +50,8 @@ export const cultivation = (props) => {
               optionUrl: '/rest/metadata',
               optionMainVariable: "cropHarvestClasses",
               optionVariable: "class_name",
-              height: 41
+              height: 41,
+              required: "active_status_id.Active"
             },
             {
               name: "grow_media",
@@ -61,44 +63,51 @@ export const cultivation = (props) => {
               optionMainVariable: "cropGrowingMedia",
               serverVaraible: "grow_media",
               optionVariable: "media_name",
-              height: 41
+              height: 41,
+              required: "active_status_id.Active"
             },
             {
               name: "germination",
               headerName: "Germination",
               width: "81px",
-              height: 9
+              height: 9,
+              required: "active_status_id.Active"
             },
             {
               name: "juvenile",
               headerName: "Juvenile",
               width: "81px",
-              height: 9
+              height: 9,
+              required: "active_status_id.Active"
             },
             {
               name: "vegetative",
               headerName: "Vegetative",
               width: "81px",
-              height: 9
+              height: 9,
+              required: "active_status_id.Active"
             },
             {
               name: "generative",
               headerName: "Generative",
               width: "81px",
-              height: 9
+              height: 9,
+              required: "active_status_id.Active"
             },
             {
               type: "input",
               name: "maturity",
               headerName: "Maturity",
               width: "81px",
-              height: 9
+              height: 9,
+              required: "active_status_id.Active"
             },
             {
               name: "duration",
               headerName: "duration (Days)",
               width: "81px",
-              height: 9
+              height: 9,
+              required: "active_status_id.Active"
             },
           ],
           value: props["Add Greenhouse"] || [

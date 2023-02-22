@@ -354,6 +354,7 @@ export default function ShowFields(props) {
         return Object.values(el)
       }))
       flatterdArray.forEach((el) => {
+        
         if (el === "") {
           localErrors.push(el)
         }
