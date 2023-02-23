@@ -88,16 +88,16 @@ export const general = (props) => {
           headerName: "Variant",
           value: props["Variant"] || "",
           width: '464px',
-          required: true,
+          required: false,
           height: '9px'
         },
         {
           type: "input",
           name: "variant_name_bahasa",
-          headerName: "Variasi",
+          headerName: "Varian",
           value: props["Variant"] || "",
           width: '464px',
-          required: true,
+          required: false,
           height: '9px'
         },
         {
@@ -110,7 +110,7 @@ export const general = (props) => {
           optionMainVariable: "cropMaturities",
           optionVariable: "maturity_type",
           width: '464px',
-          required: true,
+          required: false,
           height: '41px',
           dependent: "maturity_id_bahasa",
           dependentVariable: "maturity_type_bahasa",
@@ -125,7 +125,7 @@ export const general = (props) => {
           optionMainVariable: "cropMaturities",
           optionVariable: "maturity_type_bahasa",
           width: '464px',
-          required: true,
+          required: false,
           height: '41px',
           dependent: "maturity_id",
           dependentVariable: "maturity_type",
