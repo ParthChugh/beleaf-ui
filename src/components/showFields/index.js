@@ -275,7 +275,7 @@ export default function ShowFields(props) {
               if (serverValue[row.name] === "true" || serverValue[row.name] === "false") {
                 tempValues[row.name] = serverValue[row.name] === "true"
               } else {
-                tempValues[row.name] = row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name]).id : serverValue[row.name]
+                tempValues[row.name] = (row?.optionVariable ? userState.serverOptions?.[row.optionUrl]?.[row.optionMainVariable].find(el => el[row.optionVariable] === serverValue[row.name])?.id : serverValue[row.name]) || undefined
               }
             })
             tempValues["id"] = serverValue?.id
@@ -350,15 +350,30 @@ export default function ShowFields(props) {
   const onSubmit = (params) => {
     try {
       let localErrors = []
-      const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
-        return Object.values(el)
-      }))
-      flatterdArray.forEach((el) => {
-        
-        if (el === "") {
-          localErrors.push(el)
-        }
-      })
+      if(typeof params?.[type] !== 'undefined') {
+        params?.[type].forEach((el) => {
+          Object.keys(el).forEach((el1, index1) =>  {
+            const value = el[el1]
+            const required = values?.[0]?.rows?.find(cart => cart.name === el1)?.required
+            if((required || '').split('.').length > 1) {
+              const splitRequired = (required || '').split('.')
+              if(splitRequired[1] === el[splitRequired[0]] && value === "") {
+                localErrors.push(el1)
+              }
+            }
+          })
+        })
+      } else {
+        const flatterdArray = [].concat(...Object.values(Object.values(params)[0]).map(el => {
+          return Object.values(el)
+        }))
+        flatterdArray.forEach((el) => {
+          if (el === "") {
+            localErrors.push(el)
+          }
+        })
+      }
+      
       if (localErrors.length > 0) {
         alert(`Please add the details in ${type}`)
         return;
